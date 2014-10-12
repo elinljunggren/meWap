@@ -7,7 +7,9 @@ package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.persistence.AbstractEntity;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,14 +30,17 @@ public class Event extends AbstractEntity {
     private boolean deadlineReminder;
     @Enumerated (EnumType.STRING)
     private AnswerNotification notification;
+    @OneToMany
+    private Answer answers;
     
-    private enum AnswerNotification {
+    public enum AnswerNotification {
         NO_NOTIFICATION,
         EACH_ANSWER,
         LAST_ANSWER
     }
     
-    public Event() {}
+    public Event() {
+    }
 
     public Event(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
         this.name = name;
