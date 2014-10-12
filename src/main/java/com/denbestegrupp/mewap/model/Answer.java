@@ -5,18 +5,31 @@
  */
 package com.denbestegrupp.mewap.model;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Oskar
  */
-public class Answer extends HashMap<User, List<Date>> {
+@Embeddable
+public class Answer extends ArrayList<Date> {
 
+    private User user;
+    
     public Answer() {
+    }
+    
+    public Answer(User user) {
         super();
+        this.user = user;
+    }
+    
+    public Answer(User user, List<Date> dates) {
+        super(dates);
+        this.user = user;
     }
         
 }
