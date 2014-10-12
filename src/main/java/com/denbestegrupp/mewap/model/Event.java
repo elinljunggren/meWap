@@ -26,4 +26,64 @@ public class Event {
         EACH_ANSWER,
         LAST_ANSWER
     }
+    
+    public Event() {}
+
+    public Event(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+        this.name = name;
+        this.dates = dates;
+        this.duration = duration;
+        this.deadline = deadline;
+        this.deadlineReminder = deadlineReminder;
+        this.notification = notification;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Date> getDates() {
+        return dates;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public boolean isDeadlineReminder() {
+        return deadlineReminder;
+    }
+
+    public AnswerNotification getNotification() {
+        return notification;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDates(List<Date> dates) {
+        this.dates = dates;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setDeadlineReminder(boolean deadlineReminder) {
+        this.deadlineReminder = deadlineReminder;
+    }
+
+    public void setNotification(AnswerNotification notification) {
+        this.notification = notification;
+    }
+    
 }
