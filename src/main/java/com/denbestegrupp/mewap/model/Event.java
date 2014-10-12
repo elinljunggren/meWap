@@ -5,20 +5,28 @@
  */
 package com.denbestegrupp.mewap.model;
 
+import com.denbestegrupp.mewap.persistence.AbstractEntity;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Oskar
  */
-public class Event {
+@Entity
+public class Event extends AbstractEntity {
     
     private String name;
+    @OneToMany
     private List<Date> dates;
     private long duration;
     private Date deadline;
     private boolean deadlineReminder;
+    @Enumerated (EnumType.STRING)
     private AnswerNotification notification;
     
     private enum AnswerNotification {
