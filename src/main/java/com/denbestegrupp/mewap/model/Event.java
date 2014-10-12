@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,8 +31,10 @@ public class Event extends AbstractEntity {
     private boolean deadlineReminder;
     @Enumerated (EnumType.STRING)
     private AnswerNotification notification;
+    
     @OneToMany
-    private Answer answers;
+    @Embedded
+    private List<Answer> answers;
     
     public enum AnswerNotification {
         NO_NOTIFICATION,
@@ -74,6 +77,10 @@ public class Event extends AbstractEntity {
     public AnswerNotification getNotification() {
         return notification;
     }
+    
+    public List<Answer> getAnswers() {
+        return answers;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -97,6 +104,10 @@ public class Event extends AbstractEntity {
 
     public void setNotification(AnswerNotification notification) {
         this.notification = notification;
+    }
+    
+    public void addAnswer(User user, List<Date> dates) {
+        Answer answer = new Answer(user, dates);
     }
     
 }
