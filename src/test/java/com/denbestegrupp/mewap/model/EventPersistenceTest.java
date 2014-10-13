@@ -29,6 +29,9 @@ import org.junit.runner.RunWith;
 public class EventPersistenceTest {
 
     @Inject
+    MeWap mewap;
+    
+    @Inject
     UserTransaction utx;  // This is not an EJB so have to handle transactions
 
     @Deployment
@@ -63,9 +66,7 @@ public class EventPersistenceTest {
     private void clearAll() throws Exception {  
         utx.begin();  
         em.joinTransaction();
-        em.createQuery("delete from PurchaseOrder").executeUpdate();
-        em.createQuery("delete from Customer").executeUpdate();
-        em.createQuery("delete from Product").executeUpdate();
+        em.createQuery("delete from Event").executeUpdate();
         utx.commit();
     }
 
