@@ -11,5 +11,5 @@ package com.denbestegrupp.mewap.model;
  */
 public interface IMeWap {
 
-    public IEventList getEventlist();
+    public IEventList getEventList();
 }

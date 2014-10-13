@@ -25,7 +25,7 @@ public class MeWap implements IMeWap {
     }
 
     @Override
-    public IEventList getEventlist() {
+    public IEventList getEventList() {
         return eventList;
     }
     
