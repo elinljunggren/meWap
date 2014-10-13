@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  * @author emma
  */
 @Stateless
-public class EventList extends AbstractDAO <Event,Long> implements IEventList{
+public class EventList extends AbstractDAO <Event, Long> implements IEventList {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -38,7 +38,7 @@ public class EventList extends AbstractDAO <Event,Long> implements IEventList{
     
     @Override
     protected EntityManager getEntityManager() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return entityManager;
     }
     
 }
