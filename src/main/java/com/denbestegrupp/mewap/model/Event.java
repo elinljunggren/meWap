@@ -7,14 +7,14 @@ package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.persistence.AbstractEntity;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,13 +27,13 @@ public class Event extends AbstractEntity {
     @OneToMany
     private List<Date> dates;
     private long duration;
+    @Temporal(TemporalType.DATE)
     private Date deadline;
     private boolean deadlineReminder;
     @Enumerated (EnumType.STRING)
     private AnswerNotification notification;
     
     @OneToMany
-    @Embedded
     private List<Answer> answers;
     
     public enum AnswerNotification {
