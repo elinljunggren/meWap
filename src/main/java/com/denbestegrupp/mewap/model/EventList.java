@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  * @author emma
  */
 @Stateless
-public class EventList extends AbstractDAO <Event,Long >{
+public class EventList extends AbstractDAO <Event,Long> implements IEventList{
 
     @PersistenceContext
     private EntityManager entityManager;
