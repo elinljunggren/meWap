@@ -5,7 +5,7 @@
  */
 package com.denbestegrupp.mewap.model;
 
-import com.denbestegrupp.mewap.model.Event.AnswerNotification;
+import com.denbestegrupp.mewap.model.MWEvent.AnswerNotification;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class EventListResource {
             e.printStackTrace();
 	}
 
-        AnswerNotification answerNotification = Event.AnswerNotification.valueOf(ev.getString("notification"));
+        AnswerNotification answerNotification = MWEvent.AnswerNotification.valueOf(ev.getString("notification"));
 
         List<Date> dates = new ArrayList<Date>();
         for (JsonValue date : ev.getJsonArray("dates")) {
@@ -73,7 +73,7 @@ public class EventListResource {
             }
         }
 
-        Event event = new Event(ev.getString("name"), 
+        MWEvent event = new MWEvent(ev.getString("name"), 
                 dates, 
                 (long) ev.getInt("duration"), 
                 deadline, ev.getBoolean("deadlineReminder"), 
@@ -106,7 +106,7 @@ public class EventListResource {
         log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
         log.log(Level.INFO, "Json{0}", ev.toString());
 
-        Event event = meWap.getEventList().find(id);
+        MWEvent event = meWap.getEventList().find(id);
         
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         
@@ -129,7 +129,7 @@ public class EventListResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response find(@PathParam(value = "id") Long id) {
 
-        Event event = meWap.getEventList().find(id);
+        MWEvent event = meWap.getEventList().find(id);
         if (event != null) {
             EventWrapper ew = new EventWrapper(event);
             return Response.ok(ew).build();
@@ -142,10 +142,10 @@ public class EventListResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll() {
 
-        Collection<Event> es = meWap.getEventList().findAll();
+        Collection<MWEvent> es = meWap.getEventList().findAll();
         Collection<EventWrapper> ews = new ArrayList<>();
         
-        for(Event e: es){
+        for(MWEvent e: es){
             EventWrapper ew = new EventWrapper(e);
             ews.add(ew);
         }
@@ -161,10 +161,10 @@ public class EventListResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam(value = "first") int first, @QueryParam(value = "count") int count) {
 
-        Collection<Event> es = meWap.getEventList().findRange(first, count);
+        Collection<MWEvent> es = meWap.getEventList().findRange(first, count);
         Collection<EventWrapper> ews = new ArrayList<>();
         
-        for(Event e: es){
+        for(MWEvent e: es){
             EventWrapper ew = new EventWrapper(e);
             ews.add(ew);
         }

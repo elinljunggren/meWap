@@ -17,18 +17,18 @@ import javax.persistence.PersistenceContext;
  * @author emma
  */
 @Stateless
-public class EventList extends AbstractDAO <Event, Long> implements IEventList {
+public class EventList extends AbstractDAO <MWEvent, Long> implements IEventList {
 
     @PersistenceContext
     private EntityManager entityManager;
     
     
     public EventList(){
-        super(Event.class);
+        super(MWEvent.class);
     }
-    public List <Event> getByName(String name){
-        List <Event> found = new ArrayList<>();
-        for(Event e: findRange(0, count())){
+    public List <MWEvent> getByName(String name){
+        List <MWEvent> found = new ArrayList<>();
+        for(MWEvent e: findRange(0, count())){
             if(e.getName().equals(name)){
                 found.add(e);
             }

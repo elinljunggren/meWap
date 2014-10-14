@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -21,22 +22,23 @@ import javax.persistence.TemporalType;
  * @author Oskar
  */
 @Entity
-public class Answer extends AbstractEntity {
-
-    private User user;
+public class MWAnswer extends AbstractEntity {
+    
+    @Embedded
+    private MWUser user;
     @ElementCollection
     @Temporal(TemporalType.DATE)
     private List<Date> dates;
     
-    public Answer() {
+    public MWAnswer() {
     }
     
-    public Answer(User user) {
+    public MWAnswer(MWUser user) {
         this.user = user;
 	this.dates = new ArrayList();
     }
     
-    public Answer(User user, List<Date> dates) {
+    public MWAnswer(MWUser user, List<Date> dates) {
         this.dates = dates;
         this.user = user;
     }

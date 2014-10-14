@@ -8,6 +8,7 @@ package com.denbestegrupp.mewap.model;
 import com.denbestegrupp.mewap.persistence.AbstractEntity;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ import javax.persistence.TemporalType;
  * @author Oskar
  */
 @Entity
-public class Event extends AbstractEntity {
+public class MWEvent extends AbstractEntity {
     
     private String name;
     @ElementCollection
@@ -36,7 +37,7 @@ public class Event extends AbstractEntity {
     private AnswerNotification notification;
     
     @OneToMany
-    private List<Answer> answers;
+    private List<MWAnswer> answers;
     
     public enum AnswerNotification {
         NO_NOTIFICATION,
@@ -44,10 +45,20 @@ public class Event extends AbstractEntity {
         LAST_ANSWER
     }
     
-    public Event() {
+    public MWEvent() {
     }
 
-    public Event(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+    public MWEvent(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+        this.name = name;
+        this.dates = dates;
+        this.duration = duration;
+        this.deadline = deadline;
+        this.deadlineReminder = deadlineReminder;
+        this.notification = notification;
+    }
+    
+    public MWEvent(Long id, String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+        super(id);
         this.name = name;
         this.dates = dates;
         this.duration = duration;
@@ -80,7 +91,7 @@ public class Event extends AbstractEntity {
         return notification;
     }
     
-    public List<Answer> getAnswers() {
+    public List<MWAnswer> getAnswers() {
         return answers;
     }
 
@@ -108,8 +119,43 @@ public class Event extends AbstractEntity {
         this.notification = notification;
     }
     
-    public void addAnswer(User user, List<Date> dates) {
-        Answer answer = new Answer(user, dates);
+    public void addAnswer(MWUser user, List<Date> dates) {
+        MWAnswer answer = new MWAnswer(user, dates);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.dates);
+        hash = 59 * hash + (int) (this.duration ^ (this.duration >>> 32));
+        hash = 59 * hash + Objects.hashCode(this.deadline);
+        hash = 59 * hash + (this.deadlineReminder ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.notification);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MWEvent other = (MWEvent) obj;
+        if (!Objects.equals(this.name, other.name)
+                || !Objects.equals(this.dates, other.dates)
+                || this.duration != other.duration
+                || !Objects.equals(this.deadline, other.deadline)
+                || this.deadlineReminder != other.deadlineReminder
+                || this.notification != other.notification) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
     
 }
