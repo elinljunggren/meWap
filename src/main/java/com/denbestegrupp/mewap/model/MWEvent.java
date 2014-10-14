@@ -56,6 +56,16 @@ public class MWEvent extends AbstractEntity {
         this.deadlineReminder = deadlineReminder;
         this.notification = notification;
     }
+    
+    public MWEvent(Long id, String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+        super(id);
+        this.name = name;
+        this.dates = dates;
+        this.duration = duration;
+        this.deadline = deadline;
+        this.deadlineReminder = deadlineReminder;
+        this.notification = notification;
+    }
 
     public String getName() {
         return name;
