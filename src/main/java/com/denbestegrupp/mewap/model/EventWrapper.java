@@ -31,12 +31,12 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class EventWrapper {
     
-    private Event event;
+    private MWEvent event;
 
     protected EventWrapper() { // Must have
     }
    
-    public EventWrapper(Event event) { 
+    public EventWrapper(MWEvent event) { 
         this.event = event; 
     }
     
@@ -71,7 +71,7 @@ public class EventWrapper {
     }
 
     @XmlElement
-    public Event.AnswerNotification getNotification() {
+    public MWEvent.AnswerNotification getNotification() {
         return event.getNotification();
     }
     

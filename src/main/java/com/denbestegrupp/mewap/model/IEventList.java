@@ -14,8 +14,8 @@ import javax.ejb.Local;
  * @author Oskar
  */
 @Local
-public interface IEventList extends IDAO<Event, Long> {
+public interface IEventList extends IDAO<MWEvent, Long> {
     
-    public List<Event> getByName(String name);
+    public List<MWEvent> getByName(String name);
     
 }

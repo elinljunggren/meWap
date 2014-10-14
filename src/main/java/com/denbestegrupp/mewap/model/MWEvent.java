@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
  * @author Oskar
  */
 @Entity
-public class Event extends AbstractEntity {
+public class MWEvent extends AbstractEntity {
     
     private String name;
     @ElementCollection
@@ -45,10 +45,10 @@ public class Event extends AbstractEntity {
         LAST_ANSWER
     }
     
-    public Event() {
+    public MWEvent() {
     }
 
-    public Event(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+    public MWEvent(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
         this.name = name;
         this.dates = dates;
         this.duration = duration;
@@ -133,7 +133,7 @@ public class Event extends AbstractEntity {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Event other = (Event) obj;
+        final MWEvent other = (MWEvent) obj;
         if (!Objects.equals(this.name, other.name)
                 || !Objects.equals(this.dates, other.dates)
                 || this.duration != other.duration
