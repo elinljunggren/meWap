@@ -56,7 +56,7 @@ public class EventPersistenceTest {
     }
 
     @Test
-    public void TestPersistAnEvent() throws Exception {
+    public void TestPersistAndFindAnEvent() throws Exception {
         List<Date> dates = new ArrayList<>();
         dates.add(new Date(1413278890));
         dates.add(new Date(1413078898));
