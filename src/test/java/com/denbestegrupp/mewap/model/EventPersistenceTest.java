@@ -3,6 +3,8 @@ package com.denbestegrupp.mewap.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -63,7 +65,8 @@ public class EventPersistenceTest {
         dates.add(new Date(1413073898));
         MWEvent event = new MWEvent(1L, "Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
         mewap.getEventList().create(event);
-        assertTrue(mewap.getEventList().find(1L).equals(event));
+        MWEvent dbevent = mewap.getEventList().find(1L);
+        assertTrue(dbevent.equals(event));
     }
     
     @Test
