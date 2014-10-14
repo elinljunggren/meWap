@@ -1,5 +1,8 @@
 package com.denbestegrupp.mewap.model;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -53,8 +56,14 @@ public class EventPersistenceTest {
     }
 
     @Test
-    public void TestNothing() throws Exception {
-        assertTrue(true);
+    public void TestPersistAnEvent() throws Exception {
+        List<Date> dates = new ArrayList<>();
+        dates.add(new Date(1413278890));
+        dates.add(new Date(1413078898));
+        dates.add(new Date(1413073898));
+        MWEvent event = new MWEvent("Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+        mewap.getEventList().create(event);
+        assertTrue(mewap.getEventList().getByName("Fest").equals(event));
     }
 
     // Need a standalone em to remove testdata between tests
@@ -67,6 +76,7 @@ public class EventPersistenceTest {
         utx.begin();  
         em.joinTransaction();
         em.createQuery("delete from Event").executeUpdate();
+        em.createQuery("delete from Answer").executeUpdate();
         utx.commit();
     }
 
