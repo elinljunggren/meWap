@@ -9,18 +9,23 @@ import com.denbestegrupp.mewap.persistence.AbstractEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Oskar
  */
-@Embeddable
+@Entity
 public class Answer extends AbstractEntity {
 
     private User user;
-    @OneToMany
+    @ElementCollection
+    @Temporal(TemporalType.DATE)
     private List<Date> dates;
     
     public Answer() {

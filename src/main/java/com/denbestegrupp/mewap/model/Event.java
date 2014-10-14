@@ -8,6 +8,7 @@ package com.denbestegrupp.mewap.model;
 import com.denbestegrupp.mewap.persistence.AbstractEntity;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -24,7 +25,8 @@ import javax.persistence.TemporalType;
 public class Event extends AbstractEntity {
     
     private String name;
-    @OneToMany
+    @ElementCollection
+    @Temporal(TemporalType.DATE)
     private List<Date> dates;
     private long duration;
     @Temporal(TemporalType.DATE)
