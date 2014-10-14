@@ -3,7 +3,9 @@
   <persistence-unit name="mewap_test_pu" transaction-type="JTA">
     <jta-data-source>jdbc/mewap</jta-data-source>
     <class>com.denbestegrupp.mewap.model.Event</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <class>com.denbestegrupp.mewap.model.User</class>
+    <class>com.denbestegrupp.mewap.model.Answer</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

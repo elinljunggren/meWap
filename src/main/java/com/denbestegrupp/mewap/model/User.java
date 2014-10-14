@@ -5,6 +5,7 @@
  */
 package com.denbestegrupp.mewap.model;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -12,10 +13,9 @@ import javax.persistence.Id;
  *
  * @author Oskar
  */
-@Entity
+@Embeddable
 class User {
     
-    @Id
     private String email;
     private String name;
 
