@@ -61,9 +61,22 @@ public class EventPersistenceTest {
         dates.add(new Date(1413278890));
         dates.add(new Date(1413078898));
         dates.add(new Date(1413073898));
-        MWEvent event = new MWEvent("Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+        MWEvent event = new MWEvent(1L, "Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
         mewap.getEventList().create(event);
-        assertTrue(mewap.getEventList().getByName("Fest").equals(event));
+        assertTrue(mewap.getEventList().find(1L).equals(event));
+    }
+    
+    @Test
+    public void TestUpdateAndGetByNameEvent() throws Exception {
+        List<Date> dates = new ArrayList<>();
+        dates.add(new Date(1413278890));
+        dates.add(new Date(1413078898));
+        dates.add(new Date(1413073898));
+        MWEvent event = new MWEvent(1L, "Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+        mewap.getEventList().create(event);
+        event = new MWEvent(1L, "Hest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+        mewap.getEventList().update(event);
+        assertTrue(mewap.getEventList().getByName("Hest").equals(event));
     }
 
     // Need a standalone em to remove testdata between tests
