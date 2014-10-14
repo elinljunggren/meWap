@@ -3,7 +3,6 @@
   <persistence-unit name="mewap_test_pu" transaction-type="JTA">
     <jta-data-source>jdbc/mewap</jta-data-source>
     <class>com.denbestegrupp.mewap.model.Event</class>
-    <class>com.denbestegrupp.mewap.model.User</class>
     <class>com.denbestegrupp.mewap.model.Answer</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>

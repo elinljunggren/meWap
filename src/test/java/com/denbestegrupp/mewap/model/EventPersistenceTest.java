@@ -85,6 +85,8 @@ public class EventPersistenceTest {
     // Need a standalone em to remove testdata between tests
     // No em accessible from interfaces
     @PersistenceContext(unitName = "mewap_test_pu")
+    @Produces
+    @Default
     EntityManager em;
 
     // Order matters
