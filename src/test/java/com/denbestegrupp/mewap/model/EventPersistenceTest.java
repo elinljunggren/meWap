@@ -93,8 +93,8 @@ public class EventPersistenceTest {
     private void clearAll() throws Exception {  
         utx.begin();  
         em.joinTransaction();
-        em.createQuery("delete from Event").executeUpdate();
-        em.createQuery("delete from Answer").executeUpdate();
+        em.createQuery("delete from MWEvent").executeUpdate();
+        em.createQuery("delete from MWAnswer").executeUpdate();
         utx.commit();
     }
 
