@@ -81,7 +81,7 @@
             <artifactId>glassfish-embedded-all</artifactId>
             <version>4.1</version>
             <scope>provided</scope>
-        </dependency>  
+        </dependency>
           
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
