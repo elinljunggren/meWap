@@ -37,7 +37,7 @@ public class MWEvent extends AbstractEntity {
     private AnswerNotification notification;
     
     @OneToMany
-    private List<Answer> answers;
+    private List<MWAnswer> answers;
     
     public enum AnswerNotification {
         NO_NOTIFICATION,
@@ -49,6 +49,16 @@ public class MWEvent extends AbstractEntity {
     }
 
     public MWEvent(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+        this.name = name;
+        this.dates = dates;
+        this.duration = duration;
+        this.deadline = deadline;
+        this.deadlineReminder = deadlineReminder;
+        this.notification = notification;
+    }
+    
+    public MWEvent(Long id, String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+        super(id);
         this.name = name;
         this.dates = dates;
         this.duration = duration;
@@ -81,7 +91,7 @@ public class MWEvent extends AbstractEntity {
         return notification;
     }
     
-    public List<Answer> getAnswers() {
+    public List<MWAnswer> getAnswers() {
         return answers;
     }
 
@@ -109,8 +119,8 @@ public class MWEvent extends AbstractEntity {
         this.notification = notification;
     }
     
-    public void addAnswer(User user, List<Date> dates) {
-        Answer answer = new Answer(user, dates);
+    public void addAnswer(MWUser user, List<Date> dates) {
+        MWAnswer answer = new MWAnswer(user, dates);
     }
 
     @Override

@@ -76,7 +76,7 @@ public class EventWrapper {
     }
     
     @XmlElement
-    public List<Answer> getAnswers() {
+    public List<MWAnswer> getAnswers() {
         return event.getAnswers();
     }
 }

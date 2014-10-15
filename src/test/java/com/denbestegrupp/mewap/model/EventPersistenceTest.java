@@ -1,5 +1,10 @@
 package com.denbestegrupp.mewap.model;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -53,13 +58,35 @@ public class EventPersistenceTest {
     }
 
     @Test
-    public void TestNothing() throws Exception {
-        assertTrue(true);
+    public void TestPersistAndFindAnEvent() throws Exception {
+        List<Date> dates = new ArrayList<>();
+        dates.add(new Date(1413278890));
+        dates.add(new Date(1413078898));
+        dates.add(new Date(1413073898));
+        MWEvent event = new MWEvent(1L, "Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+        mewap.getEventList().create(event);
+        MWEvent dbevent = mewap.getEventList().find(1L);
+        assertTrue(dbevent.equals(event));
+    }
+    
+    @Test
+    public void TestUpdateAndGetByNameEvent() throws Exception {
+        List<Date> dates = new ArrayList<>();
+        dates.add(new Date(1413278890));
+        dates.add(new Date(1413078898));
+        dates.add(new Date(1413073898));
+        MWEvent event = new MWEvent(1L, "Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+        mewap.getEventList().create(event);
+        event = new MWEvent(1L, "Hest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+        mewap.getEventList().update(event);
+        assertTrue(mewap.getEventList().getByName("Hest").equals(event));
     }
 
     // Need a standalone em to remove testdata between tests
     // No em accessible from interfaces
     @PersistenceContext(unitName = "mewap_test_pu")
+    @Produces
+    @Default
     EntityManager em;
 
     // Order matters
@@ -67,6 +94,7 @@ public class EventPersistenceTest {
         utx.begin();  
         em.joinTransaction();
         em.createQuery("delete from Event").executeUpdate();
+        em.createQuery("delete from Answer").executeUpdate();
         utx.commit();
     }
 
