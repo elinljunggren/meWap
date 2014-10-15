@@ -70,7 +70,7 @@ public class EventPersistenceTest {
     }
     
     @Test
-    public void TestUpdateAndGetByNameEvent() throws Exception {
+    public void TestUpdateAndGetEventByName() throws Exception {
         List<Date> dates = new ArrayList<>();
         dates.add(new Date(1413278890));
         dates.add(new Date(1413078898));
@@ -79,7 +79,8 @@ public class EventPersistenceTest {
         mewap.getEventList().create(event);
         event = new MWEvent(1L, "Hest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
         mewap.getEventList().update(event);
-        assertTrue(mewap.getEventList().getByName("Hest").equals(event));
+        MWEvent dbevent = mewap.getEventList().getByName("Hest").get(0);
+        assertTrue(dbevent.equals(event));
     }
 
     // Need a standalone em to remove testdata between tests
