@@ -1,7 +1,26 @@
+'use strict';
+
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * The meWap app
+ * @author Josefin Ondrus
  */
 
 
+var meWap = angular.module('MeWap', [
+    'ngRoute', 
+    'EventListControllers', 
+    'EventListService'
+]);
+
+meWap.config(['$routeProvider',
+    function($routeProvider){
+        $routeProvider.
+                when('/eventLists',{
+                    templateUrl: 'partials/eventLists/eventLists.html',
+                    controller: 'EventListCtrl'
+                }).
+                otherwise({
+                    redirectTo: '/index.html'
+                });
+            
+        }]);
