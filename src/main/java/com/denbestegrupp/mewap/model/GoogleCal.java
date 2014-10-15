@@ -31,7 +31,7 @@ public class GoogleCal {
 
     private Calendar cal;
     private Events events;
-    private User user;
+    private MWUser user;
 
     public GoogleCal() {
         //this.cal
@@ -79,7 +79,7 @@ public class GoogleCal {
         return this.cal;
     }
 
-    public User getUser() {
+    public MWUser getUser() {
         return this.user;
     }
 
