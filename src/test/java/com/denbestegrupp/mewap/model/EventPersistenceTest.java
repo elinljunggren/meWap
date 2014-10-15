@@ -163,6 +163,24 @@ public class EventPersistenceTest {
         List<MWEvent> dbevents = mewap.getEventList().findRange(3, 4);
         assertTrue(dbevents.equals(events));
     }
+    
+    @Test
+    public void TestAddAnswer() throws Exception {
+        MWEvent event = createDummyEvent(1L);
+        mewap.getEventList().create(event);
+        List<Date> dates = new ArrayList<>();
+        dates.add(new Date(1413278890));
+        dates.add(new Date(1413078898));
+        event.addAnswer(new MWUser("email@email.email", "name name"), dates);
+        mewap.getEventList().update(event);
+        dates.add(new Date(1413278891));
+        dates.add(new Date(1413078899));
+        event.addAnswer(new MWUser("email2@email2.email2", "name2 name2"), dates);
+        mewap.getEventList().update(event);
+        
+        List<MWAnswer> answers = mewap.getEventList().find(1L).getAnswers();
+        assertTrue(answers.equals(event.getAnswers()));
+    }
 
     // Need a standalone em to remove testdata between tests
     // No em accessible from interfaces

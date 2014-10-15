@@ -9,11 +9,10 @@ import com.denbestegrupp.mewap.persistence.AbstractEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -50,5 +49,31 @@ public class MWAnswer extends AbstractEntity {
     public void addDate(Date date) {
 	    dates.add(date);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.user);
+        hash = 89 * hash + Objects.hashCode(this.dates);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MWAnswer other = (MWAnswer) obj;
+        if (!Objects.equals(this.user, other.user)
+                || !Objects.equals(this.dates, other.dates)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
         
 }
