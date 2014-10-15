@@ -1,17 +1,17 @@
 'use strict';
 
 /* 
- * 
+ * @author Josefin Ondrus
  */
 
-var meWapService = angular.module('meWapService', []);
+var eventListService = angular.module('EventlistService', []);
 
 // Representing the remote RESTful ProductCatalogue
-meWapService.factory('meWapProxy', ['$http',
+eventListService.factory('EventListProxy', ['$http',
     function ($http) {
 
         //TODO
-        var url = 'http://localhost:8080/meWap/webresources/meWaps';
+        var url = 'http://localhost:8080/meWap/webresources/eventLists';
         return {
             findAll: function () {
                 return $http.get(url);
