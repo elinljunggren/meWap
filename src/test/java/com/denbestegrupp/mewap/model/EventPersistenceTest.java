@@ -138,6 +138,31 @@ public class EventPersistenceTest {
         assertTrue(mewap.getEventList().count() == 1);
     }
     
+    @Test
+    public void TestFindAll() throws Exception {
+        List<MWEvent> events = new ArrayList<>();
+        for (int i=0; i<5; i++) {
+            MWEvent event = createDummyEvent("hest" + i);
+            events.add(event);
+            mewap.getEventList().create(event);
+        }
+        List<MWEvent> dbevents = mewap.getEventList().findAll();
+        assertTrue(dbevents.equals(events));
+    }
+    
+    @Test
+    public void TestFindRange() throws Exception {
+        List<MWEvent> events = new ArrayList<>();
+        for (int i=0; i<10; i++) {
+            MWEvent event = createDummyEvent("hest" + i);
+            mewap.getEventList().create(event);
+            if (i >= 3 && i < 7) {
+                events.add(event);
+            }
+        }
+        List<MWEvent> dbevents = mewap.getEventList().findRange(3, 4);
+        assertTrue(dbevents.equals(events));
+    }
 
     // Need a standalone em to remove testdata between tests
     // No em accessible from interfaces
