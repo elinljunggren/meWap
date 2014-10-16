@@ -37,6 +37,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author elin
  */
+@Path("events")
 public class EventListResource {
  
     private final static Logger log = Logger.getAnonymousLogger();
