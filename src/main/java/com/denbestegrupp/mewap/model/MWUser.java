@@ -65,7 +65,5 @@ class MWUser {
         }
         return true;
     }
-    
-    
 
 }
