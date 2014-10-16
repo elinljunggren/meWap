@@ -29,7 +29,7 @@ public class GoogleAuth {
     
     public URL getLoginURL() {
         try {
-            return new URL("http://raksooo.se/logout");
+            return new URL("http://raksooo.se/login");
         } catch (MalformedURLException ex) {
             Logger.getLogger(GoogleAuth.class.getName()).log(Level.SEVERE, null, ex);
             return null;
