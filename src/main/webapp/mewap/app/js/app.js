@@ -5,7 +5,7 @@
  * @author Josefin Ondrus
  */
 
-
+//TODO
 var meWap = angular.module('MeWap', [
     'ngRoute', 
     'EventListControllers', 
