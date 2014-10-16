@@ -38,41 +38,43 @@ public class GoogleCal {
 //        this.events = user.getEvents();
 
     }
-    //check if mewapevent is availiable to book in users googlecalendar
 
-    public void addIfFree(MWEvent mwEvent) {
-
-        List<Event> eventList = events.getItems();
+    public List<Date> getFreeDates(MWEvent mwEvent) {
         List<Date> answerDates = new ArrayList<Date>();
-        List<Date> suggestedDates = mwEvent.getDates();
-        for (int i = 0; i < suggestedDates.size(); i++) {
-            for (Event e : eventList) {
-             //   if (e.) {
-            //     if (e.getStart().getDateTime().getValue() == s) {
-
-                  //  } else {
-                        Event ev = new Event();
-                        //should be ev.setStart(mwEvent.get(i).getStartTime()) isch
-                        ev.setStart(null);
-                        ev.setEnd(null);
-                   //     ev.setDescription(mwEvent.get(i).getName());
-                        eventList.add(ev);
-                        //högst oklart hur jag får det specifika datumet på ett förslag
-                //        answerDates.add(mwEvent.get(i).getDates().get(i));
-
-//                        Date startDate = new Date();
-//                        Date endDate = new Date(startDate.getTime() + 3600000);
-//                        DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
-//                        event.setStart(new EventDateTime().setDateTime(start));
-//                        DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
-//                        event.setEnd(new EventDateTime().setDateTime(end));
-
-                  //  }
-               // }
-
+        List<Date> mwDates = mwEvent.getDates();
+        for (int i = 0; i < mwDates.size(); i++) {
+            if (isFree(mwDates.get(i))) {
+                answerDates.add(mwDates.get(i));
             }
         }
+        return answerDates;
     }
+
+    //check if mewapevent is availiable to book in users googlecalendar
+    public boolean isFree(Date date) {
+
+        List<Event> eventList = events.getItems();
+        int high = eventList.size() - 1;
+        int low = 0;
+        int half = (low + high) / 2;
+
+        while (low <= high) {
+            if (eventList.get(half).getStart().getDate().getValue() == (date.getTime())) {
+                return false;
+
+            } else if (eventList.get(half).getStart().getDate().getValue() > (date.getTime())) {
+                high = half - 1;
+            } else {
+                low = half + 1;
+            }
+            half = (low + high) / 2;
+
+        }
+
+        return true;
+    }
+
+ 
 
     public Calendar getCal() {
 
