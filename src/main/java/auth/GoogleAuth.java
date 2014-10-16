@@ -5,10 +5,35 @@
  */
 package auth;
 
+import java.net.URL;
+
 /**
  *
  * @author Oskar
  */
 public class GoogleAuth {
+    
+    private static GoogleAuth instance = null;
+    
+    private GoogleAuth() {
+        
+    }
+    
+    public static GoogleAuth getInstance() {
+        instance = new GoogleAuth();
+        return instance;
+    }
+    
+    public URL getLoginURL() {
+        return null;
+    }
+    
+    public URL getLogoutURL() {
+        return null;
+    }
+    
+    public boolean isLoggedIn() {
+        return false;
+    }
     
 }
