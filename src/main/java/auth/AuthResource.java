@@ -5,10 +5,49 @@
  */
 package auth;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 /**
  *
  * @author Oskar
  */
+@Path("auth")
 public class AuthResource {
+    
+    private final static GoogleAuth gauth = GoogleAuth.getInstance();
+    
+    @GET
+    @Path(value = "login")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response login() {
+        if (!gauth.isLoggedIn()) {
+            return Response.ok(gauth.getLoginURL().toString()).build();
+        } else {
+            return Response.noContent().build();
+        }
+    }
+    
+    @GET
+    @Path(value = "logout")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response logout() {
+        if (gauth.isLoggedIn()) {
+            return Response.ok(gauth.getLogoutURL().toString()).build();
+        } else {
+            return Response.noContent().build();
+        }
+    }
+    
+    @GET
+    @Path(value = "isLoggedIn")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response isLoggedIn() {
+        return Response.ok(gauth.isLoggedIn()).build();
+    }
     
 }
