@@ -28,6 +28,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.denbestegrupp.mewap.auth.AuthResource.class);
+        resources.add(com.denbestegrupp.mewap.model.EventListResource.class);
     }
     
 }
