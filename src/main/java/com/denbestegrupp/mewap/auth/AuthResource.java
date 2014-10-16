@@ -5,6 +5,8 @@
  */
 package com.denbestegrupp.mewap.auth;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -21,17 +23,12 @@ public class AuthResource {
     private final static GoogleAuth gauth = GoogleAuth.getInstance();
     
     @GET
-    @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findAll() {
-        return Response.ok("Hej").build();
-    }
-    
-    /*@GET
     @Path(value = "login")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response login() {
         if (!gauth.isLoggedIn()) {
-            return Response.ok(gauth.getLoginURL().toString()).build();
+            JsonObject url = Json.createObjectBuilder().add("url", gauth.getLoginURL().toString()).build();
+            return Response.ok(url).build();
         } else {
             return Response.noContent().build();
         }
@@ -42,7 +39,8 @@ public class AuthResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response logout() {
         if (gauth.isLoggedIn()) {
-            return Response.ok(gauth.getLogoutURL().toString()).build();
+            JsonObject url = Json.createObjectBuilder().add("url", gauth.getLogoutURL().toString()).build();
+            return Response.ok(url).build();
         } else {
             return Response.noContent().build();
         }
@@ -52,7 +50,8 @@ public class AuthResource {
     @Path(value = "isLoggedIn")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response isLoggedIn() {
-        return Response.ok(gauth.isLoggedIn()).build();
-    }*/
+        JsonObject loggedIn = Json.createObjectBuilder().add("loggedIn", gauth.isLoggedIn()).build();
+        return Response.ok(loggedIn).build();
+    }
     
 }
