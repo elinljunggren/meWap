@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package auth;
+package com.denbestegrupp.mewap.auth;
 
+import com.denbestegrupp.mewap.auth.GoogleAuth;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -22,6 +23,12 @@ public class AuthResource {
     private final static GoogleAuth gauth = GoogleAuth.getInstance();
     
     @GET
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findAll() {
+        return Response.ok("Hej").build();
+    }
+    
+    /*@GET
     @Path(value = "login")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response login() {
@@ -48,6 +55,6 @@ public class AuthResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response isLoggedIn() {
         return Response.ok(gauth.isLoggedIn()).build();
-    }
+    }*/
     
 }

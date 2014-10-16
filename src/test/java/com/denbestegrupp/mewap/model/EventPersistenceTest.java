@@ -30,10 +30,10 @@ import org.junit.runner.RunWith;
  *
  * @author hajo
  */
-@RunWith(Arquillian.class)
+//@RunWith(Arquillian.class)
 public class EventPersistenceTest {
 
-    @Inject
+    /*@Inject
     MeWap mewap;
     
     @Inject
@@ -197,5 +197,5 @@ public class EventPersistenceTest {
         em.createQuery("delete from MWAnswer").executeUpdate();
         utx.commit();
     }
-
+*/
 }
