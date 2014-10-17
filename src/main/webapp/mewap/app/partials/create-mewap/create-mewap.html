@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en" ng-app="meWap">
+    <head>
+        <title>Create meWap</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <table class="table">
+            <tr>
+                <td>name:</td>
+                <td>
+                    <br><input ng-model="mwevent.name" type="text" placeholder="ENTER NAME..." value="{{mwevent.name}}"><br>
+                </td>
+            </tr>
+            <tr>
+                <td>description:</td>
+                <td>
+                    <br><input ng-model="mwevent.description" type="text" value="{{mwevent.description}}"><br>
+                </td>
+            </tr>
+            <tr>
+                <td>event length: </td>
+                <td>
+                    <br><input ng-model="mwevent.duration" type="number" value="{{mwevent.duration}}"><br>
+                </td>
+            </tr>
+            <tr>
+                <td>dates: </td>
+                <td>
+                    <br><input ng-model="mwevent.dates" type="date" value="{{mwevent.dates}}"><br>
+                </td>
+            </tr>
+         
+        </table>
+        <div class="btn-group">
+            <input type="button" value="Cancel" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/mymewaps')"/>
+            <input type="button" value="Save" class="btn btn-default" ng-click="save()"/>
+        </div>
+        <div>TODO write content</div>
+    </body>
+</html>
