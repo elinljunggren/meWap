@@ -6,13 +6,7 @@
 
 var EventListControllers = angular.module('EventListControllers', []);
 
-// General navigation controller
-EventListControllers.controller('NavigationCtrl', ['$scope', '$location',
-    function ($scope, $location) {
-        $scope.navigate = function (url) {
-            $location.path(url);
-        };
-    }]);
+
 
 EventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
     function ($scope, EventListProxy) {
@@ -41,4 +35,12 @@ EventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
                 console.log("findRange: error");
             });
         }
+    }]);
+
+// General navigation controller
+EventListControllers.controller('NavigationCtrl', ['$scope', '$location',
+    function ($scope, $location) {
+        $scope.navigate = function (url) {
+            $location.path(url);
+        };
     }]);

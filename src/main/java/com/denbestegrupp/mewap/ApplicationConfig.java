@@ -10,7 +10,7 @@ import javax.ws.rs.core.Application;
  * Technical class needed by JAX-RS
  * @author hajo
  */
-@javax.ws.rs.ApplicationPath("")
+@javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
 
     @Override

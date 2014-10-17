@@ -15,8 +15,8 @@ var meWap = angular.module('MeWap', [
 meWap.config(['$routeProvider',
     function($routeProvider){
         $routeProvider.
-                when('/eventLists',{
-                    templateUrl: 'partials/eventLists/eventLists.html',
+                when('/my-mewaps',{
+                    templateUrl: 'partials/my-mewaps/my-mewaps.html',
                     controller: 'EventListCtrl'
                 }).
                 otherwise({

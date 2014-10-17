@@ -4,14 +4,14 @@
  * @author Josefin Ondrus
  */
 
-var eventListService = angular.module('EventlistService', []);
+var eventListService = angular.module('EventListService', []);
 
 // Representing the remote RESTful ProductCatalogue
 eventListService.factory('EventListProxy', ['$http',
     function ($http) {
 
         //TODO
-        var url = 'http://localhost:8080/meWap/events';
+        var url = 'http://localhost:8080/meWap/webresources/events';
         return {
             findAll: function () {
                 return $http.get(url);

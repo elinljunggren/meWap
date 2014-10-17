@@ -6,6 +6,7 @@
 package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.model.MWEvent.AnswerNotification;
+import com.sun.faces.action.RequestMapping;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author elin
  */
-@Path("events")
+@Path("/events")
 public class EventListResource {
  
     private final static Logger log = Logger.getAnonymousLogger();
