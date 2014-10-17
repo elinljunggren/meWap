@@ -9,11 +9,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.ApplicationScoped;
 
 /**
  *
  * @author Oskar
  */
+@ApplicationScoped
 public class GoogleAuth {
     
     private static GoogleAuth instance = null;
