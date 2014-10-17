@@ -12,17 +12,15 @@ and open the template in the editor.
         </tr>               
         </thead>
         <tbody>
-            <tr class="clickableRow" ng-repeat="mvevent in mwevents" ng-class-odd="'odd'" 
-                ng-class-even="'even'" >
-                <td><a href="#/my-mewaps/{{mvevent.id}}">
-                        {{mvevent.name}}</a></td>
-                        <td> {{mvevent.creator}}</td>
-                        <td>{{mvevent.deadline}}</td>
+                                                                                            
+            <tr class="clickableRow" href="#/my-mewaps/{{mvevent.id}}" 
+                ng-repeat="mvevent in mwevents" ng-class-odd="'odd'" 
+                ng-class-even="'even'" > //Check with DB!!
+                <td>{{mvevent.name}}</td>
+                <td>{{mvevent.creator}}</td>
+                <td>{{mvevent.deadline}}</td>
             </tr>
         </tbody>
-            
-        
-        
     </table>
     
 </div>
