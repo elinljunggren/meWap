@@ -11,7 +11,7 @@ eventListService.factory('EventListProxy', ['$http',
     function ($http) {
 
         //TODO
-        var url = 'http://localhost:8080/meWap/webresources/eventLists';
+        var url = 'http://localhost:8080/meWap/webresources/evens';
         return {
             findAll: function () {
                 return $http.get(url);
