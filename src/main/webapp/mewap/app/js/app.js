@@ -1,7 +1,8 @@
 'use strict';
+ 
 
 /* 
- * The meWap app
+ * The meWap apps
  * @author Josefin Ondrus
  */
 
