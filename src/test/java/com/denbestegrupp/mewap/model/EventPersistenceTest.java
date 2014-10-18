@@ -22,18 +22,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * Testing the persistence layer
- *
- * NOTE NOTE NOTE: JavaDB (Derby) must be running (not using an embedded
- * database) GlassFish not needed using embedded
- *
- * @author hajo
- */
-//@RunWith(Arquillian.class)
+@RunWith(Arquillian.class)
 public class EventPersistenceTest {
 
-    /*@Inject
+    @Inject
     MeWap mewap;
     
     @Inject
@@ -74,11 +66,16 @@ public class EventPersistenceTest {
         dates.add(new Date(1413278890));
         dates.add(new Date(1413078898));
         dates.add(new Date(1413073898));
+        
+        List<MWUser> participators = new ArrayList<>();
+        participators.add(new MWUser("asd@asd.asd", "ASD"));
+        participators.add(new MWUser("qwe@qwe.wqe", "QWE"));
+        
         MWEvent event;
         if (id == -1) {
-            event = new MWEvent(name, dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+            event = new MWEvent(name, dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         } else {
-            event = new MWEvent(id, name, dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+            event = new MWEvent(id, name, dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         }
         return event;
     }
@@ -109,9 +106,14 @@ public class EventPersistenceTest {
         dates.add(new Date(1413278890));
         dates.add(new Date(1413078898));
         dates.add(new Date(1413073898));
-        MWEvent event = new MWEvent(1L, "Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+        
+        List<MWUser> participators = new ArrayList<>();
+        participators.add(new MWUser("asd@asd.asd", "ASD"));
+        participators.add(new MWUser("qwe@qwe.wqe", "QWE"));
+        
+        MWEvent event = new MWEvent(1L, "Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         mewap.getEventList().create(event);
-        event = new MWEvent(1L, "Hest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER);
+        event = new MWEvent(1L, "Hest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         mewap.getEventList().update(event);
         MWEvent dbevent = mewap.getEventList().getByName("Hest").get(0);
         assertTrue(dbevent.equals(event));
@@ -197,5 +199,5 @@ public class EventPersistenceTest {
         em.createQuery("delete from MWAnswer").executeUpdate();
         utx.commit();
     }
-*/
+
 }
