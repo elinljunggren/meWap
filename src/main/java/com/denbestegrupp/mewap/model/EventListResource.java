@@ -65,7 +65,7 @@ public class EventListResource {
 
         AnswerNotification answerNotification = MWEvent.AnswerNotification.valueOf(ev.getString("notification"));
 
-        List<Date> dates = new ArrayList<Date>();
+        List<Date> dates = new ArrayList<>();
         for (JsonValue date : ev.getJsonArray("dates")) {
             try {
                 dates.add(formatter.parse(date.toString()));
