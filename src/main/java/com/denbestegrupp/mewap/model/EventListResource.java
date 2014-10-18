@@ -78,7 +78,8 @@ public class EventListResource {
                 dates, 
                 (long) ev.getInt("duration"), 
                 deadline, ev.getBoolean("deadlineReminder"), 
-                answerNotification);
+                answerNotification,
+                null); // TODO: Send participators
         meWap.getEventList().create(event);   
         
         return Response.created(null).build();
@@ -120,7 +121,7 @@ public class EventListResource {
             }
         }
         
-        event.setDates(dates);
+        // TODO: event.setDates(dates);
         meWap.getEventList().update(event);
         return Response.created(null).build();
     }

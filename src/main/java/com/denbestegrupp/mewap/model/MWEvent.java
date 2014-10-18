@@ -34,6 +34,8 @@ public class MWEvent extends AbstractEntity {
     private boolean deadlineReminder;
     @Enumerated (EnumType.STRING)
     private AnswerNotification notification;
+    @ElementCollection
+    private List<MWUser> participators;
     
     @OneToMany
     private List<MWAnswer> answers;
@@ -47,16 +49,17 @@ public class MWEvent extends AbstractEntity {
     public MWEvent() {
     }
     
-    public MWEvent(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+    public MWEvent(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
         this.name = name;
         this.dates = dates;
         this.duration = duration;
         this.deadline = deadline;
         this.deadlineReminder = deadlineReminder;
         this.notification = notification;
+        this.participators = participators;
     }
     
-    public MWEvent(Long id, String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification) {
+    public MWEvent(Long id, String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
         super(id);
         this.name = name;
         this.dates = dates;
@@ -64,6 +67,7 @@ public class MWEvent extends AbstractEntity {
         this.deadline = deadline;
         this.deadlineReminder = deadlineReminder;
         this.notification = notification;
+        this.participators = participators;
     }
 
     public String getName() {
@@ -90,32 +94,12 @@ public class MWEvent extends AbstractEntity {
         return notification;
     }
     
+    public List<MWUser> getParticipators() {
+        return participators;
+    }
+    
     public List<MWAnswer> getAnswers() {
         return answers;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDates(List<Date> dates) {
-        this.dates = dates;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
-    }
-
-    public void setDeadlineReminder(boolean deadlineReminder) {
-        this.deadlineReminder = deadlineReminder;
-    }
-
-    public void setNotification(AnswerNotification notification) {
-        this.notification = notification;
     }
     
     public void addAnswer(MWUser user, List<Date> dates) {
