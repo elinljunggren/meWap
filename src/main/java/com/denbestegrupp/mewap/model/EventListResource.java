@@ -43,6 +43,8 @@ import javax.ws.rs.core.UriInfo;
 public class EventListResource {
  
     private final static Logger log = Logger.getAnonymousLogger();
+    private final static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-ddTHH:MM:ss");
+    
     @Inject
     private MeWap meWap;
 
@@ -55,7 +57,6 @@ public class EventListResource {
         log.log(Level.INFO, "{0}:create", this);
         log.log(Level.INFO, "Json{0}", ev.toString());
         
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); // format yyyy-mm-ddTHH:MM:ss
 	String dateInString = ev.getString("deadline");
  
         Date deadline = null;
@@ -75,6 +76,11 @@ public class EventListResource {
                 e.printStackTrace();
             }
         }
+        
+        List<MWUser> participators = new ArrayList<>();
+        for (JsonValue p : ev.getJsonArray("participators")) {
+                participators.add(meWap.getUserList().find(p.toString()));
+        }
 
         MWEvent event = new MWEvent(ev.getString("name"),
                 ev.getString("description"),
@@ -82,7 +88,7 @@ public class EventListResource {
                 (long) ev.getInt("duration"), 
                 deadline, ev.getBoolean("deadlineReminder"), 
                 answerNotification,
-                null); // TODO: Send participators
+                participators);
         meWap.getEventList().create(event);   
         
         return Response.created(null).build();
@@ -98,12 +104,6 @@ public class EventListResource {
         return Response.ok().build();
     }
 
-    /**
-     * Updates event after getting an answer with dates.
-     * @param id
-     * @param ev
-     * @return 
-     */
     @PUT
     @Path(value = "{id}")
     @Consumes(value = MediaType.APPLICATION_JSON)
@@ -111,7 +111,6 @@ public class EventListResource {
         log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
         log.log(Level.INFO, "Json{0}", ev.toString());
         
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); // format yyyy-mm-ddTHH:MM:ss
 	String dateInString = ev.getString("deadline");
  
         Date deadline = null;
@@ -123,13 +122,18 @@ public class EventListResource {
                 
         AnswerNotification answerNotification = MWEvent.AnswerNotification.valueOf(ev.getString("notification"));
         
-        List<Date> dates = new ArrayList<Date>();
+        List<Date> dates = new ArrayList<>();
         for (JsonValue date : ev.getJsonArray("dates")) {
             try {
                 dates.add(formatter.parse(date.toString()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        }
+        
+        List<MWUser> participators = new ArrayList<>();
+        for (JsonValue p : ev.getJsonArray("participators")) {
+                participators.add(meWap.getUserList().find(p.toString()));
         }
         
         MWEvent event = new MWEvent(id,
@@ -139,7 +143,32 @@ public class EventListResource {
                 (long) ev.getInt("duration"), 
                 deadline, ev.getBoolean("deadlineReminder"), 
                 answerNotification,
-                null); 
+                participators); 
+        
+        meWap.getEventList().update(event);
+        return Response.created(null).build();
+    }
+    
+    @PUT
+    @Path(value = "{id}")
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    public Response addAnswer(@PathParam(value = "id") final long id, JsonObject ev) {
+        log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
+        log.log(Level.INFO, "Json{0}", ev.toString());
+        
+        MWEvent event = meWap.getEventList().find(id);
+        MWUser user = meWap.getUserList().find(ev.getString("user"));
+
+        List<Date> dates = new ArrayList<>();
+        for (JsonValue date : ev.getJsonArray("dates")) {
+            try {
+                dates.add(formatter.parse(date.toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        event.addAnswer(user, dates);
         
         meWap.getEventList().update(event);
         return Response.created(null).build();
@@ -181,8 +210,6 @@ public class EventListResource {
     @Path(value = "range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam(value = "first") int first, @QueryParam(value = "count") int count) {
-
-        log.log(Level.INFO, "------------------------------------------------------------first:" + first + " count:" + count);
 
         Collection<MWEvent> es = meWap.getEventList().findRange(first, count);
         Collection<EventWrapper> ews = new ArrayList<>();
