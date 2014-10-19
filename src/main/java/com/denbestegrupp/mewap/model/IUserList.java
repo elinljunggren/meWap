@@ -14,7 +14,7 @@ import javax.ejb.Local;
  * @author Oskar
  */
 @Local
-public interface IUserList extends IDAO<MWUser, Long> {
+public interface IUserList extends IDAO<MWUser, String> {
 
     public List<MWUser> getByName(String name);
     

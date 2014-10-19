@@ -197,6 +197,7 @@ public class EventPersistenceTest {
         em.joinTransaction();
         em.createQuery("delete from MWEvent").executeUpdate();
         em.createQuery("delete from MWAnswer").executeUpdate();
+        em.createQuery("delete from MWUser").executeUpdate();
         utx.commit();
     }
 

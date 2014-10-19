@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  * @author Oskar
  */
 @Stateless
-public class UserList extends AbstractDAO <MWUser, Long> implements IUserList {
+public class UserList extends AbstractDAO <MWUser, String> implements IUserList {
 
     @PersistenceContext
     private EntityManager entityManager;
