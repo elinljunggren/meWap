@@ -6,7 +6,7 @@
 
 var eventListService = angular.module('EventListService', []);
 
-// Representing the remote RESTful ProductCatalogue
+// Representing the remote RESTful EventList
 eventListService.factory('EventListProxy', ['$http',
     function ($http) {
 
