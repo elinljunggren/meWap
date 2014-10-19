@@ -25,6 +25,7 @@ import javax.persistence.TemporalType;
 public class MWEvent extends AbstractEntity {
     
     private String name;
+    private String description;
     @ElementCollection
     @Temporal(TemporalType.DATE)
     private List<Date> dates;
@@ -36,7 +37,6 @@ public class MWEvent extends AbstractEntity {
     private AnswerNotification notification;
     @ElementCollection
     private List<MWUser> participators;
-    private String description;
     
     @OneToMany
     private List<MWAnswer> answers;
@@ -50,33 +50,37 @@ public class MWEvent extends AbstractEntity {
     public MWEvent() {
     }
     
-    public MWEvent(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators, String description) {
+    public MWEvent(String name, String description, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
         this.name = name;
+        this.description=description;
         this.dates = dates;
         this.duration = duration;
         this.deadline = deadline;
         this.deadlineReminder = deadlineReminder;
         this.notification = notification;
         this.participators = participators;
-        this.description=description;
     }
     
-    public MWEvent(Long id, String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators, String description) {
+    public MWEvent(Long id, String name, String description, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
         super(id);
         this.name = name;
+        this.description = description;
         this.dates = dates;
         this.duration = duration;
         this.deadline = deadline;
         this.deadlineReminder = deadlineReminder;
         this.notification = notification;
         this.participators = participators;
-        this.description = description;
     }
 
     public String getName() {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+        
     public List<Date> getDates() {
         return dates;
     }
@@ -103,9 +107,6 @@ public class MWEvent extends AbstractEntity {
     
     public List<MWAnswer> getAnswers() {
         return answers;
-    }
-    public String getDescription(){
-        return description;
     }
     
     public void addAnswer(MWUser user, List<Date> dates) {

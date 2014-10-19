@@ -76,7 +76,8 @@ public class EventListResource {
             }
         }
 
-        MWEvent event = new MWEvent(ev.getString("name"), 
+        MWEvent event = new MWEvent(ev.getString("name"),
+                ev.getString("description"),
                 dates, 
                 (long) ev.getInt("duration"), 
                 deadline, ev.getBoolean("deadlineReminder"), 
@@ -133,6 +134,7 @@ public class EventListResource {
         
         MWEvent event = new MWEvent(id,
                 ev.getString("name"), 
+                ev.getString("description"),
                 dates, 
                 (long) ev.getInt("duration"), 
                 deadline, ev.getBoolean("deadlineReminder"), 
