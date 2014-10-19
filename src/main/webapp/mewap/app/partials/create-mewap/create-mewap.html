@@ -11,25 +11,25 @@ and open the template in the editor.
 
     <table class="table">
         <tr>
-            <td>name:</td>
+            <td>Name of event:</td>
             <td>
                 <br><input ng-model="mwEvent.name" type="text" placeholder="Enter name..." value="{{mwEvent.name}}"/><br>
             </td>
         </tr>
         <tr>
-            <td>description:</td>
+            <td>Description of event:</td>
             <td>
                 <br><input ng-model="mwEvent.description" type="text" placeholder="Describe your event..." value="{{mwEvent.description}}"/><br>
             </td>
         </tr>
         <tr>
-            <td>event length: </td>
+            <td>Length of event: </td>
             <td>
-                <br><input ng-model="mwEvent.duration" type="time" step="900" value="{{mwEvent.duration}}"/><br>
+                <br><input ng-model="mwEvent.duration" type="time" step="900" placeholder="HH:MM" value="{{mwEvent.duration}}"/><br>
             </td>
         </tr>
         <tr>
-            <td>dates: </td>
+            <td>Dates: </td>
             <td>
                 <div ng-repeat="date in dates track by $index">
                     <br><input ng-model="dates[$index]" type="date" value="{{dates[$index]}}"/><br>
@@ -40,13 +40,13 @@ and open the template in the editor.
         </tr>
         <tr>
             <td>
-                response deadline:</td>
+                Response deadline:</td>
             <td> <br><input ng-model="mwEvent.deadline" type="date" value="{{mwEvent.deadline}}"/><br>
             </td>
         </tr>
         <tr>
             <td>
-                deadlinereminder?:</td>
+                Send participators deadline reminder?:</td>
             <td>
                 <br>
                 <form>
@@ -68,11 +68,11 @@ and open the template in the editor.
             </td>
         </tr>
         <tr>
-            <td>Members to invite:</td>
+            <td>Invite members: </td>
             <td><div ng-repeat="text in participators track by $index">
                 <br><input ng-model="participators[$index]" type="text" value="{{participators[$index]}}"/><br>
                 </div>
-                <input type="button" value="addMember" class="btn btn-default" ng-click="addParticipatorField()"/>
+                <input type="button" value="add Member" class="btn btn-default" ng-click="addParticipatorField()"/>
 
             </td>
         </tr>
