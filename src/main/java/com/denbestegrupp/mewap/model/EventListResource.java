@@ -149,30 +149,30 @@ public class EventListResource {
         return Response.created(null).build();
     }
     
-    @PUT
-    @Path(value = "{id}")
-    @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response addAnswer(@PathParam(value = "id") final long id, JsonObject ev) {
-        log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
-        log.log(Level.INFO, "Json{0}", ev.toString());
-        
-        MWEvent event = meWap.getEventList().find(id);
-        MWUser user = meWap.getUserList().find(ev.getString("user"));
-
-        List<Date> dates = new ArrayList<>();
-        for (JsonValue date : ev.getJsonArray("dates")) {
-            try {
-                dates.add(formatter.parse(date.toString()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        event.addAnswer(user, dates);
-        
-        meWap.getEventList().update(event);
-        return Response.created(null).build();
-    }
+//    @PUT
+//    @Path(value = "{id}")
+//    @Consumes(value = MediaType.APPLICATION_JSON)
+//    public Response addAnswer(@PathParam(value = "id") final long id, JsonObject ev) {
+//        log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
+//        log.log(Level.INFO, "Json{0}", ev.toString());
+//        
+//        MWEvent event = meWap.getEventList().find(id);
+//        MWUser user = meWap.getUserList().find(ev.getString("user"));
+//
+//        List<Date> dates = new ArrayList<>();
+//        for (JsonValue date : ev.getJsonArray("dates")) {
+//            try {
+//                dates.add(formatter.parse(date.toString()));
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        
+//        event.addAnswer(user, dates);
+//        
+//        meWap.getEventList().update(event);
+//        return Response.created(null).build();
+//    }
     
     @GET
     @Path(value = "{id}")

@@ -44,7 +44,13 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             $scope.mwEvent.dates = [$scope.mwEvent.dates]; 
             $scope.mwEvent.participators = [$scope.mwEvent.participators]; 
             $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ?true:false; 
-
+            console.log($scope.mwEvent.duration);
+            var duration = new Date($scope.mwEvent.duration);
+            var hour = duration.getHours();
+            var minute = duration.getMinutes();
+            hour = hour*60*1000;
+            minute =minute*60*60*1000;
+            $scope.mwEvent.duration  =hour + minute;
             EventListProxy.create($scope.mwEvent)
                     .success(function () {
                         $location.path('/my-mewaps');
