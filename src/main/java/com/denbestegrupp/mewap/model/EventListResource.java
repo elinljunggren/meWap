@@ -43,7 +43,8 @@ import javax.ws.rs.core.UriInfo;
 public class EventListResource {
  
     private final static Logger log = Logger.getAnonymousLogger();
-    private final static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-ddTHH:MM:ss");
+    private final static SimpleDateFormat formatter = 
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     
     @Inject
     private MeWap meWap;
@@ -66,7 +67,8 @@ public class EventListResource {
             e.printStackTrace();
 	}
 
-        AnswerNotification answerNotification = MWEvent.AnswerNotification.valueOf(ev.getString("notification"));
+        AnswerNotification answerNotification = MWEvent.AnswerNotification
+                .valueOf(ev.getString("notification"));
 
         List<Date> dates = new ArrayList<>();
         for (JsonValue date : ev.getJsonArray("dates")) {
@@ -120,7 +122,8 @@ public class EventListResource {
             e.printStackTrace();
 	}
                 
-        AnswerNotification answerNotification = MWEvent.AnswerNotification.valueOf(ev.getString("notification"));
+        AnswerNotification answerNotification = MWEvent.AnswerNotification
+                .valueOf(ev.getString("notification"));
         
         List<Date> dates = new ArrayList<>();
         for (JsonValue date : ev.getJsonArray("dates")) {
@@ -200,7 +203,8 @@ public class EventListResource {
             ews.add(ew);
         }
         
-        GenericEntity<Collection<EventWrapper>> ge = new GenericEntity<Collection<EventWrapper>>(ews) {
+        GenericEntity<Collection<EventWrapper>> ge = 
+                new GenericEntity<Collection<EventWrapper>>(ews) {
         };
         
         return Response.ok(ge).build();
@@ -209,7 +213,8 @@ public class EventListResource {
     @GET
     @Path(value = "range")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findRange(@QueryParam(value = "first") int first, @QueryParam(value = "count") int count) {
+    public Response findRange(@QueryParam(value = "first") int first, 
+            @QueryParam(value = "count") int count) {
 
         Collection<MWEvent> es = meWap.getEventList().findRange(first, count);
         Collection<EventWrapper> ews = new ArrayList<>();
@@ -219,7 +224,8 @@ public class EventListResource {
             ews.add(ew);
         }
         
-        GenericEntity<Collection<EventWrapper>> ge = new GenericEntity<Collection<EventWrapper>>(ews) {
+        GenericEntity<Collection<EventWrapper>> ge = 
+                new GenericEntity<Collection<EventWrapper>>(ews) {
         };
         
         return Response.ok(ge).build();
