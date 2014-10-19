@@ -20,6 +20,10 @@ meWap.config(['$routeProvider',
                     templateUrl: 'partials/my-mewaps/my-mewaps.html',
                     controller: 'EventListCtrl'
                 }).
+                when('/my-mewaps/:id', {
+                    templateUrl: 'patrials/my-mewaps/detail-mewap.html',
+                    controller: 'DetailEventCtrl'
+                }).
                 when('/create-mewap', {
                     templateUrl: 'partials/create-mewap/create-mewap.html',
                     controller: 'NewEventCtrl'

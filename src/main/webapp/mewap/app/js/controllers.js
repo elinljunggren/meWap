@@ -35,6 +35,10 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
                 console.log("findRange: error");
             });
         }
+        $scope.view = function () {
+            
+        }
+
     }]);
 Date.prototype.toDateInputValue = (function() {
     var local = new Date(this);
@@ -74,6 +78,20 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
                 ;
             });
         };
+    }]);
+
+eventListControllers.controller('DetailEventCtrl', ['$scope',
+    '$location', '$routeParams', 'EventListProxy',
+    function ($scope, $location, $routeParams, EventListProxy){
+        EventListProxy.find($routeParams.id)
+                .success(function (mvEvent) {
+                    $scope.mwEvents = mwEvent;
+                }).error(function (){
+                    console.log("selectByPk: error");
+                });
+                
+                //controller för knappar inom detail
+                //TODO
     }]);
 
 // General navigation controller
