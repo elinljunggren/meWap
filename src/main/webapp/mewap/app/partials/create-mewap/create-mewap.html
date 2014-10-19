@@ -13,25 +13,25 @@ and open the template in the editor.
         <tr>
             <td>name:</td>
             <td>
-                <br><input ng-model="mwevent.name" type="text" placeholder="ENTER NAME..." value="{{mwevent.name}}"><br>
+                <br><input ng-model="mwEvent.name" type="text" placeholder="Enter name..." value="{{mwEvent.name}}"><br>
             </td>
         </tr>
         <tr>
             <td>description:</td>
             <td>
-                <br><input ng-model="mwevent.description" type="text" value="{{mwevent.description}}"><br>
+                <br><input ng-model="mwEvent.description" type="text" placeholder="Describe your event..." value="{{mwEvent.description}}"><br>
             </td>
         </tr>
         <tr>
             <td>event length: </td>
             <td>
-                <br><input ng-model="mwevent.duration" type="number" value="{{mwevent.duration}}"><br>
+                <br><input ng-model="mwEvent.duration" type="number" min="1" placeholder="Duration..." value="{{mwEvent.duration}}"><br>
             </td>
         </tr>
         <tr>
             <td>dates: </td>
             <td>
-                <br><input ng-model="mwevent.dates" type="date" value="{{mwevent.dates}}"><br>
+                <br><input ng-model="mwEvent.dates" type="date" placeholder="{{googlecal.todays}}" value="{{mwEvent.dates}}"><br><br>
             </td>
         </tr>
 
@@ -40,5 +40,4 @@ and open the template in the editor.
         <input type="button" value="Cancel" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/mymewaps')"/>
         <input type="button" value="Save" class="btn btn-default" ng-click="save()"/>
     </div>
-    <div>TODO write content</div>
 </div>

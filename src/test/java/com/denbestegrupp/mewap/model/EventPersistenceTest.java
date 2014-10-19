@@ -73,9 +73,9 @@ public class EventPersistenceTest {
         
         MWEvent event;
         if (id == -1) {
-            event = new MWEvent(name, dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+            event = new MWEvent(name, "hej", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         } else {
-            event = new MWEvent(id, name, dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+            event = new MWEvent(id, name, "hej", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         }
         return event;
     }
@@ -111,9 +111,9 @@ public class EventPersistenceTest {
         participators.add(new MWUser("asd@asd.asd", "ASD"));
         participators.add(new MWUser("qwe@qwe.wqe", "QWE"));
         
-        MWEvent event = new MWEvent(1L, "Fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+        MWEvent event = new MWEvent(1L, "Fest", "hest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         mewap.getEventList().create(event);
-        event = new MWEvent(1L, "Hest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+        event = new MWEvent(1L, "Hest", "fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         mewap.getEventList().update(event);
         MWEvent dbevent = mewap.getEventList().getByName("Hest").get(0);
         assertTrue(dbevent.equals(event));

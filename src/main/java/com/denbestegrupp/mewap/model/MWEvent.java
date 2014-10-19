@@ -25,6 +25,7 @@ import javax.persistence.TemporalType;
 public class MWEvent extends AbstractEntity {
     
     private String name;
+    private String description;
     @ElementCollection
     @Temporal(TemporalType.DATE)
     private List<Date> dates;
@@ -49,8 +50,9 @@ public class MWEvent extends AbstractEntity {
     public MWEvent() {
     }
     
-    public MWEvent(String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
+    public MWEvent(String name, String description, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
         this.name = name;
+        this.description=description;
         this.dates = dates;
         this.duration = duration;
         this.deadline = deadline;
@@ -59,9 +61,10 @@ public class MWEvent extends AbstractEntity {
         this.participators = participators;
     }
     
-    public MWEvent(Long id, String name, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
+    public MWEvent(Long id, String name, String description, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
         super(id);
         this.name = name;
+        this.description = description;
         this.dates = dates;
         this.duration = duration;
         this.deadline = deadline;
@@ -74,6 +77,10 @@ public class MWEvent extends AbstractEntity {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+        
     public List<Date> getDates() {
         return dates;
     }

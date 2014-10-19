@@ -5,21 +5,15 @@
  */
 package com.denbestegrupp.mewap.model;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
+
 import com.google.api.client.util.DateTime;
-import com.google.api.client.util.Lists;
-import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.*;
-import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 import javax.persistence.Embeddable;
 
 /**
@@ -32,7 +26,8 @@ public class GoogleCal {
     private Calendar cal;
     private Events events;
     private MWUser user;
-
+    private String todays;
+    
     public GoogleCal() {
         //this.cal
 //        this.events = user.getEvents();
@@ -74,7 +69,6 @@ public class GoogleCal {
         return true;
     }
 
- 
 
     public Calendar getCal() {
 
@@ -83,6 +77,12 @@ public class GoogleCal {
 
     public MWUser getUser() {
         return this.user;
+    }
+    public String getTodaysDate(){
+        DateFormat dateForm = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        todays = dateForm.format(date);
+        return todays;
     }
 
 }
