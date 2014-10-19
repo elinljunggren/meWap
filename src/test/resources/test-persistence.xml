@@ -4,6 +4,7 @@
     <jta-data-source>jdbc/mewap</jta-data-source>
     <class>com.denbestegrupp.mewap.model.MWEvent</class>
     <class>com.denbestegrupp.mewap.model.MWAnswer</class>
+    <class>com.denbestegrupp.mewap.model.MWUser</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

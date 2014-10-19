@@ -4,11 +4,11 @@
  * @author Josefin Ondrus
  */
 
-var EventListControllers = angular.module('EventListControllers', []);
+var eventListControllers = angular.module('EventListControllers', []);
 
 
 
-EventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
+eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
     function ($scope, EventListProxy) {
         $scope.orderProp = 'id'; //Eventprop?!
         $scope.pageSize = '10';
@@ -30,15 +30,28 @@ EventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
             var first = $scope.pageSize * $scope.currentPage;
             EventListProxy.findRange(first, $scope.pageSize)
                     .success(function (events) {
-                        $scope.products = events;
+                        $scope.mwEvents = events;
                     }).error(function () {
                 console.log("findRange: error");
             });
         }
     }]);
 
+eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
+    'EventListProxy',
+    function ($scope, $location, EventListProxy) {
+        $scope.save = function () {
+            EventListProxy.create($scope.mwEvent)
+                    .success(function () {
+                        $location.path('/create-mewap');
+                    }).error(function () {
+                ;
+            });
+        };
+    }]);
+
 // General navigation controller
-EventListControllers.controller('NavigationCtrl', ['$scope', '$location',
+eventListControllers.controller('NavigationCtrl', ['$scope', '$location',
     function ($scope, $location) {
         $scope.navigate = function (url) {
             $location.path(url);

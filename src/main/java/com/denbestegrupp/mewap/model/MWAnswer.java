@@ -23,7 +23,6 @@ import javax.persistence.TemporalType;
 @Entity
 public class MWAnswer extends AbstractEntity {
     
-    @Embedded
     private MWUser user;
     @ElementCollection
     @Temporal(TemporalType.DATE)
