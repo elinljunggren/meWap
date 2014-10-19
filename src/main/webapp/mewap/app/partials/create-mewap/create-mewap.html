@@ -7,7 +7,7 @@ and open the template in the editor.
 <!-- author Emma-->
 <div>
     <!--body content-->
-    <h1>Create new meWap</h1>
+    <h2>Create new meWap</h2>
 
     <table class="table">
         <tr>
@@ -69,8 +69,11 @@ and open the template in the editor.
         </tr>
         <tr>
             <td>Members to invite:</td>
-            <td>
-                <br><input ng-model="mwEvent.participators" type="text" value="{{mwEvent.participators}}"/><br>
+            <td><div ng-repeat="text in participators track by $index">
+                <br><input ng-model="participators[$index]" type="text" value="{{participators[$index]}}"/><br>
+                </div>
+                <input type="button" value="addMember" class="btn btn-default" ng-click="addParticipatorField()"/>
+
             </td>
         </tr>
         <!--
@@ -80,6 +83,7 @@ and open the template in the editor.
     <div class="btn-group">
         <input type="button" value="Cancel" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
         <input type="button" value="Save" class="btn btn-default" ng-click="save()"/>
+        <br><br>
     </div>
     
 </div>

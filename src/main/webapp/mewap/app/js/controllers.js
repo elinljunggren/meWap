@@ -51,9 +51,13 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             $scope.dates[$scope.dates.length] = new Date().toDateInputValue();
         };
         $scope.addDateField();
+        $scope.participators = [];
+        $scope.addParticipatorField = function(){
+            $scope.participators[$scope.participators.length] = new String();
+        };
         $scope.save = function () {
             $scope.mwEvent.dates = $scope.dates;
-            $scope.mwEvent.participators = [$scope.mwEvent.participators]; 
+            $scope.mwEvent.participators = $scope.participators; 
             $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ?true:false;
             
             var duration = new Date($scope.mwEvent.duration);
