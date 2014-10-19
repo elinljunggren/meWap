@@ -1,7 +1,7 @@
 'use strict';
 
 /* 
- * @author Josefin Ondrus
+ * @author josefinondrus
  */
 
 var eventListControllers = angular.module('EventListControllers', []);
@@ -29,15 +29,15 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
         function getRange() {
             var first = $scope.pageSize * $scope.currentPage;
             EventListProxy.findRange(first, $scope.pageSize)
-                    .success(function (events) {
-                        $scope.mwEvents = events;
+                    .success(function (mwevent) {
+                        $scope.mwevent = mwevent;
                     }).error(function () {
                 console.log("findRange: error");
             });
         }
-        $scope.view = function () {
+//        $scope.view = function () {
             
-        }
+  //      }
 
     }]);
 Date.prototype.toDateInputValue = (function() {
