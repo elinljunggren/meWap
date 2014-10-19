@@ -5,6 +5,7 @@
  */
 package com.denbestegrupp.mewap.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -14,9 +15,10 @@ import javax.persistence.Id;
  *
  * @author Oskar
  */
-@Embeddable
-class MWUser {
+@Entity
+class MWUser implements Serializable {
     
+    @Id
     private String email;
     private String name;
 
