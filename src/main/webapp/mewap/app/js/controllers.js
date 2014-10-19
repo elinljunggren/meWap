@@ -41,9 +41,13 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     'EventListProxy',
     function ($scope, $location, EventListProxy) {
         $scope.save = function () {
+            $scope.mwEvent.dates = [$scope.mwEvent.dates]; 
+            $scope.mwEvent.participators = [$scope.mwEvent.participators]; 
+            $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ?true:false; 
+
             EventListProxy.create($scope.mwEvent)
                     .success(function () {
-                        $location.path('/create-mewap');
+                        $location.path('/my-mewaps');
                     }).error(function () {
                 ;
             });
