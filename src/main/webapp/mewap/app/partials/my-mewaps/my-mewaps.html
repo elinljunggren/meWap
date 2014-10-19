@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div>
-    <table class="table" ng-controller = "EventListController">
+    <table class="table">
           <thead>
         <tr>
             <th>Name</th><th>Creator</th><th>Deadline</th>
@@ -13,11 +13,12 @@ and open the template in the editor.
         </thead>
         <tbody>
                                                                                             
-            <tr ng-repeat="mvevent in mwevents" ng-class-odd="'odd'" 
-                ng-class-even="'even'" href="#/my-mewap/{{mvevent.id}}" ng-ckick="view()"> //Check with DB!!
-                <td>{{mvevent.name}}</td>
-                <td>{{mvevent.creator}}</td>
-                <td>{{mvevent.deadline}}</td>
+            <tr ng-repeat="mwevent in mwevent"> <!--Check with DB!!-->
+                <!--ng-class-even="'even'" href="#/my-mewap/{{mvevent.id}}" ng-ckick="view()"-->
+
+                <td>{{mwevent.name}}</td>
+                <td>{{mwevent.creator}}</td>
+                <td>{{mwevent.deadline}}</td>
             </tr>
         </tbody>
     </table>
