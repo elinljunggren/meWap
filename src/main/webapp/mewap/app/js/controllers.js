@@ -59,6 +59,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
         $scope.addParticipatorField = function(){
             $scope.participators[$scope.participators.length] = new String();
         };
+        $scope.addParticipatorField();
         $scope.save = function () {
             $scope.mwEvent.dates = $scope.dates;
             $scope.mwEvent.participators = $scope.participators; 
