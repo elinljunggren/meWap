@@ -6,10 +6,6 @@ package com.denbestegrupp.mewap;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
-/**
- * Technical class needed by JAX-RS
- * @author hajo
- */
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
 
@@ -29,6 +25,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.denbestegrupp.mewap.auth.AuthResource.class);
         resources.add(com.denbestegrupp.mewap.model.EventListResource.class);
+        resources.add(com.denbestegrupp.mewap.model.UserListResource.class);
     }
     
 }
