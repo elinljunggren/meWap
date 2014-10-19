@@ -5,14 +5,17 @@
  */
 package com.denbestegrupp.mewap.model;
 
+import com.denbestegrupp.mewap.persistence.IDAO;
+import java.util.List;
+import javax.ejb.Local;
+
 /**
  *
- * @author elin
+ * @author Oskar
  */
-public interface IMeWap {
+@Local
+public interface IUserList extends IDAO<MWUser, Long> {
 
-    public IEventList getEventList();
-    
-    public IUserList getUserList();
+    public List<MWUser> getByName(String name);
     
 }

@@ -19,6 +19,8 @@ public class MeWap implements IMeWap {
     
     @EJB
     private IEventList eventList;
+    @EJB
+    private IUserList userList;
     
     protected MeWap() {
         Logger.getAnonymousLogger().log(Level.INFO, "MeWap alive");
@@ -28,6 +30,10 @@ public class MeWap implements IMeWap {
     public IEventList getEventList() {
         return eventList;
     }
-    
+
+    @Override
+    public IUserList getUserList() {
+        return userList;
+    }
     
 }
