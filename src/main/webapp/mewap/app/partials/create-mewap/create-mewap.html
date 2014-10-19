@@ -31,7 +31,10 @@ and open the template in the editor.
         <tr>
             <td>dates: </td>
             <td>
-                <br><input ng-model="mwEvent.dates" type="date" value="{{mwEvent.dates}}"/><br>
+                <div ng-repeat="date in dates track by $index">
+                    <br><input ng-model="dates[$index]" type="date" value="{{dates[$index]}}"/><br>
+                </div>
+                <input type="button" value="addDate" class="btn btn-default" ng-click="addDateField()"/>
             </td>
 
         </tr>
@@ -78,4 +81,5 @@ and open the template in the editor.
         <input type="button" value="Cancel" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
         <input type="button" value="Save" class="btn btn-default" ng-click="save()"/>
     </div>
+    
 </div>

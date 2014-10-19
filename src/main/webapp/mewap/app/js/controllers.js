@@ -36,21 +36,33 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
             });
         }
     }]);
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
 
 eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     'EventListProxy',
     function ($scope, $location, EventListProxy) {
+        
+        $scope.dates = [];
+        $scope.addDateField = function(){
+            $scope.dates[$scope.dates.length] = new Date().toDateInputValue();
+        };
+        $scope.addDateField();
         $scope.save = function () {
-            $scope.mwEvent.dates = [$scope.mwEvent.dates]; 
+            $scope.mwEvent.dates = $scope.dates;
             $scope.mwEvent.participators = [$scope.mwEvent.participators]; 
-            $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ?true:false; 
-            console.log($scope.mwEvent.duration);
+            $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ?true:false;
+            
             var duration = new Date($scope.mwEvent.duration);
             var hour = duration.getHours();
             var minute = duration.getMinutes();
             hour = hour*60*1000;
-            minute =minute*60*60*1000;
-            $scope.mwEvent.duration  =hour + minute;
+            minute = minute*60*60*1000;
+           
+            $scope.mwEvent.duration  = hour + minute;
             EventListProxy.create($scope.mwEvent)
                     .success(function () {
                         $location.path('/my-mewaps');
