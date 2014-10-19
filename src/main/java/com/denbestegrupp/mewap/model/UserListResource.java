@@ -40,7 +40,7 @@ public class UserListResource {
         log.log(Level.INFO, "{0}:create", this);
         log.log(Level.INFO, "Json{0}", ev.toString());
         
-        MWUser user = new MWUser(ev.getString("name"), ev.getString("email"));
+        MWUser user = new MWUser(ev.getString("email"), ev.getString("name"));
         meWap.getUserList().create(user);   
         
         return Response.created(null).build();
