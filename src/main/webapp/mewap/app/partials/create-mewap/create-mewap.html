@@ -25,7 +25,7 @@ and open the template in the editor.
         <tr>
             <td>Length of event: </td>
             <td>
-                <br><input ng-model="mwEvent.duration" type="time" step="900" placeholder="HH:MM" value="{{mwEvent.duration}}"/><br>
+                <br><input ng-model="mwEvent.duration" type="time" step="900" value="{{mwEvent.duration}}"/><br>
             </td>
         </tr>
         <tr>
@@ -40,8 +40,10 @@ and open the template in the editor.
         </tr>
         <tr>
             <td>
-                Response deadline:</td>
-            <td> <br><input ng-model="mwEvent.deadline" type="date" value="{{mwEvent.deadline}}"/><br>
+                Response deadline:
+            </td>
+            <td> 
+                <br><input ng-model="mwEvent.deadline" type="date" placeholder="yyyy-MM-dd" value="{{mwEvent.deadline}}"/><br>
             </td>
         </tr>
         <tr>
@@ -76,9 +78,7 @@ and open the template in the editor.
 
             </td>
         </tr>
-        <!--
-        this.dates = dates;-->
-
+       
     </table>
     <div class="btn-group">
         <input type="button" value="Cancel" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>

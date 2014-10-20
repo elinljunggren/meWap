@@ -6,6 +6,7 @@
 package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.model.MWEvent.AnswerNotification;
+import com.denbestegrupp.mewap.util.DateParser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,8 +44,6 @@ import javax.ws.rs.core.UriInfo;
 public class EventListResource {
  
     private final static Logger log = Logger.getAnonymousLogger();
-    private final static SimpleDateFormat formatter = 
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     
     @Inject
     private MeWap meWap;
@@ -62,7 +61,7 @@ public class EventListResource {
  
         Date deadline = null;
 	try {
-            deadline = formatter.parse(dateInString);
+            deadline = DateParser.parseRFC3339Date(dateInString);
         } catch (ParseException e) {
             e.printStackTrace();
 	}
@@ -73,7 +72,7 @@ public class EventListResource {
         List<Date> dates = new ArrayList<>();
         for (JsonValue date : ev.getJsonArray("dates")) {
             try {
-                dates.add(formatter.parse(date.toString()));
+                dates.add(DateParser.parseRFC3339Date(date.toString()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -117,7 +116,7 @@ public class EventListResource {
  
         Date deadline = null;
 	try {
-            deadline = formatter.parse(dateInString);
+            deadline = DateParser.parseRFC3339Date(dateInString);
         } catch (ParseException e) {
             e.printStackTrace();
 	}
@@ -128,7 +127,7 @@ public class EventListResource {
         List<Date> dates = new ArrayList<>();
         for (JsonValue date : ev.getJsonArray("dates")) {
             try {
-                dates.add(formatter.parse(date.toString()));
+                dates.add(DateParser.parseRFC3339Date(date.toString()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -152,30 +151,30 @@ public class EventListResource {
         return Response.created(null).build();
     }
     
-//    @PUT
-//    @Path(value = "{id}")
-//    @Consumes(value = MediaType.APPLICATION_JSON)
-//    public Response addAnswer(@PathParam(value = "id") final long id, JsonObject ev) {
-//        log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
-//        log.log(Level.INFO, "Json{0}", ev.toString());
-//        
-//        MWEvent event = meWap.getEventList().find(id);
-//        MWUser user = meWap.getUserList().find(ev.getString("user"));
-//
-//        List<Date> dates = new ArrayList<>();
-//        for (JsonValue date : ev.getJsonArray("dates")) {
-//            try {
-//                dates.add(formatter.parse(date.toString()));
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        
-//        event.addAnswer(user, dates);
-//        
-//        meWap.getEventList().update(event);
-//        return Response.created(null).build();
-//    }
+    @PUT
+    @Path(value = "/answer/{id}")
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    public Response addAnswer(@PathParam(value = "id") final long id, JsonObject ev) {
+        log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
+        log.log(Level.INFO, "Json{0}", ev.toString());
+        
+        MWEvent event = meWap.getEventList().find(id);
+        MWUser user = meWap.getUserList().find(ev.getString("user"));
+
+        List<Date> dates = new ArrayList<>();
+        for (JsonValue date : ev.getJsonArray("dates")) {
+            try {
+                dates.add(DateParser.parseRFC3339Date(date.toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }   
+        }
+        
+        event.addAnswer(user, dates);
+        
+        meWap.getEventList().update(event);
+        return Response.created(null).build();
+    }
     
     @GET
     @Path(value = "{id}")
