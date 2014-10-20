@@ -69,9 +69,8 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
         $scope.addParticipatorField();
         $scope.save = function () {
             $scope.mwEvent.dates = $scope.dates;
-            $scope.mwEvent.participators = $scope.participators;
-            $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ? true : false;
-
+            $scope.mwEvent.participators = $scope.participators; 
+            $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ?true:false;
             var duration = new Date($scope.mwEvent.duration);
             var hour = duration.getHours();
             var minute = duration.getMinutes();
