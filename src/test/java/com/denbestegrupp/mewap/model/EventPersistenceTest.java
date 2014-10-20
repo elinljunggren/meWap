@@ -17,6 +17,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.After;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,8 +45,9 @@ public class EventPersistenceTest {
 
     }
 
-    @Before  // Run before each test
-    public void before() throws Exception {
+    @Before
+    @After
+    public void beforeAndAfter() throws Exception {
         clearAll();
     }
     
@@ -67,9 +69,7 @@ public class EventPersistenceTest {
         dates.add(new Date(1413078898));
         dates.add(new Date(1413073898));
         
-        List<MWUser> participators = new ArrayList<>();
-        participators.add(new MWUser("asd@asd.asd", "ASD"));
-        participators.add(new MWUser("qwe@qwe.wqe", "QWE"));
+        List<MWUser> participators = getDummyUsers();
         
         MWEvent event;
         if (id == -1) {
@@ -78,6 +78,24 @@ public class EventPersistenceTest {
             event = new MWEvent(id, name, "hej", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         }
         return event;
+    }
+    
+    private List<MWUser> getDummyUsers() {
+        List<MWUser> participators = new ArrayList<>();
+        MWUser participator = mewap.getUserList().find("asd@asd.asd");
+        if (participator == null) {
+            participator = new MWUser("asd@asd.asd", "ASD");
+            mewap.getUserList().create(participator);
+        }
+        participators.add(participator);
+        participator = mewap.getUserList().find("qwe@qwe.qwe");
+        if (participator == null) {
+            participator = new MWUser("qwe@qwe.qwe", "QWE");
+            mewap.getUserList().create(participator);
+        }
+        participators.add(participator);
+        
+        return participators;
     }
     
     @Test
@@ -107,9 +125,8 @@ public class EventPersistenceTest {
         dates.add(new Date(1413078898));
         dates.add(new Date(1413073898));
         
-        List<MWUser> participators = new ArrayList<>();
-        participators.add(new MWUser("asd@asd.asd", "ASD"));
-        participators.add(new MWUser("qwe@qwe.wqe", "QWE"));
+        List<MWUser> participators = getDummyUsers();
+        
         
         MWEvent event = new MWEvent(1L, "Fest", "hest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         mewap.getEventList().create(event);
@@ -173,11 +190,7 @@ public class EventPersistenceTest {
         List<Date> dates = new ArrayList<>();
         dates.add(new Date(1413278890));
         dates.add(new Date(1413078898));
-        event.addAnswer(new MWUser("email@email.email", "name name"), dates);
-        mewap.getEventList().update(event);
-        dates.add(new Date(1413278891));
-        dates.add(new Date(1413078899));
-        event.addAnswer(new MWUser("email2@email2.email2", "name2 name2"), dates);
+        event.addAnswer(mewap.getUserList().find("asd@asd.asd"), dates);
         mewap.getEventList().update(event);
         
         List<MWAnswer> answers = mewap.getEventList().find(1L).getAnswers();
