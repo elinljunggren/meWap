@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,12 +32,16 @@ public class MWAnswer extends AbstractEntity {
     
     public MWAnswer(MWUser user) {
         this.user = user;
-	this.dates = new ArrayList();
+        this.dates = new ArrayList();
     }
     
     public MWAnswer(MWUser user, List<Date> dates) {
         this.dates = dates;
         this.user = user;
+    }
+    
+    public MWUser getUser() {
+	    return user;
     }
     
     public List<Date> getDates() {

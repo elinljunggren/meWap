@@ -9,11 +9,12 @@ import com.denbestegrupp.mewap.persistence.AbstractEntity;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,10 +37,10 @@ public class MWEvent extends AbstractEntity {
     private boolean deadlineReminder;
     @Enumerated (EnumType.STRING)
     private AnswerNotification notification;
-    @ElementCollection
+    @OneToMany
     private List<MWUser> participators;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<MWAnswer> answers;
     
     public enum AnswerNotification {
@@ -112,6 +113,7 @@ public class MWEvent extends AbstractEntity {
     
     public void addAnswer(MWUser user, List<Date> dates) {
         MWAnswer answer = new MWAnswer(user, dates);
+        answers.add(answer);
     }
 
     @Override
