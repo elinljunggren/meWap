@@ -1,0 +1,315 @@
+main, header, footer { display: block; }
+
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: "Oxygen", sans-serif;
+    font-size: 100%;
+    color: #333333;
+}
+
+a {
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 100ms linear;
+    float: right;
+}
+a:hover {
+    opacity: 1;
+
+}
+a:link, a:visited {
+    color: #58F4FA;
+}
+a:active {
+    color: #444466;
+}
+
+a.image {
+    opacity: 1;
+}
+
+h1 {
+    margin-top: 0px;
+    font-size: 4em;
+    float: left;
+    color: white;
+    padding-top: 0px;
+    padding-left: 10px;
+}
+
+p {
+    line-height: 1.4em;
+}
+
+body > div:first-child {
+    min-height: 100%;
+    position: relative;
+}
+
+header, main {
+    background-color: #333333 ;
+    max-width: 100%;
+    max-height: 70px;
+    margin: 0px auto;
+}
+
+header {
+    text-align: center;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 5px;
+    overflow: auto;
+}
+
+header {
+    padding-top: 10px;
+    color: #e6e6e6;
+}
+
+header nav {
+    display: inline;
+    line-height: 70px;
+    color: #e6e6e6;
+}
+
+header nav ul {
+    display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+header nav li {
+    float: left;
+    margin-left: 1.5em;
+    font-size: 1.5em;
+}
+
+header nav li {
+    cursor: default;
+}
+
+header nav li a {
+    opacity: 0.7;
+    float: right;
+}
+
+header nav li:first-child {
+    margin-left: 30px;
+}
+
+main {
+
+    padding-bottom: 293px;
+    font-weight: 300;
+}
+
+main > div {
+    float: right;
+    padding: 45px;
+    border-top: 1px #e6e6e6 solid;
+}
+
+p:first-child, h2:first-child {
+    margin-top: 0px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    padding: 20px 0 30px;
+    background: #E8F8E5;
+    text-align: center;
+    outline: 10px rgba(255, 255, 255, 0.7) solid;
+}
+
+footer > div {
+    margin: 0 auto 25px;
+    width: 100%;
+    overflow: auto;
+}
+
+footer .contact {
+    margin-top: 10px;
+    display: inline-block;
+    width: 220px;
+}
+
+footer .contact strong {
+    display: block;
+}
+
+footer img {
+    display: block;
+    width: auto;
+    margin: 0 auto;
+}
+
+footer #createdBy {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 0.6em;
+}
+
+footer #login {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+}
+
+footer #login a {
+    color: #666666;
+}
+
+
+/* styrIT */
+.styrit {
+    overflow: hidden;
+    text-align: center;
+}
+
+.styrit p, .styrit h2 {
+    text-align: left;
+}
+
+.styrit section {
+    display: inline-block;
+    width: 320px;
+    margin: 30px 0 30px;
+}
+
+.styrit section:last-child {
+    margin-bottom: 0px;
+}
+
+.styrit section div {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.styrit section h3 {
+    margin: 5px 0 0;
+    font-size: 1.4em;
+}
+
+.styrit section span.role {
+    font-size: 1.3em;
+}
+
+.styrit section span {
+    font-size: 1.1em;
+}
+
+.styrit section span {
+    display: block;
+}
+
+
+/* EmerITus */
+.emeritus, .emeritus div {
+    overflow: hidden;
+}
+
+.emeritus section {
+    float: left;
+    width: 325px;
+}
+
+.emeritus ul {
+    list-style: none;
+    padding-left: 25px;
+}
+
+.emeritus section img {
+    display: inline-block;
+    max-width: 280px;
+    max-height: 165px;
+    margin: 20px 0 0 25px;
+}
+
+
+/* Dokument */
+.documents {
+    overflow: hidden;
+}
+
+.documents section {
+    float: left;
+    width: 216px;
+}
+
+.documents ul {
+    list-style: none;
+    padding-left: 25px;
+}
+
+
+/* 404 */
+.p404 {
+    background-image: url('images/it-logga_ascii.png');
+    background-size: auto 300px;
+    background-position: center 30px;
+    background-repeat: no-repeat;
+} 
+
+.p404 p {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+
+/* Mobile */
+@media (max-width: 700px) {
+    main {
+        padding-bottom: 363px;
+    }
+
+    header nav {
+        width: 270px;
+        line-height: 45px;
+    }
+
+    header nav li:nth-child(2n-1) {  
+        margin-left: 0px;
+    }  
+}
+
+@media (max-width: 465px) {
+    header nav {
+        width: 90px;
+        line-height: 22px;
+    }
+
+    header nav {
+        float: right;
+    }
+
+    header nav li {
+        float: right;
+        margin-left: 0px;
+        font-size: 1.1em;
+    }
+
+    header > img, header > nav {
+        padding: 15px 15px;
+    }
+
+    header > img {
+        padding-top: 14px;
+    }
+
+    main > div {
+        margin: 0px 5px;
+        padding: 45px 15px;
+    }
+}

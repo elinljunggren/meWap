@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!--author elin-->
-<html lang="en" ng-app="MeWap">
+<html lang="en" ng-app="MeWap" >
     <head>
         <title>meWap</title>
         <meta charset="UTF-8">
@@ -16,7 +16,8 @@ and open the template in the editor.
         <script src="../../libs/angular.js/angular-resource.js"></script>
         <script src="js/app.js"></script>   
         <script src="js/controllers.js"></script>  
-        <script src="js/services.js"></script>  
+        <script src="js/services.js"></script> 
+        <link rel="stylesheet" type="text/css" href="css/default.css">
     </head>
     <body>
         <div>
@@ -33,7 +34,9 @@ and open the template in the editor.
 
                     </ul>
                 </nav>
-                <a href="">LOG OUT</a>
+                <div class='login'>
+                    <a href="">LOG OUT</a>        
+                </div>    
             </header>
             <div class="view-container">
                 <div ng-view ></div>
