@@ -5,6 +5,7 @@
  */
 
 var eventListService = angular.module('EventListService', []);
+var authService = angular.module('AuthService', []);
 
 // Representing the remote RESTful EventList
 eventListService.factory('EventListProxy', ['$http',
@@ -36,6 +37,26 @@ eventListService.factory('EventListProxy', ['$http',
             },
             view: function (id) {
                 return $http.get(url + "/" + id);
+            }
+        };
+
+    }]);
+
+// Representing the remote RESTful Auth
+authService.factory('AuthProxy', ['$http',
+    function ($http) {
+
+        //TODO
+        var url = 'http://localhost:8080/meWap/webresources/auth';
+        return {
+            login: function () {
+                return $http.get(url);
+            },
+            logout: function () {
+                return $http.get(url);
+            },
+            isLoggedIn: function () {
+                return $http.get(url); //TODO
             }
         };
 

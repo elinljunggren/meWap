@@ -12,6 +12,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.After;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,23 +40,23 @@ public class UserPersistenceTest {
 
     }
 
-    @Before  // Run before each test
+    @Before
     public void before() throws Exception {
         clearAll();
     }
     
     @Test
     public void testPersistAnUserAndfind() {
-        MWUser user = new MWUser("asd@asd.asd", "asd");
+        MWUser user = new MWUser("a@a.a", "a");
         mewap.getUserList().create(user);
-        assertTrue(mewap.getUserList().find("asd@asd.asd").equals(user));
+        assertTrue(mewap.getUserList().find("a@a.a").equals(user));
     }
     
     @Test
     public void testGetByName() {
-        MWUser user = new MWUser("asd@asd.asd", "asd");
+        MWUser user = new MWUser("a@a.a", "a");
         mewap.getUserList().create(user);
-        assertTrue(mewap.getUserList().getByName("asd").get(0).equals(user));
+        assertTrue(mewap.getUserList().getByName("a").get(0).equals(user));
     }
 
     // Need a standalone em to remove testdata between tests

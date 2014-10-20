@@ -10,12 +10,18 @@
 var meWap = angular.module('MeWap', [
     'ngRoute',
     'EventListControllers',
-    'EventListService'
+    'AuthControllers',
+    'EventListService',
+    'AuthService'
 ]);
 
 meWap.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
+                when('/', {
+                    templateUrl: 'partials/start.html',
+                    controller: 'NavigationCtrl'
+                }).
                 when('/my-mewaps', {
                     templateUrl: 'partials/my-mewaps/my-mewaps.html',
                     controller: 'EventListCtrl'

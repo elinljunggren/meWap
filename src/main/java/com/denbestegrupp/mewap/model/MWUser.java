@@ -7,7 +7,6 @@ package com.denbestegrupp.mewap.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 

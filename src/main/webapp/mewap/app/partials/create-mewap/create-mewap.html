@@ -32,7 +32,7 @@ and open the template in the editor.
             <td>Dates: </td>
             <td>
                 <div ng-repeat="date in dates track by $index">
-                    <br><input ng-model="dates[$index]" type="date" value="{{dates[$index]}}"/><br>
+                    <br><input ng-model="dates[$index]" type="datetime-local" /><br>
                 </div>
                 <input type="button" value="addDate" class="btn btn-default" ng-click="addDateField()"/>
             </td>
@@ -43,7 +43,7 @@ and open the template in the editor.
                 Response deadline:
             </td>
             <td> 
-                <br><input ng-model="mwEvent.deadline" type="date" placeholder="yyyy-MM-dd" value="{{mwEvent.deadline}}"/><br>
+                <br><input ng-model="mwEvent.deadline" type="datetime-local" value="{{mwEvent.deadline}}"/><br>
             </td>
         </tr>
         <tr>

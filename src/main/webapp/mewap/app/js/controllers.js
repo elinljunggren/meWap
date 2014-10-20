@@ -5,6 +5,7 @@
  */
 
 var eventListControllers = angular.module('EventListControllers', []);
+var authControllers = angular.module('AuthControllers', []);
 
 
 
@@ -99,6 +100,20 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
 
         //controller för knappar inom detail
         //TODO
+    }]);
+
+authControllers.controller('AuthCtrl', ['$scope', '$location',
+    'AuthProxy', 
+    function ($scope, $location, AuthProxy) {
+        $scope.login = function(){
+            AuthProxy.login()
+            .success(function (url) {
+                        $location.path(url);
+                    }).error(function () {
+                console.log("login: error");
+            });
+        };
+
     }]);
 
 // General navigation controller
