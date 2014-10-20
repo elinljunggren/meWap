@@ -29,10 +29,10 @@ public class MWEvent extends AbstractEntity {
     private String name;
     private String description;
     @ElementCollection
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private List<Date> dates;
     private long duration;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date deadline;
     private boolean deadlineReminder;
     @Enumerated (EnumType.STRING)

@@ -41,23 +41,22 @@ public class UserPersistenceTest {
     }
 
     @Before
-    @After
-    public void beforeAndAfter() throws Exception {
+    public void before() throws Exception {
         clearAll();
     }
     
     @Test
     public void testPersistAnUserAndfind() {
-        MWUser user = new MWUser("test@test.test", "test");
+        MWUser user = new MWUser("a@a.a", "a");
         mewap.getUserList().create(user);
-        assertTrue(mewap.getUserList().find("test@test.test").equals(user));
+        assertTrue(mewap.getUserList().find("a@a.a").equals(user));
     }
     
     @Test
     public void testGetByName() {
-        MWUser user = new MWUser("test@test.test", "test");
+        MWUser user = new MWUser("a@a.a", "a");
         mewap.getUserList().create(user);
-        assertTrue(mewap.getUserList().getByName("test").get(0).equals(user));
+        assertTrue(mewap.getUserList().getByName("a").get(0).equals(user));
     }
 
     // Need a standalone em to remove testdata between tests

@@ -24,7 +24,7 @@ public class MWAnswer extends AbstractEntity {
     
     private MWUser user;
     @ElementCollection
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private List<Date> dates;
     
     public MWAnswer() {
