@@ -1,4 +1,4 @@
-main, header, footer { display: block; }
+header, footer { display: block; }
 
 html, body {
     height: 100%;
@@ -14,13 +14,6 @@ body {
 
 a {
     text-decoration: none;
-    opacity: 0.9;
-    transition: opacity 100ms linear;
-    float: right;
-}
-a:hover {
-    opacity: 1;
-
 }
 a:link, a:visited {
     color: #58F4FA;
@@ -34,12 +27,15 @@ a.image {
 }
 
 h1 {
-    margin-top: 0px;
-    font-size: 4em;
+    margin: 0px;
+    font-size: 3em;
     float: left;
     color: white;
-    padding-top: 0px;
-    padding-left: 10px;
+    line-height: 70px;
+}
+
+h1 span {
+    color: #69C069;
 }
 
 p {
@@ -51,72 +47,57 @@ body > div:first-child {
     position: relative;
 }
 
-header, main {
-    background-color: #333333 ;
+header > nav, main {
+    margin: 0px auto;
+    width: 800px;
+}
+
+header {
+    padding: 0 50px;
     max-width: 100%;
     max-height: 70px;
-    margin: 0px auto;
-}
-
-header {
-    text-align: center;
-    padding-right: 50px;
-    padding-left: 50px;
-    padding-top: 5px;
-    overflow: auto;
-}
-
-header {
-    padding-top: 10px;
+    overflow: hidden;
+    background-color: #333333;
     color: #e6e6e6;
 }
 
-header nav {
-    display: inline;
+header > nav {
     line-height: 70px;
     color: #e6e6e6;
 }
 
-header nav ul {
-    display: inline;
+header > a {
+    float: right;
+    line-height: 70px;
+}
+
+header > nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    overflow: auto;
 }
 
-header nav li {
-    float: left;
-    margin-left: 1.5em;
+header > nav li {
     font-size: 1.5em;
-}
-
-header nav li {
+    display: inline;
     cursor: default;
 }
 
-header nav li a {
-    opacity: 0.7;
-    float: right;
+header nav li a:link, header nav li a:visited {
+    color: #F4FFF7;
 }
 
-header nav li:first-child {
-    margin-left: 30px;
+header > nav li:first-child {
+    margin-right: 1.5em;
 }
 
 main {
-
-    padding-bottom: 293px;
+    padding-top: 40px;
+    padding-bottom: 200px;
     font-weight: 300;
 }
 
-main > div {
-    float: right;
-    padding: 45px;
-    border-top: 1px #e6e6e6 solid;
-}
-
-p:first-child, h2:first-child {
+main p:first-child, main h2:first-child {
     margin-top: 0px;
 }
 
@@ -124,25 +105,29 @@ footer {
     position: absolute;
     bottom: 0px;
     width: 100%;
-    padding: 20px 0 30px;
+    padding: 30px 0 30px;
     background: #E8F8E5;
     text-align: center;
     outline: 10px rgba(255, 255, 255, 0.7) solid;
 }
 
+footer > div:first-child {
+    padding: 0 0 0 13.3333%;
+}
+footer > div:last-child {
+    padding: 0 13.3333% 0 0;
+}
+
 footer > div {
-    margin: 0 auto 25px;
     width: 100%;
     overflow: auto;
+    float: left;
+    width: 20%;
+    height: 90px;
+    padding: 0 6.6666%;
 }
 
-footer .contact {
-    margin-top: 10px;
-    display: inline-block;
-    width: 220px;
-}
-
-footer .contact strong {
+footer .contact strong, footer .contact a {
     display: block;
 }
 
@@ -168,3 +153,63 @@ footer #login {
 footer #login a {
     color: #666666;
 }
+
+
+/* create-mewap.html */
+    h2.create {
+        text-align: center;
+    }
+
+    table.create {
+        border-spacing: 15px;
+    }
+    
+    table.create tr td {
+        line-height: 1.5em;
+    }
+    
+    table.create tr td:first-child {
+        text-align: right;
+    }
+    
+    table.create tr td.vtop {
+        vertical-align: top;
+    }
+    
+    table.create label {
+        padding-left: 5px;
+    }
+    
+    table.create input[type="text"], table.create input[type="time"], table.create input[type="datetime-local"] {
+        font-size: 1em;
+        height: 17px;
+        padding: 8px;
+        width: 180px;
+        margin: 5px 0;
+    }
+    
+    table.create input[type="button"], input[type="button"].create {
+        font-size: 0.8em;
+        height: 37px;
+        width: 120px;
+        background: #2871D7;
+        border: 2px #3388FF solid;
+        border-radius: 5px;
+        margin: 5px 0;
+        color: #E6F0FF;
+    }
+    
+    div.create.btn-group {
+        text-align: right;
+    }
+    
+    input[type="button"].create.save {
+        background: green;
+        border-color: green;
+        margin: 0 10px;
+    }
+    
+    input[type="button"].create.cancel {
+        background: red;
+        border-color: red;
+    }

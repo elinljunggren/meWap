@@ -7,34 +7,34 @@ and open the template in the editor.
 <!-- author Emma-->
 <div>
     <!--body content-->
-    <h2>Create new meWap</h2>
+    <h2 class="create">Create new meWap</h2>
 
-    <table class="table">
+    <table class="create">
         <tr>
             <td>Name of event:</td>
             <td>
-                <br><input ng-model="mwEvent.name" type="text" placeholder="Enter name..." value="{{mwEvent.name}}"/><br>
+                <input ng-model="mwEvent.name" type="text" placeholder="Enter name..." value="{{mwEvent.name}}"/>
             </td>
         </tr>
         <tr>
             <td>Description of event:</td>
             <td>
-                <br><input ng-model="mwEvent.description" type="text" placeholder="Describe your event..." value="{{mwEvent.description}}"/><br>
+                <input ng-model="mwEvent.description" type="text" placeholder="Describe your event..." value="{{mwEvent.description}}"/>
             </td>
         </tr>
         <tr>
             <td>Length of event: </td>
             <td>
-                <br><input ng-model="mwEvent.duration" type="time" step="900" value="{{mwEvent.duration}}"/><br>
+                <input ng-model="mwEvent.duration" type="time" step="900" value="{{mwEvent.duration}}"/>
             </td>
         </tr>
         <tr>
-            <td>Dates: </td>
+            <td class="vtop">Dates: </td>
             <td>
                 <div ng-repeat="date in dates track by $index">
-                    <br><input ng-model="dates[$index]" type="datetime-local" /><br>
+                    <input ng-model="dates[$index]" type="datetime-local" />
                 </div>
-                <input type="button" value="addDate" class="btn btn-default" ng-click="addDateField()"/>
+                <input type="button" value="Add date" class="btn btn-default" ng-click="addDateField()"/>
             </td>
 
         </tr>
@@ -43,47 +43,43 @@ and open the template in the editor.
                 Response deadline:
             </td>
             <td> 
-                <br><input ng-model="mwEvent.deadline" type="datetime-local" value="{{mwEvent.deadline}}"/><br>
+                <input ng-model="mwEvent.deadline" type="datetime-local" value="{{mwEvent.deadline}}"/>
             </td>
         </tr>
         <tr>
+            <td class="vtop">
+                Send participators deadline reminder?</td>
             <td>
-                Send participators deadline reminder?:</td>
-            <td>
-                <br>
                 <form>
-                    Yes:<input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="true"/>
-                    No:<input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="false"/>
-                </form>
-                <br>    
+                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="true" id="deadlinereminder_true" /><label for="deadlinereminder_true">Yes</label><br />
+                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="false" id="deadlinereminder_false" /><label for="deadlinereminder_false">No</label>
+                </form>   
             </td>
         </tr>
        <tr>
-            <td>Notify participators?</td>
-            <br><td>
-                <br> <form>
-                    No notification: <input ng-model="mwEvent.notification" type="radio" name="notification" value="NO_NOTIFICATION"/><br>
-                    Notification for every answer: <input ng-model="mwEvent.notification" type="radio" name="notification" value="EACH_ANSWER"/><br>
-                    Noification for last answer: <input ng-model="mwEvent.notification" type="radio" name="notification" value="LAST_ANSWER"/><br>
-
-                </form><br>
+            <td class="vtop">Notify participators?</td>
+            <td>
+                <form>
+                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="NO_NOTIFICATION" id="no_notification" /><label for="no_notification">No notification</label><br />
+                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="EACH_ANSWER" id="each_answer" /><label for="each_answer">Notification for every answer</label><br />
+                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="LAST_ANSWER" id="last_answer" /><label for="last_answer">Noification for last answer</label>
+                </form>
             </td>
         </tr>
         <tr>
-            <td>Invite members: </td>
+            <td class="vtop">Invite members: </td>
             <td><div ng-repeat="text in participators track by $index">
-                <br><input ng-model="participators[$index]" type="text" value="{{participators[$index]}}"/><br>
+                <input ng-model="participators[$index]" type="text" value="{{participators[$index]}}"/>
                 </div>
-                <input type="button" value="add Member" class="btn btn-default" ng-click="addParticipatorField()"/>
+                <input type="button" value="Add member" class="btn btn-default" ng-click="addParticipatorField()"/>
 
             </td>
         </tr>
        
     </table>
-    <div class="btn-group">
-        <input type="button" value="Cancel" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
-        <input type="button" value="Save" class="btn btn-default" ng-click="save()"/>
-        <br><br>
+    <div class="btn-group create">
+        <input type="button" value="Cancel" class="btn btn-default create cancel" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
+        <input type="button" value="Save" class="btn btn-default create save" ng-click="save()"/>
     </div>
     
 </div>
