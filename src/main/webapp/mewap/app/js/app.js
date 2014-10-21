@@ -20,7 +20,7 @@ meWap.config(['$routeProvider',
         $routeProvider.
                 when('/', {
                     templateUrl: 'partials/start.html',
-                    controller: 'NavigationCtrl'
+                    controller: 'StartPageCtrl'
                 }).
                 when('/my-mewaps', {
                     templateUrl: 'partials/my-mewaps/my-mewaps.html',

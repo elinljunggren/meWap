@@ -5,6 +5,7 @@
  */
 package com.denbestegrupp.mewap.auth;
 
+import com.denbestegrupp.mewap.model.MWUser;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -50,5 +51,9 @@ public class GoogleAuth {
     public boolean isLoggedIn() {
         return false;
     }
+    
+    public String getLoggedInUser() {
+        return "a@a.a";
+    } 
     
 }
