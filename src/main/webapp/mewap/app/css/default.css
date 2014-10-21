@@ -156,7 +156,21 @@ footer #login a {
 
 /* slider */
     .startPage {
-        padding-top: 430px;
+        padding-top: 400px;
+        text-align: center;
+    }
+    
+    .startPage > p {
+        font-size: 1.5em;
+    }
+    
+    .startPage input[type="button"] {
+        font-size: 1.5em;
+        padding: 15px 70px;
+        background: rgb(67, 163, 67);
+        border: 2px rgb(133, 219, 133) solid;
+        border-radius: 5px;
+        color: #E6F0FF;
     }
     
     #slider {
