@@ -58,7 +58,7 @@ public class DateParser {
     catch(java.text.ParseException pe){//try again with optional decimals
       s = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ");//spec for RFC3339 (with fractional seconds)
       s.setLenient(true);
-      d = s.parse(datestring);		  
+      d = s.parse(datestring);      		  
     }
     return d;
   }
