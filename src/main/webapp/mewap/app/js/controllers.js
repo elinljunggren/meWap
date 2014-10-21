@@ -60,9 +60,14 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
 
         $scope.dates = [];
         $scope.addDateField = function () {
-            $scope.dates[$scope.dates.length] = new Date().toDateInputValue();
+        $scope.dates[$scope.dates.length] = new Date().toDateInputValue();
+                     
         };
+       
         $scope.addDateField();
+        $scope.removeDateField = function(index){
+            $scope.dates.splice(index , 1);
+        }
         $scope.participators = [];
         $scope.addParticipatorField = function () {
             $scope.participators[$scope.participators.length] = new String();

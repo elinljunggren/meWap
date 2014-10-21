@@ -31,10 +31,14 @@ and open the template in the editor.
         <tr>
             <td class="vtop">Dates: </td>
             <td>
+                All day event: <input ng-model="dates" type="checkbox" value="{{mwEvent.allDayEvent}}"/><br>
+
                 <div ng-repeat="date in dates track by $index">
-                    <input ng-model="dates[$index]" type="datetime-local" />
+                    <input ng-model="dates[$index]" type="datetime-local" value ="{{dates[$index]}}"/>
+                    <input type ="button" value="x" class="btn btn-default" ng-click="removeDateField($index)"/>
                 </div>
                 <input type="button" value="Add date" class="btn btn-default" ng-click="addDateField()"/>
+                
             </td>
 
         </tr>
