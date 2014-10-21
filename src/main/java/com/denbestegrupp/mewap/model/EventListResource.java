@@ -44,6 +44,7 @@ import javax.ws.rs.core.UriInfo;
 public class EventListResource {
  
     private final static Logger log = Logger.getAnonymousLogger();
+    private final static GoogleAuth gauth = GoogleAuth.getInstance();
     
     @Inject
     private MeWap meWap;
@@ -184,7 +185,6 @@ public class EventListResource {
     @Path(value = "{id}")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response find(@PathParam(value = "id") Long id) {
-
         MWEvent event = meWap.getEventList().find(id);
         if (event != null) {
             EventWrapper ew = new EventWrapper(event);
@@ -197,14 +197,8 @@ public class EventListResource {
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll() {
-
         Collection<MWEvent> es = meWap.getEventList().findAll();
-        Collection<EventWrapper> ews = new ArrayList<>();
-        
-        for(MWEvent e: es){
-            EventWrapper ew = new EventWrapper(e);
-            ews.add(ew);
-        }
+        Collection<EventWrapper> ews = getRelatedEvents(gauth.getLoggedInUser(), es);
         
         GenericEntity<Collection<EventWrapper>> ge = 
                 new GenericEntity<Collection<EventWrapper>>(ews) {
@@ -218,14 +212,8 @@ public class EventListResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam(value = "first") int first, 
             @QueryParam(value = "count") int count) {
-
         Collection<MWEvent> es = meWap.getEventList().findRange(first, count);
-        Collection<EventWrapper> ews = new ArrayList<>();
-        
-        for(MWEvent e: es){
-            EventWrapper ew = new EventWrapper(e);
-            ews.add(ew);
-        }
+        Collection<EventWrapper> ews = getRelatedEvents(gauth.getLoggedInUser(), es);
         
         GenericEntity<Collection<EventWrapper>> ge = 
                 new GenericEntity<Collection<EventWrapper>>(ews) {
@@ -238,12 +226,24 @@ public class EventListResource {
     @Path(value = "count")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response count() {
-
         log.log(Level.INFO, "Count");
         int c = meWap.getEventList().count();
         
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
+    }
+    
+    private Collection<EventWrapper> getRelatedEvents(String user, Collection<MWEvent> es) {    
+        Collection<EventWrapper> ews = new ArrayList<>();
+        MWUser mwuser = meWap.getUserList().find(user);
+        
+        for(MWEvent e : es) {
+            if(user.equals(e.getCreator()) || e.getParticipators().contains(mwuser)) {
+                EventWrapper ew = new EventWrapper(e);
+                ews.add(ew); 
+            } 
+        }
+        return ews;
     }
     
 }
