@@ -48,11 +48,6 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
         };
 
     }]);
-Date.prototype.toDateInputValue = (function () {
-    var local = new Date(this);
-    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-    return local.toJSON().slice(0, 10);
-});
 
 eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     'EventListProxy',
@@ -60,8 +55,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
 
         $scope.dates = [];
         $scope.addDateField = function () {
-        $scope.dates[$scope.dates.length] = new Date().toDateInputValue();
-                     
+        $scope.dates[$scope.dates.length] = new Date();
         };
        
         $scope.addDateField();
