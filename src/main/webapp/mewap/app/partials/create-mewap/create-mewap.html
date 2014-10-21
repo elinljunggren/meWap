@@ -35,7 +35,7 @@ and open the template in the editor.
 
                 <div ng-repeat="date in dates track by $index">
                     <input ng-model="dates[$index]" type="datetime-local" value="{{dates[$index]}}"/>
-                    <input type ="button" value="X" class="btn btn-default" ng-click="removeDateField($index)"/>
+                    <input type ="button" value="X" class="btn btn-default" ng-click="removeDateField($index)" ng-if="dates.length>1"/>
                 </div>
                 <input type="button" value="Add date" class="btn btn-default" ng-click="addDateField()"/>
                 
@@ -74,7 +74,7 @@ and open the template in the editor.
             <td class="vtop">Invite members: </td>
             <td><div ng-repeat="text in participators track by $index">
                 <input ng-model="participators[$index]" type="text" value="{{participators[$index]}}"/>
-                <input type ="button" value="X" class="btn btn-default" ng-click="removeParticipatorField($index)"/>
+                <input type ="button" value="X" class="btn btn-default" ng-click="removeParticipatorField($index)"ng-if="participators.length>1"/>
 
                 </div>
                 <input type="button" value="Add member" class="btn btn-default" ng-click="addParticipatorField()"/>
