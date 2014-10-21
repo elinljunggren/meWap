@@ -151,6 +151,7 @@ eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
 eventListControllers.controller('NavigationCtrl', ['$scope', '$location',
     function ($scope, $location) {
         $scope.navigate = function (url) {
+            //alert(url);
             $location.path(url);
         };
     }]);
