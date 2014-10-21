@@ -164,14 +164,6 @@ footer #login a {
         text-align: center;
     }
     
-    .startPage > p {
-        font-size: 1.5em;
-    }
-    
-    .startPage > p:first-child {
-        margin-top: 0;
-    }
-    
     .startPage input[type="button"] {
         font-size: 1.5em;
         padding: 15px 70px;
@@ -198,6 +190,10 @@ footer #login a {
         position: relative;
         left: 0%;
         transition: left 500ms ease-in-out;
+    }
+    
+    .notransition {
+        transition: none !important;
     }
     
     .startPage #slider ul li {
@@ -249,14 +245,14 @@ footer #login a {
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 42px;
+        height: 40px;
         text-align: center;
     }
     
     .startPage #slider #pageIndicators span {
         display: inline-block;
-        height: 23px;
-        width: 23px;
+        height: 20px;
+        width: 20px;
         background: rgb(153, 154, 156);
         border-radius: 50%;
         margin: 0 8px;

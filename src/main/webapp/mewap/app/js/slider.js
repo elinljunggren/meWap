@@ -11,13 +11,24 @@ var interval = 3 * 1000;
 var pageIndicators = [];
 
 var goToImage = function(goTo) {
+    var page = goTo % images;
+    
     var sliderContents = document.getElementById("sliderContents");
     if (sliderContents === null) {
         return false;
     }
     sliderContents.style.left = "-" + goTo + "00%";
-    setActivePageIndicator(goTo);
-    currentImage = goTo;
+    setActivePageIndicator(page);
+    currentImage = page;
+    if (goTo !== page) {
+        setTimeout(function() {
+            var sliderContents = document.getElementById("sliderContents");
+            sliderContents.className = "notransition";
+            sliderContents.style.left = "-" + page + "00%";
+            sliderContents.offsetHeight;
+            sliderContents.className = "";
+        }, 1000);
+    }
     return true;
 };
 
@@ -29,7 +40,7 @@ var setActivePageIndicator = function(n) {
 };
 
 var nextImage = function() {
-    goToImage((currentImage + 1) % images);
+    goToImage((currentImage + 1) % (images + 1));
 };
 
 var prevImage = function() {
@@ -49,6 +60,12 @@ var startTimer = function() {
     }, interval);
 };
 
+var generateLastImage = function() {
+    var sliderContents = document.getElementById("sliderContents");
+    var first = sliderContents.getElementsByTagName("li")[0].cloneNode(true);
+    sliderContents.appendChild(first);
+};
+
 var generatePageIndicat = function() {
     for (var i=0; i<images; i++) {
         var indicator = document.createElement("span");
@@ -59,20 +76,21 @@ var generatePageIndicat = function() {
             }
         };
         pageIndicators[pageIndicators.length] = indicator;
-        document.getElementById("pageIndicators").appendChild(indicator)
+        document.getElementById("pageIndicators").appendChild(indicator);
     }
 };
 
 var generateCSS = function() {
-    document.getElementById("sliderContents").style.width = images + "00%";
+    document.getElementById("sliderContents").style.width = (images + 1) + "00%";
     var lis = document.getElementById("sliderContents").getElementsByTagName("li");
     for (var i=0; i<lis.length; i++) {
-       lis[i].style.width = (100/images)  + "%";
+       lis[i].style.width = (100/(images+1))  + "%";
     }
 };
 
 var startSlide = function() {
     images = document.getElementById("sliderContents").getElementsByTagName("li").length;
+    generateLastImage();
     generatePageIndicat();
     setActivePageIndicator(0);
     generateCSS();
