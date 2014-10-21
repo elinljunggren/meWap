@@ -27,27 +27,53 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
         $scope.$watch('pageSize', function () {
             getRange();
         });
+
         function getRange() {
+
             var first = $scope.pageSize * $scope.currentPage;
             EventListProxy.findRange(first, $scope.pageSize)
                     .success(function (mwevent) {
+                        mwevent.forEach(function (event) {
+                            var deadline = new Date(event.deadline);
+                            var parsed = new String();
+                            parsed = parsed + deadline.getDate() + " " +
+                                    month[deadline.getMonth()] + " " +
+                                    deadline.getFullYear();
+                            event.deadline = parsed;
+                            console.log(parsed);
+                        });
                         $scope.mwevent = mwevent;
                     }).error(function () {
                 console.log("findRange: error");
             });
         }
-        
-        $scope.setSelected = function () {
-            EventListProxy.setSelected($routeParams.id, $scope.mwevent)
-                    .success(function () {
-                        $location.path('/my');
-                    }).error(function () {
-                ;
-            });
-
-        };
-
     }]);
+
+
+var weekday = new Array(7);
+weekday[0] = "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
+
+var month = new Array(12);
+month[0] = "January";
+month[1] = "February";
+month[2] = "March";
+month[3] = "April";
+month[4] = "May";
+month[5] = "June";
+month[6] = "July";
+month[7] = "August";
+month[8] = "September";
+month[9] = "October";
+month[10] = "November";
+month[11] = "December";
+
+
 Date.prototype.toDateInputValue = (function () {
     var local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
@@ -70,8 +96,8 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
         $scope.addParticipatorField();
         $scope.save = function () {
             $scope.mwEvent.dates = $scope.dates;
-            $scope.mwEvent.participators = $scope.participators; 
-            $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ?true:false;
+            $scope.mwEvent.participators = $scope.participators;
+            $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ? true : false;
             var duration = new Date($scope.mwEvent.duration);
             var hour = duration.getHours();
             var minute = duration.getMinutes();
@@ -103,11 +129,11 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
     }]);
 
 authControllers.controller('AuthCtrl', ['$scope', '$location',
-    'AuthProxy', 
+    'AuthProxy',
     function ($scope, $location, AuthProxy) {
-        $scope.login = function(){
+        $scope.login = function () {
             AuthProxy.login()
-            .success(function (url) {
+                    .success(function (url) {
                         $location.path(url);
                     }).error(function () {
                 console.log("login: error");
