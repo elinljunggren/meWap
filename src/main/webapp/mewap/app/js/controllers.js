@@ -116,6 +116,12 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
 
     }]);
 
+eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
+    function ($scope, $location) {
+        //document.getElementsByTagName("main")[0].className = "startPage";
+        startSlide();
+    }]);
+
 // General navigation controller
 eventListControllers.controller('NavigationCtrl', ['$scope', '$location',
     function ($scope, $location) {
