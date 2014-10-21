@@ -27,10 +27,12 @@ import javax.persistence.TemporalType;
 public class MWEvent extends AbstractEntity {
     
     private String name;
+    private MWUser creator;
     private String description;
     @ElementCollection
     @Temporal(TemporalType.TIMESTAMP)
     private List<Date> dates;
+    private boolean allDayEvent;
     private long duration;
     @Temporal(TemporalType.TIMESTAMP)
     private Date deadline;
@@ -39,6 +41,7 @@ public class MWEvent extends AbstractEntity {
     private AnswerNotification notification;
     @OneToMany
     private List<MWUser> participators;
+    
     
     @OneToMany(cascade = CascadeType.ALL)
     private List<MWAnswer> answers;
@@ -52,27 +55,37 @@ public class MWEvent extends AbstractEntity {
     public MWEvent() {
     }
     
-    public MWEvent(String name, String description, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
+    public MWEvent(String name, MWUser creator, String description, List<Date> dates, 
+            boolean allDayEvent, long duration, Date deadline, boolean deadlineReminder, 
+            AnswerNotification notification, List<MWUser> participators) {
         this.name = name;
+        this.creator = creator;
         this.description=description;
         this.dates = dates;
+        this.allDayEvent = allDayEvent;
         this.duration = duration;
         this.deadline = deadline;
         this.deadlineReminder = deadlineReminder;
         this.notification = notification;
         this.participators = participators;
+     
     }
     
-    public MWEvent(Long id, String name, String description, List<Date> dates, long duration, Date deadline, boolean deadlineReminder, AnswerNotification notification, List<MWUser> participators) {
+    public MWEvent(Long id, String name, MWUser creator, String description, List<Date> dates, 
+            boolean allDayEvent, long duration, Date deadline, boolean deadlineReminder, 
+            AnswerNotification notification, List<MWUser> participators) {
         super(id);
         this.name = name;
         this.description = description;
         this.dates = dates;
+        this.allDayEvent = allDayEvent;
+        this.creator = creator;
         this.duration = duration;
         this.deadline = deadline;
         this.deadlineReminder = deadlineReminder;
         this.notification = notification;
         this.participators = participators;
+               
     }
 
     public String getName() {
@@ -98,7 +111,12 @@ public class MWEvent extends AbstractEntity {
     public boolean isDeadlineReminder() {
         return deadlineReminder;
     }
-
+    public boolean isAllDayEvent(){
+        return allDayEvent;
+    }
+    public MWUser getCreator(){
+        return creator;
+    }
     public AnswerNotification getNotification() {
         return notification;
     }
@@ -115,6 +133,47 @@ public class MWEvent extends AbstractEntity {
         MWAnswer answer = new MWAnswer(user, dates);
         answers.add(answer);
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDates(List<Date> dates) {
+        this.dates = dates;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setDeadlineReminder(boolean deadlineReminder) {
+        this.deadlineReminder = deadlineReminder;
+    }
+
+    public void setNotification(AnswerNotification notification) {
+        this.notification = notification;
+    }
+
+    public void setParticipators(List<MWUser> participators) {
+        this.participators = participators;
+    }
+
+    public void setAllDayEvent(boolean allDayEvent) {
+        this.allDayEvent = allDayEvent;
+    }
+
+    public void setCreator(MWUser creator) {
+        this.creator = creator;
+    }
+    
 
     @Override
     public int hashCode() {

@@ -8,7 +8,6 @@ package com.denbestegrupp.mewap.model;
 import com.denbestegrupp.mewap.model.MWEvent.AnswerNotification;
 import com.denbestegrupp.mewap.util.DateParser;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -84,8 +83,10 @@ public class EventListResource {
         }
 
         MWEvent event = new MWEvent(ev.getString("name"),
+                meWap.getUserList().find(ev.getString("creator")),
                 ev.getString("description"),
-                dates, 
+                dates,
+                ev.getBoolean("allDayEvent"), 
                 (long) ev.getInt("duration"), 
                 deadline, ev.getBoolean("deadlineReminder"), 
                 answerNotification,
@@ -138,15 +139,18 @@ public class EventListResource {
                 participators.add(meWap.getUserList().find(p.toString()));
         }
         
-        MWEvent event = new MWEvent(id,
-                ev.getString("name"), 
-                ev.getString("description"),
-                dates, 
-                (long) ev.getInt("duration"), 
-                deadline, ev.getBoolean("deadlineReminder"), 
-                answerNotification,
-                participators); 
-        
+        MWEvent event = meWap.getEventList().find(id);
+        event.setName(ev.getString("name"));
+        event.setCreator( meWap.getUserList().find(ev.getString("creator")));
+        event.setDescription(ev.getString("description"));
+        event.setDates(dates);
+        event.setAllDayEvent(ev.getBoolean("allDayEvent"));
+        event.setDuration((long) ev.getInt("duration"));
+        event.setDeadline(deadline);
+        event.setDeadlineReminder(ev.getBoolean("deadlineReminder"));
+        event.setNotification(answerNotification);
+        event.setParticipators(participators);
+                
         meWap.getEventList().update(event);
         return Response.created(null).build();
     }

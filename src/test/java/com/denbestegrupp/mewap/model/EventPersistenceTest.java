@@ -73,9 +73,9 @@ public class EventPersistenceTest {
         
         MWEvent event;
         if (id == -1) {
-            event = new MWEvent(name, "hej", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+            event = new MWEvent(name, participators.get(0),"hej", dates, false, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         } else {
-            event = new MWEvent(id, name, "hej", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+            event = new MWEvent(id, name, participators.get(0), "hej", dates, false, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         }
         return event;
     }
@@ -128,9 +128,20 @@ public class EventPersistenceTest {
         List<MWUser> participators = getDummyUsers();
         
         
-        MWEvent event = new MWEvent(1L, "Fest", "hest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+        MWEvent event = new MWEvent(1L, "Fest", participators.get(0), "hest", dates, false, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         mewap.getEventList().create(event);
-        event = new MWEvent(1L, "Hest", "fest", dates, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+        event = mewap.getEventList().find(1L);
+        event.setName("Hest");
+        event.setCreator(participators.get(0));
+        event.setDescription("fest");  
+        event.setDates(dates);
+        event.setAllDayEvent(false);
+        event.setDuration(14400);
+        event.setDeadline(new Date(1413978991));
+        event.setDeadlineReminder(true);
+        event.setNotification(MWEvent.AnswerNotification.EACH_ANSWER);
+        event.setParticipators(participators);
+       
         mewap.getEventList().update(event);
         MWEvent dbevent = mewap.getEventList().getByName("Hest").get(0);
         assertTrue(dbevent.equals(event));
