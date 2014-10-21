@@ -5,6 +5,7 @@
  */
 package com.denbestegrupp.mewap.auth;
 
+import java.math.BigDecimal;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.GET;
@@ -52,6 +53,14 @@ public class AuthResource {
     public Response isLoggedIn() {
         JsonObject loggedIn = Json.createObjectBuilder().add("loggedIn", gauth.isLoggedIn()).build();
         return Response.ok(loggedIn).build();
+    }
+    
+    @GET
+    @Path(value = "getLoggedInUser")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response getLoggedInUser() {
+        JsonObject loggedInUser = Json.createObjectBuilder().add("loggedInUser", gauth.getLoggedInUser()).build();
+        return Response.ok(loggedInUser).build();
     }
     
 }
