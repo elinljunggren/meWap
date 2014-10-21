@@ -22,11 +22,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Event", propOrder = {
     "id",
     "name",
+    "creator",
+    "description",
     "dates",
+    "allDayEvent",
     "duration",
     "deadline",
     "deadlineReminder",
     "notification",
+    "participators",
     "answers"
 })
 public class EventWrapper {
@@ -54,7 +58,18 @@ public class EventWrapper {
     public List<Date> getDates() {
         return event.getDates();
     }
-
+    @XmlElement
+    public MWUser getCreator(){
+        return event.getCreator();
+    }
+    @XmlElement
+    public String getDescription(){
+        return event.getDescription();
+    }
+    @XmlElement
+    public boolean isAllDayEvent(){
+        return event.isAllDayEvent();
+    }
     @XmlElement
     public long getDuration() {
         return event.getDuration();
@@ -74,7 +89,10 @@ public class EventWrapper {
     public MWEvent.AnswerNotification getNotification() {
         return event.getNotification();
     }
-    
+    @XmlElement
+    public List <MWUser> getParticipators(){
+        return event.getParticipators();
+    }
     @XmlElement
     public List<MWAnswer> getAnswers() {
         return event.getAnswers();

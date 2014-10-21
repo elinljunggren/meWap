@@ -76,7 +76,6 @@ month[11] = "December";
 eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     'EventListProxy',
     function ($scope, $location, EventListProxy) {
-
         $scope.dates = [];
         $scope.addDateField = function () {
         $scope.dates[$scope.dates.length] = new Date();
@@ -94,6 +93,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             $scope.participators.splice(index , 1);
         }
         $scope.addParticipatorField();
+        
         $scope.save = function () {
             $scope.mwEvent.dates = $scope.dates;
             $scope.mwEvent.participators = $scope.participators;
