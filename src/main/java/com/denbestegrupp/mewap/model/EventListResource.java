@@ -5,6 +5,7 @@
  */
 package com.denbestegrupp.mewap.model;
 
+import com.denbestegrupp.mewap.auth.GoogleAuth;
 import com.denbestegrupp.mewap.model.MWEvent.AnswerNotification;
 import com.denbestegrupp.mewap.util.DateParser;
 import java.text.ParseException;
@@ -83,7 +84,7 @@ public class EventListResource {
         }
 
         MWEvent event = new MWEvent(ev.getString("name"),
-                meWap.getUserList().find(ev.getString("creator")),
+                meWap.getUserList().find(GoogleAuth.getInstance().getLoggedInUser()),
                 ev.getString("description"),
                 dates,
                 ev.getBoolean("allDayEvent"), 
@@ -141,7 +142,6 @@ public class EventListResource {
         
         MWEvent event = meWap.getEventList().find(id);
         event.setName(ev.getString("name"));
-        event.setCreator( meWap.getUserList().find(ev.getString("creator")));
         event.setDescription(ev.getString("description"));
         event.setDates(dates);
         event.setAllDayEvent(ev.getBoolean("allDayEvent"));
