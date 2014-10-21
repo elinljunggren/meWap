@@ -15,7 +15,7 @@ import javax.persistence.Id;
  * @author Oskar
  */
 @Entity
-class MWUser implements Serializable {
+public class MWUser implements Serializable {
     
     @Id
     private String email;

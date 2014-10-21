@@ -5,10 +5,10 @@
  */
 package com.denbestegrupp.mewap.model;
 
+import com.denbestegrupp.mewap.auth.GoogleAuth;
 import com.denbestegrupp.mewap.model.MWEvent.AnswerNotification;
 import com.denbestegrupp.mewap.util.DateParser;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -44,6 +44,7 @@ import javax.ws.rs.core.UriInfo;
 public class EventListResource {
  
     private final static Logger log = Logger.getAnonymousLogger();
+    private final static GoogleAuth gauth = GoogleAuth.getInstance();
     
     @Inject
     private MeWap meWap;
@@ -84,8 +85,10 @@ public class EventListResource {
         }
 
         MWEvent event = new MWEvent(ev.getString("name"),
+                meWap.getUserList().find(GoogleAuth.getInstance().getLoggedInUser()),
                 ev.getString("description"),
-                dates, 
+                dates,
+                ev.getBoolean("allDayEvent"), 
                 (long) ev.getInt("duration"), 
                 deadline, ev.getBoolean("deadlineReminder"), 
                 answerNotification,
@@ -138,15 +141,17 @@ public class EventListResource {
                 participators.add(meWap.getUserList().find(p.toString()));
         }
         
-        MWEvent event = new MWEvent(id,
-                ev.getString("name"), 
-                ev.getString("description"),
-                dates, 
-                (long) ev.getInt("duration"), 
-                deadline, ev.getBoolean("deadlineReminder"), 
-                answerNotification,
-                participators); 
-        
+        MWEvent event = meWap.getEventList().find(id);
+        event.setName(ev.getString("name"));
+        event.setDescription(ev.getString("description"));
+        event.setDates(dates);
+        event.setAllDayEvent(ev.getBoolean("allDayEvent"));
+        event.setDuration((long) ev.getInt("duration"));
+        event.setDeadline(deadline);
+        event.setDeadlineReminder(ev.getBoolean("deadlineReminder"));
+        event.setNotification(answerNotification);
+        event.setParticipators(participators);
+                
         meWap.getEventList().update(event);
         return Response.created(null).build();
     }
@@ -180,7 +185,6 @@ public class EventListResource {
     @Path(value = "{id}")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response find(@PathParam(value = "id") Long id) {
-
         MWEvent event = meWap.getEventList().find(id);
         if (event != null) {
             EventWrapper ew = new EventWrapper(event);
@@ -193,14 +197,8 @@ public class EventListResource {
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll() {
-
         Collection<MWEvent> es = meWap.getEventList().findAll();
-        Collection<EventWrapper> ews = new ArrayList<>();
-        
-        for(MWEvent e: es){
-            EventWrapper ew = new EventWrapper(e);
-            ews.add(ew);
-        }
+        Collection<EventWrapper> ews = getRelatedEvents(gauth.getLoggedInUser(), es);
         
         GenericEntity<Collection<EventWrapper>> ge = 
                 new GenericEntity<Collection<EventWrapper>>(ews) {
@@ -214,14 +212,8 @@ public class EventListResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam(value = "first") int first, 
             @QueryParam(value = "count") int count) {
-
         Collection<MWEvent> es = meWap.getEventList().findRange(first, count);
-        Collection<EventWrapper> ews = new ArrayList<>();
-        
-        for(MWEvent e: es){
-            EventWrapper ew = new EventWrapper(e);
-            ews.add(ew);
-        }
+        Collection<EventWrapper> ews = getRelatedEvents(gauth.getLoggedInUser(), es);
         
         GenericEntity<Collection<EventWrapper>> ge = 
                 new GenericEntity<Collection<EventWrapper>>(ews) {
@@ -234,12 +226,24 @@ public class EventListResource {
     @Path(value = "count")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response count() {
-
         log.log(Level.INFO, "Count");
         int c = meWap.getEventList().count();
         
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
+    }
+    
+    private Collection<EventWrapper> getRelatedEvents(String user, Collection<MWEvent> es) {    
+        Collection<EventWrapper> ews = new ArrayList<>();
+        MWUser mwuser = meWap.getUserList().find(user);
+        
+        for(MWEvent e : es) {
+            if(user.equals(e.getCreator()) || e.getParticipators().contains(mwuser)) {
+                EventWrapper ew = new EventWrapper(e);
+                ews.add(ew); 
+            } 
+        }
+        return ews;
     }
     
 }
