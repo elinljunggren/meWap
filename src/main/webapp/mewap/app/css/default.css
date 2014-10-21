@@ -42,7 +42,7 @@ p {
     line-height: 1.4em;
 }
 
-button, input[type="button"] {
+button:not([disabled="disabled"]), input[type="button"]:not([disabled="disabled"]) {
     cursor: pointer;
 }
 
