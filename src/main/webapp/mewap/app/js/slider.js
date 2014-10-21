@@ -34,9 +34,9 @@ var goToImage = function(goTo) {
 
 var setActivePageIndicator = function(n) {
     for (var i=0; i<pageIndicators.length; i++) {
-        pageIndicators[i].id = "";
+        pageIndicators[i].className = "";
     }
-    pageIndicators[n].id = "active";
+    pageIndicators[n].className = "active";
 };
 
 var nextImage = function() {
