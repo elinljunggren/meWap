@@ -213,11 +213,11 @@ footer #login a {
         padding-left: 5px;
     }
     
-    table.create input[type="text"], table.create input[type="time"], table.create input[type="datetime-local"] {
+    table.create input[type="text"], table.create input[type="time"], table.create input[type="datetime-local"], table.create input[type="date"] {
         font-size: 1em;
         height: 17px;
         padding: 8px;
-        width: 180px;
+        width: 200px;
         margin: 5px 0;
     }
     
@@ -249,12 +249,30 @@ footer #login a {
     }
     
     input[type="button"].create.save {
-        background: green;
-        border-color: green;
+        background: rgb(67, 163, 67);
+        border-color: rgb(133, 219, 133);
+        color: #FCFFFC;
         margin: 0 10px;
     }
     
     input[type="button"].create.cancel {
-        background: red;
-        border-color: red;
+        background: rgb(255, 64, 64);
+        border-color: rgb(255, 166, 166);
+        color: #FFF1F1
+    }
+    
+ /* my-mewaps.html */
+    .myMewaps input[type="button"], .myMewaps button {
+        font-size: 0.8em;
+        height: 37px;
+        width: 120px;
+        background: #2871D7;
+        border: 2px #3388FF solid;
+        border-radius: 5px;
+        margin: 5px 0;
+        color: #E6F0FF;
+    }
+    
+    .myMewaps .btn-group button:last-child {
+        float: right;
     }
