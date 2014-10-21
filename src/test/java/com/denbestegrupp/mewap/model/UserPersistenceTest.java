@@ -45,6 +45,21 @@ public class UserPersistenceTest {
         clearAll();
     }
     
+    @After
+    public void after() throws Exception {
+        clearAll();
+        MWUser user = new MWUser("a@a.a", "Aaa Aaa");
+        mewap.getUserList().create(user);
+        user = new MWUser("oskar@oskarnyberg.com", "Oskar Nyberg");
+        mewap.getUserList().create(user);
+        user = new MWUser("elin.l.ljunggren@gmail.com", "Elin Ljunggren");
+        mewap.getUserList().create(user);
+        user = new MWUser("emma.i.gustafsson@gmail.com", "Emma Gustafsson");
+        mewap.getUserList().create(user);
+        user = new MWUser("josefin.ondrus@gmail.com", "Josefin Ondrus");
+        mewap.getUserList().create(user);
+    }
+    
     @Test
     public void testPersistAnUserAndfind() {
         MWUser user = new MWUser("a@a.a", "a");
