@@ -1,4 +1,4 @@
-header, footer { display: block; }
+header, main, footer { display: block; }
 
 html, body {
     height: 100%;
@@ -188,7 +188,7 @@ footer #login a {
         margin: 5px 0;
     }
     
-    table.create input[type="button"], input[type="button"].create {
+    table.create input[type="button"]:not([value="X"]), input[type="button"].create {
         font-size: 0.8em;
         height: 37px;
         width: 120px;
@@ -197,6 +197,18 @@ footer #login a {
         border-radius: 5px;
         margin: 5px 0;
         color: #E6F0FF;
+    }
+    
+    table.create input[type="button"][value="X"] {
+        height: 20px;
+        width: 20px;
+        padding: 0;
+        margin-left: 10px;
+        background: #AAAAAA;
+        border: 2px #999999 solid;
+        border-radius: 50%;
+        color: #666666;
+        font-size: 0.85em;
     }
     
     div.create.btn-group {
