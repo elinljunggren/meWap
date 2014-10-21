@@ -181,7 +181,7 @@ footer #login a {
         color: #E6F0FF;
     }
     
-    #slider {
+    .startPage #slider {
         width: 100%;
         height: 400px;
         overflow: hidden;
@@ -190,7 +190,7 @@ footer #login a {
         left: 0;
     }
     
-    #slider ul {
+    .startPage #slider ul {
         list-style: none;
         height: 100%;
         margin: 0;
@@ -200,14 +200,86 @@ footer #login a {
         transition: left 500ms ease-in-out;
     }
     
-    #slider ul li {
+    .startPage #slider ul li {
         float: left;
         height: 100%;
     }
     
-    #slider ul li img {
+    .startPage #slider ul li img {
         width: 100%;
         height: 100%;
+    }
+    
+    .startPage #slider #arrows {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
+    
+    .startPage #slider #arrows > div > div {
+        position: absolute;
+        height: 70.710678119px; /* Height after 45deg rotations is 100px */
+        width: 70.710678119px;
+        top: 150px;
+        border-color: white;
+        border-width: 5px;
+        transform: rotate(45deg);
+        opacity: 0.5;
+        transition: opacity 100ms ease-in-out;
+    }
+    
+    .startPage #slider #arrows > div:hover > div {
+        opacity: 1;
+    }
+    
+    .startPage #slider #arrows > div:first-child > div {
+        border-style: none none solid solid;
+        left: 40px;
+    }
+    
+    .startPage #slider #arrows > div:last-child > div {
+        border-style: solid solid none none;
+        right: 40px;
+    }
+    
+    .startPage #slider #pageIndicators {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 42px;
+        text-align: center;
+    }
+    
+    .startPage #slider #pageIndicators span {
+        display: inline-block;
+        height: 23px;
+        width: 23px;
+        background: rgb(153, 154, 156);
+        border-radius: 50%;
+        margin: 0 8px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 100ms ease-in-out;
+    }
+    
+    .startPage #slider #pageIndicators span:hover {
+        opacity: 1;
+    }
+    
+    .startPage #slider #pageIndicators #active {
+        background: rgb(51, 135, 213);
+        cursor: default;
+        opacity: 1;
+    }
+    
+    .startPage #slider > div > div {
+        float: left;
+        height: 100%;
+        width: 50%;
+        cursor: pointer;
     }
 
 /* create-mewap.html */
