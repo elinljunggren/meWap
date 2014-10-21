@@ -32,10 +32,12 @@ and open the template in the editor.
             <td class="vtop">Dates: </td>   
            
             <td>
-            All day event: <input ng-model="mwEvent.allDayEvent" type="checkbox" value="{{mwEvent.allDayEvent}}" /><br>
+                All day event: <input ng-model="mwEvent.allDayEvent" type="checkbox" value="{{mwEvent.allDayEvent}}" checked/><br>
 
                 <div ng-repeat="date in dates track by $index">
-                    <input ng-model="dates[$index]" type="datetime-local" value="{{dates[$index]}}"/>
+                    <input ng-model="dates[$index]" type="datetime-local" value="{{dates[$index]}}" ng-if="mwEvent.allDayEvent==false"/>
+                    <input ng-model="dates[$index]" type="date" value="{{dates[$index]}}" ng-if="mwEvent.allDayEvent==true"/>
+
                     <input type ="button" value="X" class="btn btn-default" ng-click="removeDateField($index)" ng-if="dates.length>1"/>
                 </div>
                 <input type="button" value="Add date" class="btn btn-default" ng-click="addDateField()"/>
