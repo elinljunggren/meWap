@@ -71,11 +71,11 @@ public class GoogleCal {
 
     public Calendar getCal() {
 
-        return this.cal;
+        return cal;
     }
 
     public MWUser getUser() {
-        return this.user;
+        return user;
     }
     public String getTodaysDate(){
         DateFormat dateForm = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
