@@ -57,26 +57,13 @@ public class EventListResource {
     public Response create(JsonObject ev) {
         log.log(Level.INFO, "{0}:create", this);
         log.log(Level.INFO, "Json{0}", ev.toString());
-        
-	String dateInString = ev.getString("deadline");
- 
-        Date deadline = null;
-	try {
-            deadline = DateParser.parseRFC3339Date(dateInString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-	}
 
         AnswerNotification answerNotification = MWEvent.AnswerNotification
                 .valueOf(ev.getString("notification"));
 
-        List<Date> dates = new ArrayList<>();
+        List<Long> dates = new ArrayList<>();
         for (JsonValue date : ev.getJsonArray("dates")) {
-            try {
-                dates.add(DateParser.parseRFC3339Date(date.toString()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            dates.add(Long.parseLong(date.toString()));
         }
         
         List<MWUser> participators = new ArrayList<>();
@@ -90,7 +77,8 @@ public class EventListResource {
                 dates,
                 ev.getBoolean("allDayEvent"), 
                 (long) ev.getInt("duration"), 
-                deadline, ev.getBoolean("deadlineReminder"), 
+                Long.parseLong(ev.getString("deadline")), 
+                ev.getBoolean("deadlineReminder"), 
                 answerNotification,
                 participators);
         meWap.getEventList().create(event);   
@@ -114,26 +102,13 @@ public class EventListResource {
     public Response update(@PathParam(value = "id") final Long id, JsonObject ev) {
         log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
         log.log(Level.INFO, "Json{0}", ev.toString());
-        
-	String dateInString = ev.getString("deadline");
- 
-        Date deadline = null;
-	try {
-            deadline = DateParser.parseRFC3339Date(dateInString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-	}
                 
         AnswerNotification answerNotification = MWEvent.AnswerNotification
                 .valueOf(ev.getString("notification"));
         
-        List<Date> dates = new ArrayList<>();
+        List<Long> dates = new ArrayList<>();
         for (JsonValue date : ev.getJsonArray("dates")) {
-            try {
-                dates.add(DateParser.parseRFC3339Date(date.toString()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            dates.add(Long.parseLong(date.toString()));
         }
         
         List<MWUser> participators = new ArrayList<>();
@@ -147,7 +122,7 @@ public class EventListResource {
         event.setDates(dates);
         event.setAllDayEvent(ev.getBoolean("allDayEvent"));
         event.setDuration((long) ev.getInt("duration"));
-        event.setDeadline(deadline);
+        event.setDeadline(Long.parseLong(ev.getString("deadline")));
         event.setDeadlineReminder(ev.getBoolean("deadlineReminder"));
         event.setNotification(answerNotification);
         event.setParticipators(participators);
@@ -166,13 +141,9 @@ public class EventListResource {
         MWEvent event = meWap.getEventList().find(id);
         MWUser user = meWap.getUserList().find(ev.getString("user"));
 
-        List<Date> dates = new ArrayList<>();
+        List<Long> dates = new ArrayList<>();
         for (JsonValue date : ev.getJsonArray("dates")) {
-            try {
-                dates.add(DateParser.parseRFC3339Date(date.toString()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }   
+            dates.add(Long.parseLong(date.toString()));
         }
         
         event.addAnswer(user, dates);

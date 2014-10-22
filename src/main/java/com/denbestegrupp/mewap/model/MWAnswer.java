@@ -24,8 +24,7 @@ public class MWAnswer extends AbstractEntity {
     
     private MWUser user;
     @ElementCollection
-    @Temporal(TemporalType.TIMESTAMP)
-    private List<Date> dates;
+    private List<Long> dates;
     
     public MWAnswer() {
     }
@@ -35,7 +34,7 @@ public class MWAnswer extends AbstractEntity {
         this.dates = new ArrayList();
     }
     
-    public MWAnswer(MWUser user, List<Date> dates) {
+    public MWAnswer(MWUser user, List<Long> dates) {
         this.dates = dates;
         this.user = user;
     }
@@ -44,11 +43,11 @@ public class MWAnswer extends AbstractEntity {
 	    return user;
     }
     
-    public List<Date> getDates() {
+    public List<Long> getDates() {
 	    return dates;
     }
     
-    public void addDate(Date date) {
+    public void addDate(Long date) {
 	    dates.add(date);
     }
 

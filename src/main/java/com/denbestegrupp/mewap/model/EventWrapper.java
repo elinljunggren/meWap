@@ -56,7 +56,7 @@ public class EventWrapper {
     }
     
     @XmlElement
-    public Collection<Date> getDates() {
+    public Collection<Long> getDates() {
         return event.getDates();
     }
     @XmlElement
@@ -77,7 +77,7 @@ public class EventWrapper {
     }
 
     @XmlElement
-    public Date getDeadline() {
+    public Long getDeadline() {
         return event.getDeadline();
     }
 

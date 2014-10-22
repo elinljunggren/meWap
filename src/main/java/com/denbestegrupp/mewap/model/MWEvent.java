@@ -30,12 +30,10 @@ public class MWEvent extends AbstractEntity {
     private MWUser creator;
     private String description;
     @ElementCollection
-    @Temporal(TemporalType.TIMESTAMP)
-    private List<Date> dates;
+    private List<Long> dates;
     private boolean allDayEvent;
     private long duration;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deadline;
+    private Long deadline;
     private boolean deadlineReminder;
     @Enumerated (EnumType.STRING)
     private AnswerNotification notification;
@@ -55,8 +53,8 @@ public class MWEvent extends AbstractEntity {
     public MWEvent() {
     }
     
-    public MWEvent(String name, MWUser creator, String description, List<Date> dates, 
-            boolean allDayEvent, long duration, Date deadline, boolean deadlineReminder, 
+    public MWEvent(String name, MWUser creator, String description, List<Long> dates, 
+            boolean allDayEvent, long duration, Long deadline, boolean deadlineReminder, 
             AnswerNotification notification, List<MWUser> participators) {
         this.name = name;
         this.creator = creator;
@@ -71,8 +69,8 @@ public class MWEvent extends AbstractEntity {
      
     }
     
-    public MWEvent(Long id, String name, MWUser creator, String description, List<Date> dates, 
-            boolean allDayEvent, long duration, Date deadline, boolean deadlineReminder, 
+    public MWEvent(Long id, String name, MWUser creator, String description, List<Long> dates, 
+            boolean allDayEvent, long duration, Long deadline, boolean deadlineReminder, 
             AnswerNotification notification, List<MWUser> participators) {
         super(id);
         this.name = name;
@@ -96,7 +94,7 @@ public class MWEvent extends AbstractEntity {
         return description;
     }
         
-    public List<Date> getDates() {
+    public List<Long> getDates() {
         return dates;
     }
 
@@ -104,7 +102,7 @@ public class MWEvent extends AbstractEntity {
         return duration;
     }
 
-    public Date getDeadline() {
+    public Long getDeadline() {
         return deadline;
     }
 
@@ -129,7 +127,7 @@ public class MWEvent extends AbstractEntity {
         return answers;
     }
     
-    public void addAnswer(MWUser user, List<Date> dates) {
+    public void addAnswer(MWUser user, List<Long> dates) {
         MWAnswer answer = new MWAnswer(user, dates);
         answers.add(answer);
     }
@@ -142,7 +140,7 @@ public class MWEvent extends AbstractEntity {
         this.description = description;
     }
 
-    public void setDates(List<Date> dates) {
+    public void setDates(List<Long> dates) {
         this.dates = dates;
     }
 
@@ -150,7 +148,7 @@ public class MWEvent extends AbstractEntity {
         this.duration = duration;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(Long deadline) {
         this.deadline = deadline;
     }
 

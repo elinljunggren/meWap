@@ -39,7 +39,7 @@ public class AnswerWrapper {
         return new UserWrapper(answer.getUser());
     }
     @XmlElement
-    public Collection<Date> getDates(){
+    public Collection<Long> getDates(){
         return answer.getDates();
     }
 }

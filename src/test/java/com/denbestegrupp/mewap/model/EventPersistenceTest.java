@@ -64,18 +64,18 @@ public class EventPersistenceTest {
     }
 
     private MWEvent createDummyEvent(long id, String name) {
-        List<Date> dates = new ArrayList<>();
-        dates.add(new Date(1413278890));
-        dates.add(new Date(1413078898));
-        dates.add(new Date(1413073898));
+        List<Long> dates = new ArrayList<>();
+        dates.add(1413278890L);
+        dates.add(1413078898L);
+        dates.add(1413073898L);
         
         List<MWUser> participators = getDummyUsers();
         
         MWEvent event;
         if (id == -1) {
-            event = new MWEvent(name, participators.get(0),"hej", dates, false, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+            event = new MWEvent(name, participators.get(0),"hej", dates, false, 14400, 1413978991L, true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         } else {
-            event = new MWEvent(id, name, participators.get(0), "hej", dates, false, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+            event = new MWEvent(id, name, participators.get(0), "hej", dates, false, 14400, 1413978991L, true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         }
         return event;
     }
@@ -120,15 +120,15 @@ public class EventPersistenceTest {
     
     @Test
     public void TestUpdateEvent() throws Exception {
-        List<Date> dates = new ArrayList<>();
-        dates.add(new Date(1413278890));
-        dates.add(new Date(1413078898));
-        dates.add(new Date(1413073898));
+        List<Long> dates = new ArrayList<>();
+        dates.add(1413278890L);
+        dates.add(1413078898L);
+        dates.add(1413073898L);
         
         List<MWUser> participators = getDummyUsers();
         
         
-        MWEvent event = new MWEvent(1L, "Fest", participators.get(0), "hest", dates, false, 14400, new Date(1413978991), true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
+        MWEvent event = new MWEvent(1L, "Fest", participators.get(0), "hest", dates, false, 14400, 1413978991L, true, MWEvent.AnswerNotification.EACH_ANSWER, participators);
         mewap.getEventList().create(event);
         event = mewap.getEventList().find(1L);
         event.setName("Hest");
@@ -137,7 +137,7 @@ public class EventPersistenceTest {
         event.setDates(dates);
         event.setAllDayEvent(false);
         event.setDuration(14400);
-        event.setDeadline(new Date(1413978991));
+        event.setDeadline(1413978991L);
         event.setDeadlineReminder(true);
         event.setNotification(MWEvent.AnswerNotification.EACH_ANSWER);
         event.setParticipators(participators);
@@ -198,9 +198,9 @@ public class EventPersistenceTest {
     public void TestAddAnswer() throws Exception {
         MWEvent event = createDummyEvent(1L);
         mewap.getEventList().create(event);
-        List<Date> dates = new ArrayList<>();
-        dates.add(new Date(1413278890));
-        dates.add(new Date(1413078898));
+        List<Long> dates = new ArrayList<>();
+        dates.add(1413278890L);
+        dates.add(1413078898L);
         event.addAnswer(mewap.getUserList().find("asd@asd.asd"), dates);
         mewap.getEventList().update(event);
         

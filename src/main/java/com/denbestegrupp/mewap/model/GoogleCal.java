@@ -35,12 +35,12 @@ public class GoogleCal {
 
     public List<Date> getFreeDates(MWEvent mwEvent) {
         List<Date> answerDates = new ArrayList<Date>();
-        List<Date> mwDates = mwEvent.getDates();
+        /*List<Date> mwDates = mwEvent.getDates();
         for (int i = 0; i < mwDates.size(); i++) {
             if (isFree(mwDates.get(i))) {
                 answerDates.add(mwDates.get(i));
             }
-        }
+        }*/
         return answerDates;
     }
 

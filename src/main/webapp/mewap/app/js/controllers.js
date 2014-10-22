@@ -54,7 +54,6 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
             var first = $scope.pageSize * $scope.currentPage;
             EventListProxy.findRange(first, $scope.pageSize)
                     .success(function (mwevent) {
-                        console.log(mwevent);
                         mwevent.forEach(function (event) {
                             var deadline = new Date(event.deadline);
                             var parsed = new String();
@@ -64,7 +63,9 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
                             event.deadline = parsed;
                         });
                         $scope.creatorOf = $scope.sortByCreator(mwevent);
+                        console.log($scope.creatorOf);
                         $scope.participatorIn = $scope.sortByParticipator(mwevent);
+                        console.log($scope.participatorIn);
                     }).error(function () {
                 console.log("findRange: error");
             });
@@ -117,7 +118,11 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
         $scope.addParticipatorField();
 
         $scope.save = function () {
-            $scope.mwEvent.dates = $scope.dates;
+            $scope.mwEvent.dates = [];
+            $scope.dates.forEach(function(date) {
+                $scope.mwEvent.dates[$scope.mwEvent.dates.length] = date.getTime().toString();
+            });
+            $scope.mwEvent.deadline = $scope.mwEvent.deadline.getTime().toString();
             $scope.mwEvent.participators = $scope.participators;
             $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ? true : false;
             var duration = new Date($scope.mwEvent.duration);
@@ -125,8 +130,11 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             var minute = duration.getMinutes();
             hour = hour * 60 * 1000;
             minute = minute * 60 * 60 * 1000;
-
             $scope.mwEvent.duration = hour + minute;
+            if ($scope.mwEvent.allDayEvent !== true) {
+                $scope.mwEvent.allDayEvent = false;
+            }
+            
             EventListProxy.create($scope.mwEvent)
                     .success(function () {
                         $location.path('/my-mewaps');
