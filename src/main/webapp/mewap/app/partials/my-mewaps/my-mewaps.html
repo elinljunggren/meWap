@@ -11,9 +11,17 @@ and open the template in the editor.
             </tr>               
         </thead>
         <tbody>
-
-            <tr ng-repeat="event in mwevent" ng-class-odd="'odd'" 
+        <th>You are creator of:</th>
+            <tr ng-repeat="event in creatorOf" ng-class-odd="'odd'" 
                 ng-class-even="'even'">
+                <td><a href="#/my-mewaps/{{event.id}}">{{event.name}}</a></td>
+                <td>{{event.creator.name}}</td>
+                <td>{{event.deadline}}</td>
+            </tr>
+            <th>You participate in:</th>
+
+            <tr ng-repeat ="event in participatorIn" ng-class-odd="'odd'"
+                ng-class-even="'even'" >
                 <td><a href="#/my-mewaps/{{event.id}}">{{event.name}}</a></td>
                 <td>{{event.creator.name}}</td>
                 <td>{{event.deadline}}</td>

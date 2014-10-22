@@ -207,7 +207,6 @@ public class MWEvent extends AbstractEntity {
         
         return true;
     }
-    
-    
+   
     
 }

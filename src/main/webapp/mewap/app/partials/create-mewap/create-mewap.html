@@ -25,14 +25,17 @@ and open the template in the editor.
         <tr>
             <td>Length of event: </td>
             <td>
-                <input ng-model="mwEvent.duration" type="time" step="900" value="{{mwEvent.duration}}"/>
+                
+                
+                <input ng-model="mwEvent.duration" type="time" step="900" value="{{mwEvent.duration}}" ng-if="mwEvent.allDayEvent!=true"/>
+                <input ng-model="mwEvent.allDayEvent" type="checkbox" name="allDayEvent" value="{{mwEvent.allDayEvent}}" checked/>All day event<br>
             </td>
         </tr>
         <tr>
             <td class="vtop">Dates: </td>   
            
             <td>
-                <input ng-model="mwEvent.allDayEvent" type="checkbox" name="allDayEvent" value="{{mwEvent.allDayEvent}}" checked/>All day event<br>
+                
                 <div ng-repeat="date in dates track by $index">
                     <input ng-model="dates[$index]" type="datetime-local" value="{{dates[$index]}}" ng-if="mwEvent.allDayEvent!=true"/>
                     <input ng-model="dates[$index]" type="date" value="{{dates[$index]}}" ng-if="mwEvent.allDayEvent==true"/>

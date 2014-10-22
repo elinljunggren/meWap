@@ -214,7 +214,7 @@ public class EventListResource {
             @QueryParam(value = "count") int count) {
         Collection<MWEvent> es = meWap.getEventList().findRange(first, count);
         Collection<EventWrapper> ews = getRelatedEvents(gauth.getLoggedInUser(), es);
-        
+
         GenericEntity<Collection<EventWrapper>> ge = 
                 new GenericEntity<Collection<EventWrapper>>(ews) {
         };

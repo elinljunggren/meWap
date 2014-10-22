@@ -7,10 +7,8 @@
 var eventListControllers = angular.module('EventListControllers', []);
 var authControllers = angular.module('AuthControllers', []);
 
-
-
-eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
-    function ($scope, EventListProxy) {
+eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'AuthProxy',
+    function ($scope, EventListProxy, AuthProxy) {
         $scope.orderProp = 'id'; //Eventprop?!
         $scope.pageSize = '10';
         $scope.currentPage = 0;
@@ -27,12 +25,35 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
         $scope.$watch('pageSize', function () {
             getRange();
         });
+        $scope.sortByCreator = function (eventList) {
+            var creator = [];
+            eventList.forEach(function (event) {
+                if (event.creator.email === loggedInUser) {
+                    creator[creator.length] = event;
 
+                }
+            });
+            return creator;
+        }
+        $scope.sortByParticipator = function (eventList) {
+            var participatorList = [];
+            eventList.forEach(function (event) {
+                event.participators.forEach(function (participator) {
+                    if (participator.email === loggedInUser) {
+                        participatorList[participatorList.length] = event;
+                    }
+
+                });
+
+            });
+            return participatorList;
+        }
         function getRange() {
 
             var first = $scope.pageSize * $scope.currentPage;
             EventListProxy.findRange(first, $scope.pageSize)
                     .success(function (mwevent) {
+                        console.log(mwevent);
                         mwevent.forEach(function (event) {
                             var deadline = new Date(event.deadline);
                             var parsed = new String();
@@ -41,7 +62,8 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
                                     deadline.getFullYear();
                             event.deadline = parsed;
                         });
-                        $scope.mwevent = mwevent;
+                        $scope.creatorOf = $scope.sortByCreator(mwevent);
+                        $scope.participatorIn = $scope.sortByParticipator(mwevent);
                     }).error(function () {
                 console.log("findRange: error");
             });
