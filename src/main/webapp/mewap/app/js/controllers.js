@@ -162,10 +162,8 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
             console.log("firstPage");
             AuthProxy.isLoggedIn()
                     .success(function(loggedIn) {
-                if (loggedIn && $scope.isStartPage()) {
+                if (loggedIn) {
                     $scope.navigate("/my-mewaps");
-                } else if (loggedIn) {
-                    
                 }
             }).error(function() {
                 console.log("isloggedin: error");
