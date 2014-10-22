@@ -20,11 +20,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
                 }).error(function () {
             console.log("count: error");
         });
-        getRange();
         $scope.$watch('currentPage', function () {
-            getRange();
-        });
-        $scope.$watch('pageSize', function () {
             getRange();
         });
 
