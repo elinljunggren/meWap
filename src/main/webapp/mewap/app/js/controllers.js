@@ -153,8 +153,8 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
         $scope.navigate = function (url) {
             $location.path(url);
         };
-        $scope.isStartPage = function() {
-            return $location.path() === "/";
+        $scope.menuOnPage = function() {
+            return $location.path() !== "/";
         };
         
         if (firstPage) {
@@ -163,7 +163,7 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
             AuthProxy.isLoggedIn()
                     .success(function(loggedIn) {
                 if (loggedIn && $scope.isStartPage()) {
-                    //$scope.navigate("/my-mewaps");
+                    $scope.navigate("/my-mewaps");
                 } else if (loggedIn) {
                     
                 }

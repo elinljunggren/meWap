@@ -22,16 +22,16 @@ and open the template in the editor.
     </head>
     <body>
         <div>
-            <header>
-                <h1>me<span>W</span>ap</h1>
+            <header ng-controller="NavigationCtrl">
+                <h1 ng-click="navigate('/start')">me<span>W</span>ap</h1>
                 <a>LOG OUT</a>
-                <nav ng-controller="NavigationCtrl">
+                <nav>
                     <ul>
                        <li>
-                           <a ng-click="navigate('/my-mewaps')" ng-if="!isStartPage()">My meWaps</a>
+                           <a ng-click="navigate('/my-mewaps')" ng-if="menuOnPage()">My meWaps</a>
                        </li>  
                        <li>
-                           <a ng-click="navigate('/create-mewap')" ng-if="!isStartPage()">Create meWap</a>
+                           <a ng-click="navigate('/create-mewap')" ng-if="menuOnPage()">Create meWap</a>
                        </li>
                     </ul>
                 </nav>

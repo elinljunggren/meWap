@@ -22,6 +22,10 @@ meWap.config(['$routeProvider',
                     templateUrl: 'partials/start.html',
                     controller: 'StartPageCtrl'
                 }).
+                when('/start', {
+                    templateUrl: 'partials/start.html',
+                    controller: 'StartPageCtrl'
+                }).
                 when('/my-mewaps', {
                     templateUrl: 'partials/my-mewaps/my-mewaps.html',
                     controller: 'EventListCtrl'
