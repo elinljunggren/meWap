@@ -77,22 +77,22 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     function ($scope, $location, EventListProxy) {
         $scope.dates = [];
         $scope.addDateField = function () {
-        $scope.dates[$scope.dates.length] = new Date();
+            $scope.dates[$scope.dates.length] = new Date();
         };
-       
+
         $scope.addDateField();
-        $scope.removeDateField = function(index){
-            $scope.dates.splice(index , 1);
+        $scope.removeDateField = function (index) {
+            $scope.dates.splice(index, 1);
         };
         $scope.participators = [];
         $scope.addParticipatorField = function () {
             $scope.participators[$scope.participators.length] = new String();
         };
-        $scope.removeParticipatorField = function(index){
-            $scope.participators.splice(index , 1);
+        $scope.removeParticipatorField = function (index) {
+            $scope.participators.splice(index, 1);
         };
         $scope.addParticipatorField();
-        
+
         $scope.save = function () {
             $scope.mwEvent.dates = $scope.dates;
             $scope.mwEvent.participators = $scope.participators;
@@ -113,16 +113,87 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
         };
     }]);
 
+Date.prototype.getWeekNumber = function () {
+    var d = new Date(+this);
+    d.setHours(0, 0, 0);
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
+};
+
+function arrayContains(array, elem){
+    
+    array.forEach(function(e){
+        if(e===elem){
+            return true;
+        }
+    });
+    return false;
+}
+
 eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
+                    var dates = sortMaster(event);
+                    $scope.x = dates[0];
+                    $scope.y = dates[1];
                 }).error(function () {
             console.log("selectByPk: error");
         });
 
+        function sortByWeek(event) {
+            var x = [];
+            var y = [];
+            event.dates.forEach(function (d) {
+                var date = new Date(d);
+                var week = date.getWeekNumber();
+                if(!arrayContains(x,date.getDay())){
+                    x[x.length] = date.getDay();
+                }
+                y[y.length] = date;
+            });
+            return [x,y];
+        }
+
+        function sortByDate(event) {
+            var x = [];
+            var y = [];
+            event.dates.forEach(function (d) {
+                var date = new Date(d);
+                var time = date.getHours() + ":" + date.getMinutes();
+                if(!arrayContains(x,time)){
+                    x[x.length] = time;
+                }
+                y[y.length] = date;
+            });
+            return [x,y];
+        }
+
+        function sortMaster(event) {
+            var sorts = [sortByWeek, sortByDate];
+            var sortResults = [];
+            sorts.forEach(function(sort) {
+                sortResults[sortResults.length] = sort(event);
+            });
+            
+            var bestResult;
+            var bestSum = -1;
+            sortResults.forEach(function(result) {
+                var sum = result[0].length + result[1].length;
+                if (bestSum === -1 || sum < bestSum) {
+                    bestSum = sum;
+                    bestResult = result;
+                }
+            });
+            return bestResult;
+        }
+        
+        function datesToMatrix(alt, dates){
+            var matrix = [];
+            //alt.forEach(function())
+        }
         //controller för knappar inom detail
         //TODO
     }]);
