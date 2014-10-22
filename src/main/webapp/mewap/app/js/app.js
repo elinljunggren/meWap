@@ -15,8 +15,6 @@ var meWap = angular.module('MeWap', [
     'AuthService'
 ]);
 
-var loggedInUser = "a@a.a"; // TODO
-
 meWap.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.

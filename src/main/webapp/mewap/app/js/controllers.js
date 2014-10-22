@@ -7,8 +7,11 @@
 var eventListControllers = angular.module('EventListControllers', []);
 var authControllers = angular.module('AuthControllers', []);
 
+var loggedInUser;
+
 eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'AuthProxy',
     function ($scope, EventListProxy, AuthProxy) {
+        $scope.loggedInUser = loggedInUser;
         $scope.orderProp = 'id'; //Eventprop?!
         $scope.pageSize = '10';
         $scope.currentPage = 0;
@@ -63,9 +66,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
                             event.deadline = parsed;
                         });
                         $scope.creatorOf = $scope.sortByCreator(mwevent);
-                        console.log($scope.creatorOf);
                         $scope.participatorIn = $scope.sortByParticipator(mwevent);
-                        console.log($scope.participatorIn);
                     }).error(function () {
                 console.log("findRange: error");
             });
@@ -264,6 +265,12 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
             console.log("firstPage");
             AuthProxy.isLoggedIn()
                     .success(function(loggedIn) {
+                        AuthProxy.getLoggedInUser()
+                        .success(function(user) {
+                            loggedInUser = user.loggedInUser;
+                        }).error(function() {
+                            console.log("loggedInUser: error");
+                        });
                 if (loggedIn) {
                     $scope.navigate("/my-mewaps");
                 }
