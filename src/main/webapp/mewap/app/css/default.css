@@ -15,16 +15,6 @@ body {
 a {
     text-decoration: none;
 }
-a:link, a:visited {
-    color: #58F4FA;
-}
-a:active {
-    color: #444466;
-}
-
-a.image {
-    opacity: 1;
-}
 
 h1 {
     margin: 0px;
@@ -44,6 +34,11 @@ p {
 
 button:not([disabled="disabled"]), input[type="button"]:not([disabled="disabled"]) {
     cursor: pointer;
+    transition: opacity 150ms ease-in-out;
+}
+
+button:not([disabled="disabled"]):hover, input[type="button"]:not([disabled="disabled"]):hover {
+    opacity: 0.9;
 }
 
 body > div:first-child {
@@ -87,8 +82,15 @@ header > nav li {
     cursor: default;
 }
 
-header nav li a:link, header nav li a:visited {
+header > nav li a, header > nav li a:link, header > nav li a:visited {
     color: #F4FFF7;
+    opacity: 1;
+    transition: opacity 100ms ease-in-out;
+    cursor: pointer;
+}
+
+header nav li a:hover {
+    opacity: 0.8;
 }
 
 header > nav li:first-child {
@@ -99,6 +101,18 @@ main {
     padding-top: 40px;
     padding-bottom: 200px;
     font-weight: 300;
+}
+
+main a:link, main a:visited {
+    color: #0FB017;
+    opacity: 1;
+    transition: opacity 100ms ease-in-out;
+}
+main a:hover {
+    opacity: 0.6;
+}
+main a:active {
+    opacity: 0.3;
 }
 
 main p:first-child, main h2:first-child {
@@ -113,6 +127,15 @@ footer {
     background: #E8F8E5;
     text-align: center;
     outline: 10px rgba(255, 255, 255, 0.7) solid;
+}
+
+footer a:link, footer a:visited {
+    color: #444444;
+    opacity: 0.8;
+    transition: opacity 100ms ease-in-out;
+}
+footer a:hover {
+    opacity: 1;
 }
 
 footer > div:first-child {
@@ -169,7 +192,7 @@ footer #login a {
         padding: 15px 70px;
         background: rgb(67, 163, 67);
         border: 2px rgb(133, 219, 133) solid;
-        border-radius: 5px;
+        border-radius: 10px;
         color: #E6F0FF;
     }
     
@@ -182,7 +205,7 @@ footer #login a {
         left: 0;
     }
     
-    .startPage #slider ul {
+    .startPage #slider > ul {
         list-style: none;
         height: 100%;
         margin: 0;
@@ -196,12 +219,12 @@ footer #login a {
         transition: none !important;
     }
     
-    .startPage #slider ul li {
+    .startPage #slider > ul li {
         float: left;
         height: 100%;
     }
     
-    .startPage #slider ul li img {
+    .startPage #slider > ul li img {
         width: 100%;
         height: 100%;
     }
@@ -257,7 +280,7 @@ footer #login a {
         border-radius: 50%;
         margin: 0 8px;
         cursor: pointer;
-        opacity: 0.7;
+        opacity: 0.5;
         transition: opacity 100ms ease-in-out;
     }
     
@@ -265,7 +288,7 @@ footer #login a {
         opacity: 1;
     }
     
-    .startPage #slider #pageIndicators #active {
+    .startPage #slider #pageIndicators .active {
         background: rgb(51, 135, 213);
         cursor: default;
         opacity: 1;
