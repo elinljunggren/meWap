@@ -40,7 +40,6 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
                                     month[deadline.getMonth()] + " " +
                                     deadline.getFullYear();
                             event.deadline = parsed;
-                            console.log(parsed);
                         });
                         $scope.mwevent = mwevent;
                     }).error(function () {
@@ -118,8 +117,8 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
         EventListProxy.find($routeParams.id)
-                .success(function (mvEvent) {
-                    $scope.mwEvents = mwEvent;
+                .success(function (event) {
+                    $scope.mwevent = event;
                 }).error(function () {
             console.log("selectByPk: error");
         });
