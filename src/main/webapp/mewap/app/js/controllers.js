@@ -100,6 +100,7 @@ month[11] = "December";
 eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     'EventListProxy',
     function ($scope, $location, EventListProxy) {
+        $scope.loggedInUser = loggedInUser;
         $scope.dates = [];
         $scope.addDateField = function () {
             $scope.dates[$scope.dates.length] = new Date();
@@ -165,6 +166,7 @@ function arrayContains(array, elem){
 eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
+        $scope.loggedInUser = loggedInUser;
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
@@ -246,6 +248,7 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
 
 eventListControllers.controller('StartPageCtrl', ['$scope', '$location', 
     function ($scope, $location) {
+        $scope.loggedInUser = loggedInUser;
         startSlide();
     }]);
 
@@ -268,6 +271,7 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
                         AuthProxy.getLoggedInUser()
                         .success(function(user) {
                             loggedInUser = user.loggedInUser;
+                            $scope.loggedInUser = loggedInUser;
                         }).error(function() {
                             console.log("loggedInUser: error");
                         });
