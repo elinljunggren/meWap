@@ -56,7 +56,7 @@ authService.factory('AuthProxy', ['$http',
                 return $http.get(url);
             },
             isLoggedIn: function () {
-                return $http.get(url); //TODO
+                return $http.get(url + "/isLoggedIn");
             }
         };
 

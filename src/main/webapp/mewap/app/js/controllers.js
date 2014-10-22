@@ -40,7 +40,6 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy',
                                     month[deadline.getMonth()] + " " +
                                     deadline.getFullYear();
                             event.deadline = parsed;
-                            console.log(parsed);
                         });
                         $scope.mwevent = mwevent;
                     }).error(function () {
@@ -118,8 +117,8 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
         EventListProxy.find($routeParams.id)
-                .success(function (mvEvent) {
-                    $scope.mwEvents = mwEvent;
+                .success(function (event) {
+                    $scope.mwevent = event;
                 }).error(function () {
             console.log("selectByPk: error");
         });
@@ -142,16 +141,32 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
 
     }]);
 
-eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
+eventListControllers.controller('StartPageCtrl', ['$scope', '$location', 
     function ($scope, $location) {
         startSlide();
     }]);
 
 // General navigation controller
-eventListControllers.controller('NavigationCtrl', ['$scope', '$location',
-    function ($scope, $location) {
+var firstPage = true;
+eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthProxy', 
+    function ($scope, $location, AuthProxy) {
         $scope.navigate = function (url) {
-            //alert(url);
             $location.path(url);
         };
+        $scope.menuOnPage = function() {
+            return $location.path() !== "/";
+        };
+        
+        if (firstPage) {
+            firstPage = false;
+            console.log("firstPage");
+            AuthProxy.isLoggedIn()
+                    .success(function(loggedIn) {
+                if (loggedIn) {
+                    $scope.navigate("/my-mewaps");
+                }
+            }).error(function() {
+                console.log("isloggedin: error");
+            });
+        }
     }]);
