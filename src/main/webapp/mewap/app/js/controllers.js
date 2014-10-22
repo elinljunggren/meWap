@@ -142,16 +142,34 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
 
     }]);
 
-eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
+eventListControllers.controller('StartPageCtrl', ['$scope', '$location', 
     function ($scope, $location) {
         startSlide();
     }]);
 
 // General navigation controller
-eventListControllers.controller('NavigationCtrl', ['$scope', '$location',
-    function ($scope, $location) {
+var firstPage = true;
+eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthProxy', 
+    function ($scope, $location, AuthProxy) {
         $scope.navigate = function (url) {
-            //alert(url);
             $location.path(url);
         };
+        $scope.isStartPage = function() {
+            return $location.path() === "/";
+        };
+        
+        if (firstPage) {
+            firstPage = false;
+            console.log("firstPage");
+            AuthProxy.isLoggedIn()
+                    .success(function(loggedIn) {
+                if (loggedIn && $scope.isStartPage()) {
+                    //$scope.navigate("/my-mewaps");
+                } else if (loggedIn) {
+                    
+                }
+            }).error(function() {
+                console.log("isloggedin: error");
+            });
+        }
     }]);

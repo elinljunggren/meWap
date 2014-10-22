@@ -25,13 +25,13 @@ and open the template in the editor.
             <header>
                 <h1>me<span>W</span>ap</h1>
                 <a>LOG OUT</a>
-                <nav>
+                <nav ng-controller="NavigationCtrl">
                     <ul>
                        <li>
-                           <a ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')">My meWaps</a>
+                           <a ng-click="navigate('/my-mewaps')" ng-if="!isStartPage()">My meWaps</a>
                        </li>  
                        <li>
-                           <a ng-controller="NavigationCtrl" ng-click="navigate('/create-mewaps')">Create meWap</a>
+                           <a ng-click="navigate('/create-mewap')" ng-if="!isStartPage()">Create meWap</a>
                        </li>
                     </ul>
                 </nav>

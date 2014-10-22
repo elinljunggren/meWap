@@ -224,7 +224,7 @@ footer #login a {
         height: 100%;
     }
     
-    .startPage #slider > ul li img {
+    .startPage #slider > ul li img.full {
         width: 100%;
         height: 100%;
     }
