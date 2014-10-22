@@ -5,8 +5,9 @@
  */
 package com.denbestegrupp.mewap.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -55,12 +56,12 @@ public class EventWrapper {
     }
     
     @XmlElement
-    public List<Date> getDates() {
+    public Collection<Date> getDates() {
         return event.getDates();
     }
     @XmlElement
-    public MWUser getCreator(){
-        return event.getCreator();
+    public UserWrapper getCreator(){
+        return new UserWrapper(event.getCreator());
     }
     @XmlElement
     public String getDescription(){
@@ -90,11 +91,21 @@ public class EventWrapper {
         return event.getNotification();
     }
     @XmlElement
-    public List <MWUser> getParticipators(){
-        return event.getParticipators();
+    public Collection<UserWrapper> getParticipators(){
+        Collection<MWUser> u = event.getParticipators();
+        Collection<UserWrapper> cu = new ArrayList<>();
+        for (MWUser user : u){
+            cu.add(new UserWrapper(user));
+        }
+        return cu;
     }
     @XmlElement
-    public List<MWAnswer> getAnswers() {
-        return event.getAnswers();
+    public Collection<AnswerWrapper> getAnswers() {
+        Collection<MWAnswer> u = event.getAnswers();
+        Collection<AnswerWrapper> cu = new ArrayList<>();
+        for (MWAnswer answer : u){
+            cu.add(new AnswerWrapper(answer));
+        }
+        return cu;
     }
 }

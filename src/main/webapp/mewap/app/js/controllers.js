@@ -18,10 +18,10 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
                 }).error(function () {
             console.log("count: error");
         });
-        getRange();
         $scope.$watch('currentPage', function () {
             getRange();
         });
+
         $scope.$watch('pageSize', function () {
             getRange();
         });
@@ -30,6 +30,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
             eventList.forEach(function (event) {
                 if (event.creator.email === loggedInUser) {
                     creator[creator.length] = event;
+
 
                 }
             });

@@ -5,8 +5,6 @@
  */
 package com.denbestegrupp.mewap.model;
 
-import java.util.Collection;
-import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,31 +13,32 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  *
- * @author emma
+ * @author josefinondrus
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name="Answer", propOrder = {
-    "user",
-    "dates"
+@XmlType(name = "User", propOrder = {
+    "email",
+    "name"
 })
-public class AnswerWrapper {
-    
-    private MWAnswer answer;
-    
-    protected AnswerWrapper(){
+public class UserWrapper {
+    private MWUser user;
+
+    protected UserWrapper() { 
+    }
+   
+    public UserWrapper(MWUser user) { 
+        this.user = user; 
     }
     
-    public AnswerWrapper(MWAnswer answer){
-        this.answer = answer;
+    @XmlElement 
+    public String getEmail() {
+        return user.getEmail();
     }
     
     @XmlElement
-    public UserWrapper getUser(){
-        return new UserWrapper(answer.getUser());
+    public String getName() {
+        return user.getName();
     }
-    @XmlElement
-    public Collection<Date> getDates(){
-        return answer.getDates();
-    }
+
 }
