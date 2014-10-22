@@ -238,7 +238,7 @@ public class EventListResource {
         MWUser mwuser = meWap.getUserList().find(user);
         
         for(MWEvent e : es) {
-            if(user.equals(e.getCreator()) || e.getParticipators().contains(mwuser)) {
+            if(mwuser.equals(e.getCreator()) || e.getParticipators().contains(mwuser)) {
                 EventWrapper ew = new EventWrapper(e);
                 ews.add(ew); 
             } 

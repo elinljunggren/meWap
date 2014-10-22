@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.denbestegrupp.mewap.model;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,8 +63,8 @@ public class UserListResource {
 
         MWUser user = meWap.getUserList().find(email);
         if (user != null) {
-            //EventWrapper ew = new EventWrapper(event);
-            return Response.ok(user).build();
+            UserWrapper ew = new UserWrapper(user);
+            return Response.ok(ew).build();
         } else {
             return Response.noContent().build();
         }
@@ -74,7 +75,11 @@ public class UserListResource {
     public Response findAll() {
 
         Collection<MWUser> us = meWap.getUserList().findAll();
-        GenericEntity<Collection<MWUser>> gu = new GenericEntity<Collection<MWUser>>(us) {
+        Collection<UserWrapper> usw = new ArrayList<>();
+        for(MWUser user : us){
+            usw.add(new UserWrapper(user));
+        }
+        GenericEntity<Collection<UserWrapper>> gu = new GenericEntity<Collection<UserWrapper>>(usw) {
         };
         
         return Response.ok(gu).build();
