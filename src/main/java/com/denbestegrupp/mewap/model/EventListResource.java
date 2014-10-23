@@ -71,12 +71,16 @@ public class EventListResource {
                 participators.add(meWap.getUserList().find(p.toString()));
         }
 
+        long durationValue = -1;
+        if(!ev.isNull("duration")) {
+            durationValue = (long) ev.getInt("duration");
+        }
         MWEvent event = new MWEvent(ev.getString("name"),
                 meWap.getUserList().find(GoogleAuth.getInstance().getLoggedInUser()),
                 ev.getString("description"),
                 dates,
                 ev.getBoolean("allDayEvent"), 
-                (long) ev.getInt("duration"), 
+                durationValue, 
                 Long.parseLong(ev.getString("deadline")), 
                 ev.getBoolean("deadlineReminder"), 
                 answerNotification,
