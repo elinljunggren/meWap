@@ -175,6 +175,20 @@ Date.prototype.getWeekNumber = function () {
     return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
 };
 
+Date.prototype.getSimpleDate = function () {
+    var d = new Date(+this);
+    var simple = new String();
+    simple = d.getDate() + "/" + d.getMonth();
+    return simple;
+};
+
+Date.prototype.getSimpleTime = function () {
+    var d = new Date(+this);
+    var simple = new String();
+    simple = d.getHour() + ":" + d.getMinutes();
+    return simple;
+};
+
 function arrayContains(array, elem) {
 
     for(var i=0; i<array.length; i++){
@@ -250,50 +264,60 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 }
             });
             return matrix;
-            /*for (var i = 0; i < y.length; i++) {
-                matrix[i + 1] = [];
-                var date = y[i];
-                matrix[i + 1][0] = date.getWeekNumber();
-                console.log("****matrix:");
-                console.log(matrix);
-                //ALLT OK!
-                var j = 0;
-
-                y.forEach(function (date) {
-                    console.log("y.forEach date: " + i + " " + date);
-
-                    while (date.getDay() !== x[j]) {
-                        console.log("date = " + date + "****" + "y[j] = " + y[j]);
-                        matrix[i + 1][j + 1] = "";
-                        j++;
-                        console.log(y[j]);
-                        if (y[j] === undefined || y[j] === null) {
-                            break;
-                        }
-                    }
-
-                    //  console.log(matrix);
-                    matrix[i + 1][j + 1] = date;
-                    j++;
-
-                });
-
-            }
-            return matrix;*/
         }
 
         function sortByDate(event) {
-            var x = [];
-            var y = [];
+            var x = []; //time
+            var y = []; //date
+            var dates = [];
+            //Fill them ALL!
             event.forEach(function (d) {
                 var date = new Date(d);
-                var time = date.getHours() + ":" + date.getMinutes();
-                if (!arrayContains(x, time)) {
-                    x[x.length] = time;
+                var sd = date.getSimpleDate();
+                if (!arrayContains(x, date.getSimpleTime())) {
+                    x[x.length] = date.getSimpleTime();
                 }
-                y[y.length] = date;
+                if(!arrayContains(y, sd)){
+                    y[y.length] = sd;
+                }
+                dates[dates.length] = date;
             });
-            return [x, y];
+            
+            //Sort days and weeks ascending order
+            x.sort(function(a, b){
+                return a-b;
+            });
+            
+            y.sort(function(a, b){
+                return a-b;
+            });
+            
+            //insert days in farts row
+            var matrix = [];
+            matrix[0] = [];
+            matrix[0][0] = "";
+            x.forEach(function (time) {
+                matrix[0][matrix[0].length] = time;
+            });
+            
+            //insert weeks in first column
+            for (var i = 1; i <= y.length; i++) {
+                matrix[i] = [];
+                matrix[i][0] = y[i-1];
+            }
+            
+            dates.forEach(function(date) {
+                for (var i = 0; i < y.length; i++) {
+                    if(date.getSimpleDate() === y[i]) {
+                        for(var j = 0; j < x.length; j++) {
+                           if(date.getSimpleTime() === x[j]) {
+                               matrix[i+1][j+1] = date;
+                           }
+                        }
+                    }
+                }
+            });
+            return matrix;
         }
 
         function sortMaster(event) {
