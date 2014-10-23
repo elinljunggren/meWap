@@ -199,20 +199,7 @@ function arrayContains(array, elem) {
     }
     return false;
 }
-eventListControllers.controller('HistoryCtrl', ['$scope', '$location', 
-    '$routeParams', 'EventListProxy',
-    function($scope, $location, EventListProxy, AuthProxy){
-        $scope.loggedInUser = loggedInUser;
-        EventListProxy.find($routeParams.id)
-                .success(function (event) {
-                    $scope.mwevent = event;
-                }).error(function () {
-            console.log("selectByPk: error");
-        });
-        $scope.findOldEvents= function (){
-        };
-    }
- ]);
+
 eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
@@ -334,7 +321,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         }
 
         function sortMaster(event) {
-            var sorts = [sortByWeek];
+            var sorts = [sortByWeek, sortByDate];
             var sortResults = [];
             sorts.forEach(function (sort) {
                 sortResults[sortResults.length] = sort(event);
