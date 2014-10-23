@@ -123,22 +123,22 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             //console.log($scope.dates);
             $scope.checkDeadlineDate();
         });
-        
-        $scope.checkDeadlineDate = function(){
+
+        $scope.checkDeadlineDate = function () {
             var minDateValue = -1;
             var minDate;
-            $scope.dates.forEach(function(date){
-               if(minDateValue>date.getTime()|| minDateValue===-1){
-                   minDateValue=date.getTime();
-                   minDate = date;
-                //   console.log(date);
-               }
-           
+            $scope.dates.forEach(function (date) {
+                if (minDateValue > date.getTime() || minDateValue === -1) {
+                    minDateValue = date.getTime();
+                    minDate = date;
+                    //   console.log(date);
+                }
+
             });
-            
-       //     console.log(minDate);
-        $scope.minDeadline = new Date(minDate);
-        };
+
+            //     console.log(minDate);
+            $scope.minDeadline = new Date(minDate);
+        }; 
         
         $scope.save = function () {
             $scope.mwEvent.dates = [];
