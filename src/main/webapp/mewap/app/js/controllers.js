@@ -8,6 +8,7 @@ var eventListControllers = angular.module('EventListControllers', []);
 var authControllers = angular.module('AuthControllers', []);
 
 var loggedInUser;
+var loginURL = "";
 
 eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'AuthProxy',
     function ($scope, EventListProxy, AuthProxy) {
@@ -236,12 +237,7 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
     'AuthProxy',
     function ($scope, $location, AuthProxy) {
         $scope.login = function () {
-            AuthProxy.login()
-                    .success(function (url) {
-                        $location.path(url);
-                    }).error(function () {
-                console.log("login: error");
-            });
+            document.location.href = loginURL;
         };
 
     }]);
@@ -249,6 +245,7 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
 eventListControllers.controller('StartPageCtrl', ['$scope', '$location', 
     function ($scope, $location) {
         $scope.loggedInUser = loggedInUser;
+        $scope.loginURL = loginURL;
         startSlide();
     }]);
 
@@ -265,18 +262,26 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
         
         if (firstPage) {
             firstPage = false;
-            console.log("firstPage");
             AuthProxy.isLoggedIn()
                     .success(function(loggedIn) {
-                        AuthProxy.getLoggedInUser()
-                        .success(function(user) {
-                            loggedInUser = user.loggedInUser;
-                            $scope.loggedInUser = loggedInUser;
-                        }).error(function() {
-                            console.log("loggedInUser: error");
-                        });
-                if (loggedIn) {
+                if (loggedIn.loggedIn) {
+                    AuthProxy.getLoggedInUser()
+                    .success(function(user) {
+                        loggedInUser = user.loggedInUser;
+                        $scope.loggedInUser = loggedInUser;
+                        $scope.loginURL = loginURL;
+                    }).error(function() {
+                        console.log("loggedInUser: error");
+                    });
                     $scope.navigate("/my-mewaps");
+                } else {
+                    AuthProxy.login()
+                    .success(function(url) {
+                        loginURL = url.url;
+                        $scope.loginURL = url.url;
+                    }).error(function() {
+                        console.log("getLoginURL: error");
+                    });
                 }
             }).error(function() {
                 console.log("isloggedin: error");
