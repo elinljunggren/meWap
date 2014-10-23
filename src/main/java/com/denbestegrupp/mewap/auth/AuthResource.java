@@ -11,6 +11,8 @@ import javax.json.JsonObject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -27,39 +29,31 @@ public class AuthResource {
     @Path(value = "login")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response login() {
-        if (!gauth.isLoggedIn()) {
-            JsonObject url = Json.createObjectBuilder().add("url", gauth.getLoginURL().toString()).build();
-            return Response.ok(url).build();
-        } else {
-            return Response.noContent().build();
-        }
+        JsonObject url = Json.createObjectBuilder().add("url", gauth.getLoginURL()).build();
+        return Response.ok(url).build();
     }
     
     @GET
     @Path(value = "logout")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response logout() {
-        if (gauth.isLoggedIn()) {
-            JsonObject url = Json.createObjectBuilder().add("url", gauth.getLogoutURL().toString()).build();
-            return Response.ok(url).build();
-        } else {
-            return Response.noContent().build();
-        }
+        JsonObject url = Json.createObjectBuilder().add("url", gauth.getLogoutURL().toString()).build();
+        return Response.ok(url).build();
     }
     
     @GET
     @Path(value = "isLoggedIn")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response isLoggedIn() {
-        JsonObject loggedIn = Json.createObjectBuilder().add("loggedIn", gauth.isLoggedIn()).build();
+    public Response isLoggedIn(@Context HttpHeaders hh) {
+        JsonObject loggedIn = Json.createObjectBuilder().add("loggedIn", gauth.isLoggedIn(hh)).build();
         return Response.ok(loggedIn).build();
     }
     
     @GET
     @Path(value = "getLoggedInUser")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response getLoggedInUser() {
-        JsonObject loggedInUser = Json.createObjectBuilder().add("loggedInUser", gauth.getLoggedInUser()).build();
+    public Response getLoggedInUser(@Context HttpHeaders hh) {
+        JsonObject loggedInUser = Json.createObjectBuilder().add("loggedInUser", gauth.getLoggedInUser(hh)).build();
         return Response.ok(loggedInUser).build();
     }
     

@@ -50,10 +50,10 @@ authService.factory('AuthProxy', ['$http',
         var url = 'http://localhost:8080/meWap/webresources/auth';
         return {
             login: function () {
-                return $http.get(url);
+                return $http.get(url + "/login");
             },
             logout: function () {
-                return $http.get(url);
+                return $http.get(url + "/logout");
             },
             isLoggedIn: function () {
                 return $http.get(url + "/isLoggedIn");

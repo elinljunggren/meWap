@@ -25,6 +25,8 @@ pom.xml.versionsBackup
 pom.xml.next
 release.properties
 
-###Angular###
+### Angular ###
 libs/
 
+### OAuth Keys ###
+src/main/java/com/denbestegrupp/mewap/auth/AuthConstants.java

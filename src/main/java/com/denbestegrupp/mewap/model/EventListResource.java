@@ -7,11 +7,8 @@ package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.auth.GoogleAuth;
 import com.denbestegrupp.mewap.model.MWEvent.AnswerNotification;
-import com.denbestegrupp.mewap.util.DateParser;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +28,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -54,7 +52,7 @@ public class EventListResource {
     
     @POST
     @Consumes(value = {MediaType.APPLICATION_JSON})
-    public Response create(JsonObject ev) {
+    public Response create(JsonObject ev, @Context HttpHeaders hh) {
         log.log(Level.INFO, "{0}:create", this);
         log.log(Level.INFO, "Json{0}", ev.toString());
 
@@ -76,7 +74,7 @@ public class EventListResource {
             durationValue = (long) ev.getInt("duration");
         }
         MWEvent event = new MWEvent(ev.getString("name"),
-                meWap.getUserList().find(GoogleAuth.getInstance().getLoggedInUser()),
+                meWap.getUserList().find(gauth.getLoggedInUser(hh)),
                 ev.getString("description"),
                 dates,
                 ev.getBoolean("allDayEvent"), 
@@ -171,8 +169,8 @@ public class EventListResource {
 
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findAll() {
-        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser());
+    public Response findAll(@Context HttpHeaders hh) {
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
         Collection<MWEvent> es = meWap.getEventList()
                 .getRelatedToUser(user, meWap.getEventList().findAll());
         Collection<EventWrapper> ews = wrapEvents(es);
@@ -187,9 +185,9 @@ public class EventListResource {
     @GET
     @Path(value = "range")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findRange(@QueryParam(value = "first") int first, 
-            @QueryParam(value = "count") int count) {
-        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser());
+    public Response findRange(@QueryParam(value = "first") int first,
+            @QueryParam(value = "count") int count, @Context HttpHeaders hh) {
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
         List<MWEvent> es = meWap.getEventList()
                 .getRelatedToUser(user, meWap.getEventList().findAll());
         Collection<MWEvent> es2 = getRange(es, first, count);
