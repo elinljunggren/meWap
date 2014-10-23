@@ -29,7 +29,10 @@ and open the template in the editor.
                 
                 
                 <input ng-model="mwEvent.duration" type="time" step="900" value="{{mwEvent.duration}}" ng-if="mwEvent.allDayEvent!=true"/>
-                <input ng-model="mwEvent.allDayEvent" type="checkbox" name="allDayEvent" value="{{mwEvent.allDayEvent}}" checked/>All day event<br>
+                <input ng-model="mwEvent.allDayEvent" type="checkbox" name="allDayEvent" value="{{mwEvent.allDayEvent}}" id="allDayEvent"/>
+                <label for="allDayEvent">
+                    All day event
+                </label><br>
             </td>
         </tr>
         <tr>
@@ -63,8 +66,14 @@ and open the template in the editor.
                 Send participators deadline reminder?</td>
             <td>
                 <form>
-                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="true" id="deadlinereminder_true" /><label for="deadlinereminder_true">Yes</label><br />
-                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="false" id="deadlinereminder_false" /><label for="deadlinereminder_false">No</label>
+                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="true" id="deadlinereminder_true" />
+                    <label for="deadlinereminder_true">
+                        Yes
+                    </label><br />
+                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="false" id="deadlinereminder_false" />
+                    <label for="deadlinereminder_false">
+                        No
+                    </label>
                 </form>   
             </td>
         </tr>
@@ -72,9 +81,18 @@ and open the template in the editor.
             <td class="vtop">Notify participators?</td>
             <td>
                 <form>
-                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="NO_NOTIFICATION" id="no_notification" /><label for="no_notification">No notification</label><br />
-                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="EACH_ANSWER" id="each_answer" /><label for="each_answer">Notification for every answer</label><br />
-                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="LAST_ANSWER" id="last_answer" /><label for="last_answer">Noification for last answer</label>
+                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="NO_NOTIFICATION" id="no_notification" />
+                    <label for="no_notification">
+                        No notification
+                    </label><br />
+                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="EACH_ANSWER" id="each_answer" />
+                    <label for="each_answer">
+                        Notification for every answer
+                    </label><br />
+                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="LAST_ANSWER" id="last_answer" />
+                    <label for="last_answer">
+                        Noification for last answer
+                    </label>
                 </form>
             </td>
         </tr>
