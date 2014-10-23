@@ -24,7 +24,7 @@ and open the template in the editor.
         <div>
             <header ng-controller="NavigationCtrl">
                 <h1 ng-click="navigate('/start')">me<span>W</span>ap</h1>
-                <span ng-if="loginURL.length === 0">{{loggedInUser}}</span>
+                <a href="/meWap/logout" ng-if="loginURL.length === 0">{{loggedInUser}}</a>
                 <a href="{{loginURL}}" ng-if="loginURL.length > 0">LOG IN</a>
                 <nav>
                     <ul>
