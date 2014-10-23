@@ -9,20 +9,12 @@ and open the template in the editor.
     <div><h3>{{mwevent.description}}</h3></div>
     <table class="table">
         <thead>
-            <tr>
-                <th>id</th><th>dates</th>
-            </tr>
+
         </thead>
         <tbody>
-            <tr>
-                <td>{{mwevent.id}}</td>
-            </tr>
                 
-            <tr ng-repeat="dates in mwevent.dates" ng-class-odd="'odd'" 
-                ng-class-even="'even'" >
-
-
-                <td>{{dates}}</td>
+            <tr ng-repeat="rows in matrix">
+                <td ng-repeat="col in rows">{{col}}</td>
             </tr>
 
         </tbody>

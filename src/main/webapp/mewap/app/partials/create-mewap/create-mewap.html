@@ -54,7 +54,7 @@ and open the template in the editor.
                 Response deadline:
             </td>
             <td> 
-                <input ng-model="mwEvent.deadline" type="datetime-local" name="deadline" value="{{mwEvent.deadline}}" max ="minDeadline" />
+                <input ng-model="mwEvent.deadline" type="datetime-local" name="deadline" value="{{mwEvent.deadline}}" />
             </td>
         </tr>
         <tr>
@@ -62,8 +62,8 @@ and open the template in the editor.
                 Send participators deadline reminder?</td>
             <td>
                 <form>
-                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="true" id="deadlinereminder_true" /><label for="deadlinereminder_true">Yes</label><br />
-                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlinereminder" value="false" id="deadlinereminder_false" /><label for="deadlinereminder_false">No</label>
+                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlineReminder" value="true" id="deadlineReminder_true" /><label for="deadlineReminder_true">Yes</label><br />
+                    <input ng-model="mwEvent.deadlineReminder" type="radio" name="deadlineReminder" value="false" id="deadlineReminder_false" /><label for="deadlineReminder_false">No</label>
                 </form>   
             </td>
         </tr>
