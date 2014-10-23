@@ -39,7 +39,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
                 }
             });
             return creator;
-        }
+        };
         $scope.sortByParticipator = function (eventList) {
             var participatorList = [];
             eventList.forEach(function (event) {
@@ -52,7 +52,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
 
             });
             return participatorList;
-        }
+        };
         function getRange() {
 
             var first = $scope.pageSize * $scope.currentPage;
@@ -119,7 +119,28 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             $scope.participators.splice(index, 1);
         };
         $scope.addParticipatorField();
+        
+        $scope.$watch('dates', function () {
+            //console.log($scope.dates);
+            $scope.checkDeadlineDate();
+        });
 
+        $scope.checkDeadlineDate = function () {
+            var minDateValue = -1;
+            var minDate;
+            $scope.dates.forEach(function (date) {
+                if (minDateValue > date.getTime() || minDateValue === -1) {
+                    minDateValue = date.getTime();
+                    minDate = date;
+                    //   console.log(date);
+                }
+
+            });
+
+            //     console.log(minDate);
+            $scope.minDeadline = new Date(minDate);
+        }; 
+        
         $scope.save = function () {
             $scope.mwEvent.dates = [];
             $scope.dates.forEach(function(date) {
@@ -154,13 +175,14 @@ Date.prototype.getWeekNumber = function () {
     return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
 };
 
-function arrayContains(array, elem){
-    
-    array.forEach(function(e){
-        if(e===elem){
+function arrayContains(array, elem) {
+
+    for(var i=0; i<array.length; i++){
+       
+        if (array[i] === elem) {
             return true;
         }
-    });
+    }
     return false;
 }
 
@@ -171,52 +193,120 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
-                    var dates = sortMaster(event);
-                    $scope.x = dates[0];
-                    $scope.y = dates[1];
+                    $scope.matrix = sortMaster(event.dates);
                 }).error(function () {
             console.log("selectByPk: error");
         });
 
         function sortByWeek(event) {
-            var x = [];
-            var y = [];
-            event.dates.forEach(function (d) {
+            var x = []; //days
+            var y = []; //weeks
+            var dates = [];
+            //Fill them ALL!
+            event.forEach(function (d) {
                 var date = new Date(d);
                 var week = date.getWeekNumber();
-                if(!arrayContains(x,date.getDay())){
+                if (!arrayContains(x, date.getDay())) {
                     x[x.length] = date.getDay();
                 }
-                y[y.length] = date;
+                if(!arrayContains(y, week)){
+                    y[y.length] = week;
+                }
+                dates[dates.length] = date;
             });
-            return [x,y];
+            
+            //Sort days and weeks ascending order
+            x.sort(function(a, b){
+                return a-b;
+            });
+            
+            y.sort(function(a, b){
+                return a-b;
+            });
+            
+            //insert days in farts row
+            var matrix = [];
+            matrix[0] = [];
+            matrix[0][0] = "";
+            x.forEach(function (day) {
+                matrix[0][matrix[0].length] = weekday[day];
+            });
+            
+            //insert weeks in first column
+            for (var i = 1; i <= y.length; i++) {
+                matrix[i] = [];
+                matrix[i][0] = y[i-1];
+            }
+            
+            dates.forEach(function(date) {
+                for (var i = 0; i < y.length; i++) {
+                    if(date.getWeekNumber() === y[i]) {
+                        for(var j = 0; j < x.length; j++) {
+                           if(date.getDay() === x[j]) {
+                               matrix[i+1][j+1] = date;
+                           }
+                        }
+                    }
+                }
+            });
+            return matrix;
+            /*for (var i = 0; i < y.length; i++) {
+                matrix[i + 1] = [];
+                var date = y[i];
+                matrix[i + 1][0] = date.getWeekNumber();
+                console.log("****matrix:");
+                console.log(matrix);
+                //ALLT OK!
+                var j = 0;
+
+                y.forEach(function (date) {
+                    console.log("y.forEach date: " + i + " " + date);
+
+                    while (date.getDay() !== x[j]) {
+                        console.log("date = " + date + "****" + "y[j] = " + y[j]);
+                        matrix[i + 1][j + 1] = "";
+                        j++;
+                        console.log(y[j]);
+                        if (y[j] === undefined || y[j] === null) {
+                            break;
+                        }
+                    }
+
+                    //  console.log(matrix);
+                    matrix[i + 1][j + 1] = date;
+                    j++;
+
+                });
+
+            }
+            return matrix;*/
         }
 
         function sortByDate(event) {
             var x = [];
             var y = [];
-            event.dates.forEach(function (d) {
+            event.forEach(function (d) {
                 var date = new Date(d);
                 var time = date.getHours() + ":" + date.getMinutes();
-                if(!arrayContains(x,time)){
+                if (!arrayContains(x, time)) {
                     x[x.length] = time;
                 }
                 y[y.length] = date;
             });
-            return [x,y];
+            return [x, y];
         }
 
         function sortMaster(event) {
-            var sorts = [sortByWeek, sortByDate];
+            var sorts = [sortByWeek];
             var sortResults = [];
-            sorts.forEach(function(sort) {
+            sorts.forEach(function (sort) {
                 sortResults[sortResults.length] = sort(event);
             });
-            
+
             var bestResult;
             var bestSum = -1;
-            sortResults.forEach(function(result) {
-                var sum = result[0].length + result[1].length;
+            sortResults.forEach(function (result) {
+                var sum = result[0].length + result[0][1].length;
                 if (bestSum === -1 || sum < bestSum) {
                     bestSum = sum;
                     bestResult = result;
@@ -224,11 +314,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             });
             return bestResult;
         }
-        
-        function datesToMatrix(alt, dates){
-            var matrix = [];
-            //alt.forEach(function())
-        }
+
         //controller för knappar inom detail
         //TODO
     }]);
@@ -242,7 +328,7 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
 
     }]);
 
-eventListControllers.controller('StartPageCtrl', ['$scope', '$location', 
+eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
     function ($scope, $location) {
         $scope.loggedInUser = loggedInUser;
         $scope.loginURL = loginURL;
@@ -251,15 +337,15 @@ eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
 
 // General navigation controller
 var firstPage = true;
-eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthProxy', 
+eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthProxy',
     function ($scope, $location, AuthProxy) {
         $scope.navigate = function (url) {
             $location.path(url);
         };
-        $scope.menuOnPage = function() {
+        $scope.menuOnPage = function () {
             return $location.path() !== "/";
         };
-        
+
         if (firstPage) {
             firstPage = false;
             AuthProxy.isLoggedIn()

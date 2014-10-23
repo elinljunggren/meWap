@@ -89,7 +89,7 @@ var generateCSS = function() {
 };
 
 var startSlide = function() {
-    images = document.getElementById("sliderContents").getElementsByTagName("li").length;
+    images = document.getElementById("sliderContents").children.length;
     generateLastImage();
     generatePageIndicat();
     setActivePageIndicator(0);

@@ -69,12 +69,16 @@ public class EventListResource {
                 participators.add(meWap.getUserList().find(p.toString()));
         }
 
+        long durationValue = -1;
+        if(!ev.isNull("duration")) {
+            durationValue = (long) ev.getInt("duration");
+        }
         MWEvent event = new MWEvent(ev.getString("name"),
                 meWap.getUserList().find(gauth.getLoggedInUser(hh)),
                 ev.getString("description"),
                 dates,
                 ev.getBoolean("allDayEvent"), 
-                (long) ev.getInt("duration"), 
+                durationValue, 
                 Long.parseLong(ev.getString("deadline")), 
                 ev.getBoolean("deadlineReminder"), 
                 answerNotification,
@@ -166,8 +170,10 @@ public class EventListResource {
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll(@Context HttpHeaders hh) {
-        Collection<MWEvent> es = meWap.getEventList().findAll();
-        Collection<EventWrapper> ews = getRelatedEvents(gauth.getLoggedInUser(hh), es);
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
+        Collection<MWEvent> es = meWap.getEventList()
+                .getRelatedToUser(user, meWap.getEventList().findAll());
+        Collection<EventWrapper> ews = wrapEvents(es);
         
         GenericEntity<Collection<EventWrapper>> ge = 
                 new GenericEntity<Collection<EventWrapper>>(ews) {
@@ -179,10 +185,13 @@ public class EventListResource {
     @GET
     @Path(value = "range")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findRange(@QueryParam(value = "first") int first, 
+    public Response findRange(@QueryParam(value = "first") int first,
             @QueryParam(value = "count") int count, @Context HttpHeaders hh) {
-        Collection<MWEvent> es = meWap.getEventList().findRange(first, count);
-        Collection<EventWrapper> ews = getRelatedEvents(gauth.getLoggedInUser(hh), es);
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
+        List<MWEvent> es = meWap.getEventList()
+                .getRelatedToUser(user, meWap.getEventList().findAll());
+        Collection<MWEvent> es2 = getRange(es, first, count);
+        Collection<EventWrapper> ews = wrapEvents(es2);
 
         GenericEntity<Collection<EventWrapper>> ge = 
                 new GenericEntity<Collection<EventWrapper>>(ews) {
@@ -202,17 +211,28 @@ public class EventListResource {
         return Response.ok(value).build();
     }
     
-    private Collection<EventWrapper> getRelatedEvents(String user, Collection<MWEvent> es) {    
+    private Collection<EventWrapper> wrapEvents(Collection<MWEvent> events) {
         Collection<EventWrapper> ews = new ArrayList<>();
-        MWUser mwuser = meWap.getUserList().find(user);
         
-        for(MWEvent e : es) {
-            if(mwuser.equals(e.getCreator()) || e.getParticipators().contains(mwuser)) {
-                EventWrapper ew = new EventWrapper(e);
-                ews.add(ew); 
-            } 
+        for(MWEvent e : events) {
+            EventWrapper ew = new EventWrapper(e);
+            ews.add(ew);
         }
         return ews;
+    }
+
+    private Collection<MWEvent> getRange(List<MWEvent> events, int first, int count) {
+        Collection<MWEvent> es = new ArrayList<>();
+        int last = first+count;
+        
+        for(int i = first; i < last; i++ ) {
+            try {
+                es.add(events.get(i));
+            } catch(IndexOutOfBoundsException e) {
+                break;
+            }
+        }
+        return es;
     }
     
 }

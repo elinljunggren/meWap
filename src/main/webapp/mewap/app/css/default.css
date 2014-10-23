@@ -213,7 +213,7 @@ footer #login a {
         padding: 0;
         position: relative;
         left: 0%;
-        transition: left 500ms ease-in-out;
+        transition: left 500ms ease-out;
     }
     
     .notransition {
@@ -225,9 +225,23 @@ footer #login a {
         height: 100%;
     }
     
-    .startPage #slider > ul li img.full {
-        width: 100%;
-        height: 100%;
+    .startPage #slider > ul > li .text {
+        float: left;
+        padding-top: 80px;
+        padding-left: 200px;
+        color: #f4ffff;
+    }
+    
+    .startPage #slider > ul > li h2 {
+        font-size: 3em; 
+    }
+    
+    .startPage #slider > ul > li img.full {
+        max-height: 100%;
+    }
+    
+    .startPage #slider > ul > li .text ul {
+        font-size: 2em;
     }
     
     .startPage #slider #arrows {
@@ -275,10 +289,10 @@ footer #login a {
     
     .startPage #slider #pageIndicators span {
         display: inline-block;
-        height: 20px;
-        width: 20px;
-        background: rgb(153, 154, 156);
-        border-radius: 50%;
+        height: 17px;
+        width: 17px;
+        background: #f2ffff;
+        border-radius: 5%;
         margin: 0 8px;
         cursor: pointer;
         opacity: 0.5;
@@ -290,7 +304,7 @@ footer #login a {
     }
     
     .startPage #slider #pageIndicators .active {
-        background: rgb(51, 135, 213);
+        background: #535758; /*rgb(51, 135, 213)*/
         cursor: default;
         opacity: 1;
     }
