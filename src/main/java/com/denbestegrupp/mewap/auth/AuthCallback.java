@@ -47,7 +47,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  * @author Oskar
  */
 @WebServlet(name = "AuthServlet", urlPatterns = {"/authcallback"})
-class AuthCallback extends HttpServlet {
+public class AuthCallback extends HttpServlet {
 
     @Inject
     private MeWap mewap;
