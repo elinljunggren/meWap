@@ -54,15 +54,6 @@ public class GoogleAuth {
         return oauthUrl.toString();
     }
     
-    public URL getLogoutURL() {
-        try {
-            return new URL("http://raksooo.se/logout");
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(GoogleAuth.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
-    
     public boolean isLoggedIn(HttpHeaders hh) {
         try {
             String access_token = hh.getCookies().get("access_token").getValue();

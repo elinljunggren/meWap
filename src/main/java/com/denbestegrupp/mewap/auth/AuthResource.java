@@ -34,14 +34,6 @@ public class AuthResource {
     }
     
     @GET
-    @Path(value = "logout")
-    @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response logout() {
-        JsonObject url = Json.createObjectBuilder().add("url", gauth.getLogoutURL().toString()).build();
-        return Response.ok(url).build();
-    }
-    
-    @GET
     @Path(value = "isLoggedIn")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response isLoggedIn(@Context HttpHeaders hh) {
