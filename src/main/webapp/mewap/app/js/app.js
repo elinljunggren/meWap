@@ -38,6 +38,10 @@ meWap.config(['$routeProvider',
                     templateUrl: 'partials/create-mewap/create-mewap.html',
                     controller: 'NewEventCtrl'
                 }).
+                when('/history-mewap',{
+                    templateUrl:'partials/my-mewaps/history-mewap.html',
+                    controller: 'HistoryCtrl'
+                }).
                 otherwise({
                     redirectTo: '/index.html'
                 });
