@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div> 
+    <h2>Old meWaps</h2>
+    
+    <table class="hover-table">
+
+        <thead>
+            <th>You have participated in:</th>
+
+            <tr>
+                <th>Name</th><th>Creator</th><th>Deadline</th>
+            </tr>               
+        </thead>
+        <tbody>
+        <tr ng-repeat="event in findOldEvents" ng-class-odd="'odd'" 
+            ng-class-even="'even'">
+            <td><a href="#/my-mewaps/{{event.id}}">{{event.name}}</a></td>
+            <td>{{event.creator.name}}</td>
+            <td>{{event.deadline}}</td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
