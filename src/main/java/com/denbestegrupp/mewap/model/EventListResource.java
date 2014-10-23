@@ -168,8 +168,10 @@ public class EventListResource {
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll() {
-        Collection<MWEvent> es = meWap.getEventList().findAll();
-        Collection<EventWrapper> ews = getRelatedEvents(gauth.getLoggedInUser(), es);
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser());
+        Collection<MWEvent> es = meWap.getEventList()
+                .getRelatedToUser(user, meWap.getEventList().findAll());
+        Collection<EventWrapper> ews = wrapEvents(es);
         
         GenericEntity<Collection<EventWrapper>> ge = 
                 new GenericEntity<Collection<EventWrapper>>(ews) {
@@ -183,8 +185,11 @@ public class EventListResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam(value = "first") int first, 
             @QueryParam(value = "count") int count) {
-        Collection<MWEvent> es = meWap.getEventList().findRange(first, count);
-        Collection<EventWrapper> ews = getRelatedEvents(gauth.getLoggedInUser(), es);
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser());
+        List<MWEvent> es = meWap.getEventList()
+                .getRelatedToUser(user, meWap.getEventList().findAll());
+        Collection<MWEvent> es2 = getRange(es, first, count);
+        Collection<EventWrapper> ews = wrapEvents(es2);
 
         GenericEntity<Collection<EventWrapper>> ge = 
                 new GenericEntity<Collection<EventWrapper>>(ews) {
@@ -204,17 +209,28 @@ public class EventListResource {
         return Response.ok(value).build();
     }
     
-    private Collection<EventWrapper> getRelatedEvents(String user, Collection<MWEvent> es) {    
+    private Collection<EventWrapper> wrapEvents(Collection<MWEvent> events) {
         Collection<EventWrapper> ews = new ArrayList<>();
-        MWUser mwuser = meWap.getUserList().find(user);
         
-        for(MWEvent e : es) {
-            if(mwuser.equals(e.getCreator()) || e.getParticipators().contains(mwuser)) {
-                EventWrapper ew = new EventWrapper(e);
-                ews.add(ew); 
-            } 
+        for(MWEvent e : events) {
+            EventWrapper ew = new EventWrapper(e);
+            ews.add(ew);
         }
         return ews;
+    }
+
+    private Collection<MWEvent> getRange(List<MWEvent> events, int first, int count) {
+        Collection<MWEvent> es = new ArrayList<>();
+        int last = first+count;
+        
+        for(int i = first; i < last; i++ ) {
+            try {
+                es.add(events.get(i));
+            } catch(IndexOutOfBoundsException e) {
+                break;
+            }
+        }
+        return es;
     }
     
 }

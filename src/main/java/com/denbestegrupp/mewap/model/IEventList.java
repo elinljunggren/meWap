@@ -6,6 +6,7 @@
 package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.persistence.IDAO;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -17,5 +18,7 @@ import javax.ejb.Local;
 public interface IEventList extends IDAO<MWEvent, Long> {
     
     public List<MWEvent> getByName(String name);
+    
+    public List<MWEvent> getRelatedToUser(MWUser user, Collection<MWEvent> es);
     
 }
