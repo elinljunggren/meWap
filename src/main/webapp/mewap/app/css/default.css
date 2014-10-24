@@ -465,4 +465,28 @@ footer #login a {
     }
     
  /* detail-mewap.html */
- 
+    
+    .detail table td {
+        min-width: 40px;
+        text-align: center;
+        vertical-align: middle;
+        padding: 15px 20px;
+    }
+    
+    .detail table td:not(:first-child):not(.noDate):not(.title) {
+        cursor: pointer;
+        background-color: #DDFFDD;
+    }
+    
+    .detail table td.title {
+        font-weight: bold;
+        background-color: #EEEEEE;
+    }
+    
+    .detail table td > p, .detail table td > div, .detail table td > div > p {
+        display: inline;
+    }
+    
+    .detail table td > div > div {
+        display: none;
+    }

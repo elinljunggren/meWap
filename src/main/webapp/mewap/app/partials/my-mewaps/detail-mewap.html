@@ -4,13 +4,13 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 
-<div class="detailed">
+<div class="detail">
     <h2>{{mwevent.name}}</h2>
     <p>{{mwevent.description}}</p>
     <table class="table">
         <tbody>
             <tr ng-repeat="rows in matrix" ng-init="y = $index">
-                <td ng-repeat="col in rows track by $index" ng-init="x = $index">
+                <td ng-repeat="col in rows track by $index" ng-init="x = $index" ng-class="{noDate: col === null, title: y*x === 0 && y+x !== 0}">
                     <p ng-if="y*x === 0 && col !== null">{{col}}</p>
                     <div ng-if="y*x > 0 && col !== null">
                         <p ng-click="addA(col)" ng-class="checked[col]">{{answersPerDate[col.getTime()].length || "0"}}</p>
