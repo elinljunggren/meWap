@@ -31,6 +31,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
         $scope.$watch('pageSize', function () {
             getRange();
         });
+        //Sort listing of mewaps by if user is creator
         $scope.sortByCreator = function (eventList) {
             var creator = [];
             eventList.forEach(function (event) {
@@ -42,6 +43,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
             });
             return creator;
         };
+        //Sort listing of mewaps by if user is participator
         $scope.sortByParticipator = function (eventList) {
             var participatorList = [];
             eventList.forEach(function (event) {
@@ -128,7 +130,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             //console.log($scope.dates);
             $scope.checkDeadlineDate();
         });
-
+        //Checks if deadline on mewap is passed todays date
         $scope.checkDeadlineDate = function () {
             var minDateValue = -1;
             var minDate;
@@ -144,7 +146,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             //     console.log(minDate);
             $scope.minDeadline = new Date(minDate);
         };
-
+        //method saves mewap-event upon click in html page
         $scope.save = function () {
             $scope.mwEvent.dates = [];
             $scope.dates.forEach(function (date) {
@@ -212,6 +214,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
         $scope.currentPage = 0;
         $scope.oldEventName = "";
 
+        //Calculates how many events per page
         EventListProxy.count()
                 .success(function (count) {
                     $scope.count = count.value;
@@ -219,6 +222,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
                 }).error(function () {
             console.log("count: error");
         });
+        
         $scope.$watch('currentPage', function () {
             getRange();
         });
@@ -231,10 +235,8 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
         function getRange() {
 
             var first = $scope.pageSize * $scope.currentPage;
-            EventListProxy.findRange(first, $scope.pageSize)
+            EventListProxy.findHistory(first, $scope.pageSize)
                     .success(function (mwevent) {
-                        $scope.oldMewaps = $scope.findOldMewaps(mwevent);
-                       // $scope.oldDateParsed = $scope.oldDateParser(mwevent);
                         mwevent.forEach(function (event) {
                             var deadline = new Date(event.deadline);
                             var parsed = new String();
@@ -243,6 +245,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
                                     deadline.getFullYear();
                             event.deadline = parsed;
                         });
+                        $scope.mwevent = mwevent;
 
                     }).error(function () {
                 console.log("findRange: error");
@@ -260,22 +263,6 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
 //            });
 //            return parsed;
 //        }
-        $scope.findOldMewaps = function (eventList) {
-            var oldMewaps = [];
-            var today = new Date();
-            eventList.forEach(function (event) {
-                if (event.dates < today) {
-                    oldMewaps[oldMewaps.length] = event;
-
-                }
-            });
-
-            console.log(oldMewaps);
-
-            return oldMewaps;
-        };
-
-
     }
 ]);
 eventListControllers.controller('DetailEventCtrl', ['$scope',

@@ -28,6 +28,9 @@ eventListService.factory('EventListProxy', ['$http',
             findRange: function (first, count) {
                 return $http.get(url + "/range?first=" + first + "&count=" + count);
             },
+            findHistory: function(first, count){
+                return $http.get(url + "/history?first=" + first + "&count=" + count);
+            },
             find: function (id) {
                 return $http.get(url + "/" + id);
             },

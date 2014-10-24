@@ -233,12 +233,29 @@ footer #login a {
     .startPage #slider > ul > li .text {
         float: left;
         padding-top: 80px;
-        padding-left: 200px;
+        padding-left: 10%;
+        padding-right: 10%;
+        width: 80%;
         color: #f4ffff;
     }
     
     .startPage #slider > ul > li h2 {
         font-size: 3em; 
+        font-family: "Lato", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, sans-serif;
+        font-weight: 100;
+    }
+    
+    .startPage #slider > ul > li .firstSlide h2 {
+        font-size: 6em;
+        text-align: center;
+    }
+    
+    .startPage #slider > ul > li .secondSlide h2{
+        text-align: center;
+    }
+    
+    .startPage #slider > ul > li .firstSlide h2 span {
+        font-size: 1.1em;
     }
     
     .startPage #slider > ul > li img.full {
