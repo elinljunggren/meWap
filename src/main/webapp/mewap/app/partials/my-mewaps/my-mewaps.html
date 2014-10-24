@@ -4,22 +4,36 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div class="myMewaps">
-    <table class="hover table">
+    <table>
         <thead>
+            <tr>
+                <th colspan="3">You are creator of:</th>
+            </tr>
             <tr>
                 <th>Name</th><th>Creator</th><th>Deadline</th>
             </tr>               
         </thead>
+
         <tbody>
-        <th>You are creator of:</th>
             <tr ng-repeat="event in creatorOf" ng-class-odd="'odd'" 
                 ng-class-even="'even'">
                 <td><a href="#/my-mewaps/{{event.id}}">{{event.name}}</a></td>
                 <td>{{event.creator.name}}</td>
                 <td>{{event.deadline}}</td>
             </tr>
-            <th>You participate in:</th>
+        </tbody>
+    </table>
 
+    <table>
+        <thead>
+            <tr>
+                <th colspan="3">You participate in:</th>
+            </tr>
+            <tr>
+                <th>Name</th><th>Creator</th><th>Deadline</th>
+            </tr> 
+        </thead>
+        <tbody>
             <tr ng-repeat ="event in participatorIn" ng-class-odd="'odd'"
                 ng-class-even="'even'" >
                 <td><a href="#/my-mewaps/{{event.id}}">{{event.name}}</a></td>
