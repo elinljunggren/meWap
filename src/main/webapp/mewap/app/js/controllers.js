@@ -297,7 +297,6 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                             }
                         }
                     }
-                    console.log($scope.matrix);
                 }).error(function () {
             console.log("selectByPk: error");
         });
@@ -444,9 +443,11 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         //eventID, user, lista med answers
         //
         var containsUser = function(array, user) {
-            for (var i=0; i<array.length; i++) {
-                if (array[i].email === user.email) {
-                    return true;
+            if(array !== undefined){
+                for (var i=0; i<array.length; i++) {
+                    if (array[i].email === user.email) {
+                     return true;
+                    }
                 }
             }
             return false;
@@ -456,7 +457,6 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             var tmp = $scope.answer.dates;
             var date = new Date(col);
             var currentUser = {"email":loggedInUser,"name":userName};
-            console.log($scope.answersPerDate[col.getTime()]);
             if (containsUser($scope.answersPerDate[col.getTime()], currentUser)) {
                 var index = tmp.indexOf(date.getTime().toString());
                 tmp.splice(index, 1);
