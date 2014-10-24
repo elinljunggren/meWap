@@ -8,7 +8,7 @@ html, body {
 
 body {
     font-family: "Oxygen", sans-serif;
-    font-size: 100%;
+    font-size: 90%;
     color: #333333;
 }
 
@@ -18,11 +18,14 @@ a, h1 {
 }
 
 h1 {
-    margin: 0px;
+    position: relative;
+    top: -4px;
+    margin: 0 50px 0 0;
     font-size: 3em;
     float: left;
     color: white;
     line-height: 70px;
+    font-weight: 400;
 }
 
 h1 span {
@@ -61,10 +64,6 @@ header {
     color: #e6e6e6;
 }
 
-header #logout {
-    text-align: right;
-}
-
 header > nav {
     line-height: 70px;
     color: #e6e6e6;
@@ -74,6 +73,8 @@ header > span, header > a {
     float: right;
     line-height: 70px;
     color: white;
+    text-align: right;
+    font-size: 1.2em;
 }
 
 header > nav ul {
@@ -331,6 +332,7 @@ footer #login a {
     
     table.create tr td {
         line-height: 1.5em;
+        height: 49px;
     }
     
     table.create tr td:first-child {
@@ -345,7 +347,11 @@ footer #login a {
         padding-left: 5px;
     }
     
-    table.create input[type="text"], table.create input[type="time"], table.create input[type="datetime-local"], table.create input[type="date"] {
+    table.create #allDayEvent:not(:checked) {
+        margin-left: 14px;
+    }
+    
+    table.create input[type="text"], table.create input[type="email"], table.create input[type="time"], table.create input[type="datetime-local"], table.create input[type="date"] {
         font-size: 1em;
         height: 17px;
         padding: 8px;
@@ -405,6 +411,38 @@ footer #login a {
         color: #E6F0FF;
     }
     
-    .myMewaps .btn-group button:last-child {
+    .myMewaps .btn-group {
+        display: inline;
         float: right;
+    }
+    
+    .myMewaps .btn-group {
+        margin-right: 20%;
+    }
+    
+    .myMewaps .btn-group button:last-child, .myMewaps input[type="button"]:last-child {
+        margin-left: 25px;
+    }
+    
+    .myMewaps table {
+        width: 80%;
+        margin-bottom: 25px;
+        border-spacing: 15px;
+    }
+    
+    .myMewaps table th {
+        text-align: left;
+    }
+    
+    .myMewaps table thead tr:first-child th {
+        font-size: 1.4em;
+        font-weight: 300;
+    }
+    
+    .myMewaps table td:first-child {
+        width: 45%;
+    }
+    
+    .myMewaps table td:last-child {
+        width: 20%;
     }
