@@ -409,7 +409,9 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
                     }).error(function() {
                         console.log("loggedInUser: error");
                     });
-                    $scope.navigate("/my-mewaps");
+                    if ($location.path() === "/") {
+                        $scope.navigate("/my-mewaps");
+                    }
                 } else {
                     $scope.navigate("/");
                     AuthProxy.login()
