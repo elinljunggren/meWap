@@ -18,13 +18,18 @@ and open the template in the editor.
         <script src="js/controllers.js"></script>  
         <script src="js/services.js"></script> 
         <script src="js/slider.js"></script>
+        <link href="http://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="css/default.css">
     </head>
     <body>
         <div>
             <header ng-controller="NavigationCtrl">
                 <h1 ng-click="navigate('/start')">me<span>W</span>ap</h1>
-                <a href="/meWap/logout" ng-if="loginURL.length === 0">{{loggedInUser}}</a>
+                <a id="logout" href="../../logout" onmouseover="this.innerHTML='LOG OUT'" 
+                                                    onmouseout="this.innerHTML=userName" 
+                                                    ng-if="loginURL.length === 0">
+                    {{userName}}
+                </a>
                 <a href="{{loginURL}}" ng-if="loginURL.length > 0">LOG IN</a>
                 <nav>
                     <ul>

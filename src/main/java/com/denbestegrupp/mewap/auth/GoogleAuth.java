@@ -84,7 +84,7 @@ public class GoogleAuth {
         try {
             jsonString = get(new StringBuilder("https://www.googleapis.com/oauth2/v1/userinfo?access_token=").append(access_token).toString());
         } catch (IOException ex) {
-            Logger.getLogger(GoogleAuth.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         
         HashMap<String,String> json = new HashMap<>();
@@ -92,7 +92,7 @@ public class GoogleAuth {
             json =
                     new ObjectMapper().readValue(jsonString, HashMap.class);
         } catch (IOException ex) {
-            Logger.getLogger(GoogleAuth.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         
         return json.get("email");

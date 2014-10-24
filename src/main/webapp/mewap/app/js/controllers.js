@@ -8,11 +8,13 @@ var eventListControllers = angular.module('EventListControllers', []);
 var authControllers = angular.module('AuthControllers', []);
 
 var loggedInUser;
+var userName;
 var loginURL = "";
 
 eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'AuthProxy',
     function ($scope, EventListProxy, AuthProxy) {
         $scope.loggedInUser = loggedInUser;
+        $scope.userName = userName;
         $scope.orderProp = 'id'; //Eventprop?!
         $scope.pageSize = '10';
         $scope.currentPage = 0;
@@ -103,6 +105,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     'EventListProxy',
     function ($scope, $location, EventListProxy) {
         $scope.loggedInUser = loggedInUser;
+        $scope.userName = userName;
         $scope.dates = [];
         $scope.addDateField = function () {
             $scope.dates[$scope.dates.length] = new Date();
@@ -186,7 +189,7 @@ Date.prototype.getSimpleDate = function () {
 Date.prototype.getSimpleTime = function () {
     var d = new Date(+this);
     var simple = new String();
-    simple = d.getHour() + ":" + d.getMinutes();
+    simple = d.getHours() + ":" + d.getMinutes();
     return simple;
 };
 
@@ -279,13 +282,24 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
         $scope.loggedInUser = loggedInUser;
+        $scope.userName = userName;
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
-                    $scope.matrix = sortMaster(event.dates);
+                    $scope.dl = new Date(event.deadline).toDateString();
+                    $scope.participators = getParticipators(event);
+                    $scope.matrix = sortMaster(event.dates, event);
                 }).error(function () {
             console.log("selectByPk: error");
         });
+        
+        function getParticipators(event){
+            var names = [];
+            event.participators.forEach(function(u){
+               names[names.length] =  u.name;
+            });
+            return names;
+        }
 
         function sortByWeek(event) {
             var x = []; //days
@@ -395,11 +409,15 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             return matrix;
         }
 
-        function sortMaster(event) {
-            var sorts = [sortByWeek, sortByDate];
+        function sortMaster(eventDates, event) {
+            if(event.allDayEvent === true){
+                var sorts=[sortByWeek];
+            }else{
+                var sorts = [sortByDate];
+            }
             var sortResults = [];
             sorts.forEach(function (sort) {
-                sortResults[sortResults.length] = sort(event);
+                sortResults[sortResults.length] = sort(eventDates);
             });
 
             var bestResult;
@@ -430,9 +448,11 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
 eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
     function ($scope, $location) {
         $scope.loggedInUser = loggedInUser;
+        $scope.userName = userName;
         $scope.loginURL = loginURL;
         startSlide();
     }]);
+
 // General navigation controller
 var firstPage = true;
 eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthProxy',
@@ -451,14 +471,21 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
                 if (loggedIn.loggedIn) {
                     AuthProxy.getLoggedInUser()
                     .success(function(user) {
-                        loggedInUser = user.loggedInUser;
+                        loggedInUser = user.email;
+                        userName = user.name;
                         $scope.loggedInUser = loggedInUser;
+                        $scope.userName = userName;
                         $scope.loginURL = loginURL;
+                        setTimeout(function () {
+                            var logout = document.getElementById("logout");
+                            logout.style.width = (logout.offsetWidth+50) + "px";
+                        }, 3000);
                     }).error(function() {
                         console.log("loggedInUser: error");
                     });
                     $scope.navigate("/my-mewaps");
                 } else {
+                    $scope.navigate("/");
                     AuthProxy.login()
                     .success(function(url) {
                         loginURL = url.url;
