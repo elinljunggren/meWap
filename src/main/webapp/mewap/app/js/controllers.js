@@ -285,7 +285,6 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                             }
                         }
                     }
-                    console.log($scope.matrix);
                 }).error(function () {
             console.log("selectByPk: error");
         });
@@ -446,7 +445,6 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             var tmp = $scope.answer.dates;
             var date = new Date(col);
             var currentUser = {"email":loggedInUser,"name":userName};
-            console.log($scope.answersPerDate[col.getTime()]);
             if (containsUser($scope.answersPerDate[col.getTime()], currentUser)) {
                 var index = tmp.indexOf(date.getTime().toString());
                 tmp.splice(index, 1);
