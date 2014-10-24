@@ -100,7 +100,7 @@ and open the template in the editor.
         <tr>
             <td class="vtop">Invite members: </td>
             <td><div ng-repeat="text in participators track by $index">
-                <input ng-model="participators[$index]" type="text" value="{{participators[$index]}}"/>
+                <input ng-model="participators[$index]" type="email" value="{{participators[$index]}}"/>
                 <input type ="button" value="X" class="btn btn-default" ng-click="removeParticipatorField($index)"ng-if="participators.length>1"/>
 
                 </div>
