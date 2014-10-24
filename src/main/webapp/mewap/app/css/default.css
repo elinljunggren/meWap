@@ -465,7 +465,18 @@ footer #login a {
     }
     
  /* detail-mewap.html */
+    .detail h2 {
+        margin: 0;
+    }
     
+    .detail > p:first-of-type {
+        margin: 5px 0 30px;
+    }
+ 
+    .detail table {
+        border-spacing: 0;
+    }
+ 
     .detail table td {
         min-width: 40px;
         text-align: center;
@@ -476,11 +487,16 @@ footer #login a {
     .detail table td:not(:first-child):not(.noDate):not(.title) {
         cursor: pointer;
         background-color: #DDFFDD;
+        position: relative;
     }
     
     .detail table td.title {
         font-weight: bold;
-        background-color: #EEEEEE;
+        background-color: #EFEFEF;
+    }
+    
+    .detail table td.noDate {
+        background-color: #EFEFEF;
     }
     
     .detail table td > p, .detail table td > div, .detail table td > div > p {
@@ -489,4 +505,29 @@ footer #login a {
     
     .detail table td > div > div {
         display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        width: 150px;
+        background: #FBFBFB;
+        padding: 25px;
+    }
+    
+    .detail table td > div > div > h3, .detail table td > div > div > h4 {
+        margin: 0 0 10px;
+    }
+    
+    .detail table td > div > div > span {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .detail table td > div > div > span:last-child {
+        font-size: 0.8em;
+        margin: 15px 0 0;
+    }
+    
+    .detail table td:hover > div > div {
+        display: block;
     }

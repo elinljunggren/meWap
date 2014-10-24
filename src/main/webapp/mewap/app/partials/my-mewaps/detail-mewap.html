@@ -13,12 +13,16 @@ and open the template in the editor.
                 <td ng-repeat="col in rows track by $index" ng-init="x = $index" ng-class="{noDate: col === null, title: y*x === 0 && y+x !== 0}">
                     <p ng-if="y*x === 0 && col !== null">{{col}}</p>
                     <div ng-if="y*x > 0 && col !== null">
-                        <p ng-click="addA(col)" ng-class="checked[col]">{{answersPerDate[col.getTime()].length || "0"}}</p>
-                        <div>
-                            {{col.getFullYear() + "-" + (col.getMonth()+1) + "-" + col.getDate()}}
-                            People who have accepted
+                        <p ng-class="checked[col]">{{answersPerDate[col.getTime()].length || "0"}}</p>
+                        <div ng-click="addA(col)">
+                            <h3>
+                                {{col.getFullYear() + "-" + (col.getMonth()+1) + "-" + col.getDate()}}
+                            </h3>
                             <span ng-repeat="user in answersPerDate[col.getTime()]">
                                 {{user.name}}
+                            </span>
+                            <span>
+                                (Click to accept)
                             </span>
                         </div>
                     </div>
