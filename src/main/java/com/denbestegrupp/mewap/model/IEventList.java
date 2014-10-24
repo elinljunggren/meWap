@@ -21,4 +21,8 @@ public interface IEventList extends IDAO<MWEvent, Long> {
     
     public List<MWEvent> getRelatedToUser(MWUser user, Collection<MWEvent> es);
     
+    public List<MWEvent> getHistory(Collection<MWEvent> es);
+    
+    public List<MWEvent> getUpcomingEvents(Collection<MWEvent> es);
+    
 }
