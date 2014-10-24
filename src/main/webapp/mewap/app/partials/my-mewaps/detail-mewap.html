@@ -10,9 +10,18 @@ and open the template in the editor.
     <table class="table">
         <tbody>
             <tr ng-repeat="rows in matrix" ng-init="y = $index">
-                <td ng-repeat="col in rows" ng-init="x = $index">
-                    <p ng-click="addA(col)" ng-if="y*x > 0">#</p>
-                    <p ng-if="y*x === 0">{{col}}</p>
+                <td ng-repeat="col in rows track by $index" ng-init="x = $index">
+                    <p ng-if="y*x === 0 && col !== null">{{col}}</p>
+                    <div ng-if="y*x > 0 && col !== null">
+                        <p ng-click="addA(col)" ng-class="checked[col]">{{answersPerDate[col.getTime()].length || "0"}}</p>
+                        <div>
+                            {{col.getFullYear() + "-" + (col.getMonth()+1) + "-" + col.getDate()}}
+                            People who have accepted
+                            <span ng-repeat="user in answersPerDate[col.getTime()]">
+                                {{user.name}}
+                            </span>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </tbody>
@@ -25,4 +34,8 @@ and open the template in the editor.
             <p>{{p}}</p>
         </li> 
     </ul>
+    <div class="btn-group answer">
+        <input type="button" value="Cancel" class="btn btn-default answer cancel" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
+        <input type="button" value="Done" class="btn btn-default answer save" ng-click="done()"/>
+    </div>
 </div>

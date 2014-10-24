@@ -260,12 +260,32 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         $scope.userName = userName;
         $scope.answer = {};
         $scope.answer.dates = [];
+        $scope.checked = [];
+        $scope.answersPerDate = [];
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
                     $scope.dl = new Date(event.deadline).toDateString();
                     $scope.participators = getParticipators(event);
+                    
+                    event.answers.forEach(function(answer) {
+                        answer.dates.forEach(function(date) {
+                            if ($scope.answersPerDate[date] === undefined) {
+                                $scope.answersPerDate[date] = [];
+                            }
+                            $scope.answersPerDate[date][$scope.answersPerDate[date].length] = answer.user;
+                        });
+                    });
+                    
                     $scope.matrix = sortMaster(event.dates, event);
+                    for (var i=0; i<$scope.matrix.length; i++) {
+                        for (var j=0; j<$scope.matrix[0].length; j++) {
+                            if ($scope.matrix[i][j] === undefined) {
+                                $scope.matrix[i][j] = null;
+                            }
+                        }
+                    }
+                    console.log($scope.matrix);
                 }).error(function () {
             console.log("selectByPk: error");
         });
@@ -411,17 +431,35 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
 
         //eventID, user, lista med answers
         //
+        var containsUser = function(array, user) {
+            for (var i=0; i<array.length; i++) {
+                if (array[i].email === user.email) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        
         $scope.addA = function (col) {
             var tmp = $scope.answer.dates;
             var date = new Date(col);
-            if (arrayContains(tmp, date.getTime().toString())) {
+            var currentUser = {"email":loggedInUser,"name":userName};
+            console.log($scope.answersPerDate[col.getTime()]);
+            if (containsUser($scope.answersPerDate[col.getTime()], currentUser)) {
                 var index = tmp.indexOf(date.getTime().toString());
                 tmp.splice(index, 1);
+                $scope.checked[col] = "";
+                index = $scope.answersPerDate[col.getTime()].indexOf(currentUser);
+                $scope.answersPerDate[col.getTime()].splice(index, 1);
             } else {
                 tmp[tmp.length] = date.getTime().toString();
+                $scope.checked[col] = "checkedDate";
+                if ($scope.answersPerDate[col.getTime()] === undefined) {
+                    $scope.answersPerDate[col.getTime()] = [];
+                }
+                $scope.answersPerDate[col.getTime()][$scope.answersPerDate[col.getTime()].length] = currentUser;
             }
             $scope.answer.dates = tmp;
-            console.log($scope.answer.dates);
         };
 
         
