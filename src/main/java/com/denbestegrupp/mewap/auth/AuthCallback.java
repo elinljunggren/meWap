@@ -85,6 +85,7 @@ public class AuthCallback extends HttpServlet {
         String accessToken = (String) jsonObject.get("access_token");
 
         Cookie cookie = new Cookie("access_token", accessToken);
+        cookie.setMaxAge(60*60*24*7);
         resp.addCookie(cookie);
 
         // get some info about the user with the access token
