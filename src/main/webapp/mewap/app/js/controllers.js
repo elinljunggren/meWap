@@ -444,9 +444,11 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         //eventID, user, lista med answers
         //
         var containsUser = function(array, user) {
-            for (var i=0; i<array.length; i++) {
-                if (array[i].email === user.email) {
-                    return true;
+            if(array !== undefined){
+                for (var i=0; i<array.length; i++) {
+                    if (array[i].email === user.email) {
+                     return true;
+                    }
                 }
             }
             return false;
