@@ -5,7 +5,11 @@
  */
 package com.denbestegrupp.mewap.auth;
 
-import java.math.BigDecimal;
+import com.denbestegrupp.mewap.model.MWUser;
+import com.denbestegrupp.mewap.model.MeWap;
+import com.denbestegrupp.mewap.model.UserWrapper;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.GET;
@@ -21,9 +25,13 @@ import javax.ws.rs.core.Response;
  * @author Oskar
  */
 @Path("auth")
+@RequestScoped
 public class AuthResource {
     
     private final static GoogleAuth gauth = GoogleAuth.getInstance();
+    
+    @Inject
+    private MeWap meWap;
     
     @GET
     @Path(value = "login")
@@ -45,8 +53,9 @@ public class AuthResource {
     @Path(value = "getLoggedInUser")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response getLoggedInUser(@Context HttpHeaders hh) {
-        JsonObject loggedInUser = Json.createObjectBuilder().add("loggedInUser", gauth.getLoggedInUser(hh)).build();
-        return Response.ok(loggedInUser).build();
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
+        UserWrapper uw = new UserWrapper(user);
+        return Response.ok(uw).build();
     }
     
 }

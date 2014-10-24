@@ -8,11 +8,13 @@ var eventListControllers = angular.module('EventListControllers', []);
 var authControllers = angular.module('AuthControllers', []);
 
 var loggedInUser;
+var userName;
 var loginURL = "";
 
 eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'AuthProxy',
     function ($scope, EventListProxy, AuthProxy) {
         $scope.loggedInUser = loggedInUser;
+        $scope.userName = userName;
         $scope.orderProp = 'id'; //Eventprop?!
         $scope.pageSize = '10';
         $scope.currentPage = 0;
@@ -103,6 +105,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     'EventListProxy',
     function ($scope, $location, EventListProxy) {
         $scope.loggedInUser = loggedInUser;
+        $scope.userName = userName;
         $scope.dates = [];
         $scope.addDateField = function () {
             $scope.dates[$scope.dates.length] = new Date();
@@ -205,6 +208,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
         $scope.loggedInUser = loggedInUser;
+        $scope.userName = userName;
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
@@ -370,9 +374,11 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
 eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
     function ($scope, $location) {
         $scope.loggedInUser = loggedInUser;
+        $scope.userName = userName;
         $scope.loginURL = loginURL;
         startSlide();
     }]);
+
 // General navigation controller
 var firstPage = true;
 eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthProxy',
@@ -391,12 +397,14 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
                 if (loggedIn.loggedIn) {
                     AuthProxy.getLoggedInUser()
                     .success(function(user) {
-                        loggedInUser = user.loggedInUser;
+                        loggedInUser = user.email;
+                        userName = user.name;
                         $scope.loggedInUser = loggedInUser;
+                        $scope.userName = userName;
                         $scope.loginURL = loginURL;
                         setTimeout(function () {
                             var logout = document.getElementById("logout");
-                            logout.style.width=logout.offsetWidth+"px";
+                            logout.style.width = (logout.offsetWidth+10) + "px";
                         }, 1000);
                     }).error(function() {
                         console.log("loggedInUser: error");
