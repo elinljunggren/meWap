@@ -191,7 +191,19 @@ Date.prototype.getSimpleDate = function () {
 Date.prototype.getSimpleTime = function () {
     var d = new Date(+this);
     var simple = new String();
-    simple = d.getHours() + ":" + d.getMinutes();
+    
+    if(d.getHours() < 10) {
+        simple = "0" + d.getHours() + ":";
+    } else {
+        simple = d.getHours() + ":";
+    }
+    
+    if(d.getMinutes() < 10) {
+            simple += "0" + d.getMinutes();
+    } else {
+        simple += d.getMinutes();
+    }
+
     return simple;
 };
 
