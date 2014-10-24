@@ -13,17 +13,29 @@ and open the template in the editor.
             <th>You have participated in:</th>
 
             <tr>
-                <th>Name</th><th>Creator</th><th>Deadline</th>
+                <th>Name</th><th>Creator</th><th>Date</th>
             </tr>               
         </thead>
         <tbody>
-        <tr ng-repeat="event in findOldEvents" ng-class-odd="'odd'" 
+        <tr ng-repeat="event in oldMewaps" ng-class-odd="'odd'" 
             ng-class-even="'even'">
-            <td><a href="#/my-mewaps/{{event.id}}">{{event.name}}</a></td>
+            <td>{{event.name}}</td>
             <td>{{event.creator.name}}</td>
             <td>{{event.deadline}}</td>
         </tr>
+        
         </tbody>
 
     </table>
+    <div class="btn-group">
+        <button class="btn btn-default" ng-disabled="currentPage === 0" 
+                ng-click="currentPage = currentPage - 1">
+            Prev
+        </button>
+        <button class="btn btn-default" 
+                ng-disabled="currentPage >= count / pageSize - 1"
+                ng-click="currentPage = currentPage + 1"> 
+            Next
+        </button>
+    </div>  
 </div>

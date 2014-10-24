@@ -200,7 +200,81 @@ function arrayContains(array, elem) {
     }
     return false;
 }
+eventListControllers.controller('HistoryCtrl', ['$scope',
+    '$location', '$routeParams', 'EventListProxy',
+    function ($scope, $location, $routeParams, EventListProxy) {
+        $scope.loggedInUser = loggedInUser;
+        $scope.orderProp = 'id'; //Eventprop?!
+        $scope.pageSize = '10';
+        $scope.currentPage = 0;
+        $scope.oldEventName = "";
 
+        EventListProxy.count()
+                .success(function (count) {
+                    $scope.count = count.value;
+
+                }).error(function () {
+            console.log("count: error");
+        });
+        $scope.$watch('currentPage', function () {
+            getRange();
+        });
+
+        $scope.$watch('pageSize', function () {
+            getRange();
+        });
+
+
+        function getRange() {
+
+            var first = $scope.pageSize * $scope.currentPage;
+            EventListProxy.findRange(first, $scope.pageSize)
+                    .success(function (mwevent) {
+                        $scope.oldMewaps = $scope.findOldMewaps(mwevent);
+                       // $scope.oldDateParsed = $scope.oldDateParser(mwevent);
+                        mwevent.forEach(function (event) {
+                            var deadline = new Date(event.deadline);
+                            var parsed = new String();
+                            parsed = parsed + deadline.getDate() + " " +
+                                    month[deadline.getMonth()] + " " +
+                                    deadline.getFullYear();
+                            event.deadline = parsed;
+                        });
+
+                    }).error(function () {
+                console.log("findRange: error");
+            });
+        }
+//        $scope.oldDateParser = function (dates) {
+//            var parsed = new String();
+//
+//            dates.forEach(function (date) {
+//                var dateP = new Date(date.deadline);
+//                parsed = parsed + dateP.getDate() + " " +
+//                        month[dateP.getMonth()] + " " +
+//                        dateP.getFullYear();
+//                dates.date = parsed;
+//            });
+//            return parsed;
+//        }
+        $scope.findOldMewaps = function (eventList) {
+            var oldMewaps = [];
+            var today = new Date();
+            eventList.forEach(function (event) {
+                if (event.dates < today) {
+                    oldMewaps[oldMewaps.length] = event;
+
+                }
+            });
+
+            console.log(oldMewaps);
+
+            return oldMewaps;
+        };
+
+
+    }
+]);
 eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
