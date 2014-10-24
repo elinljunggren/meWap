@@ -131,6 +131,10 @@ public class MWEvent extends AbstractEntity {
         MWAnswer answer = new MWAnswer(user, dates);
         answers.add(answer);
     }
+    
+    public void removeAnswer(MWAnswer answer){
+        answers.remove(answer);
+    }
 
     public void setName(String name) {
         this.name = name;
