@@ -8,7 +8,7 @@ html, body {
 
 body {
     font-family: "Oxygen", sans-serif;
-    font-size: 100%;
+    font-size: 90%;
     color: #333333;
 }
 
@@ -18,11 +18,14 @@ a, h1 {
 }
 
 h1 {
-    margin: 0px;
+    position: relative;
+    top: -4px;
+    margin: 0 50px 0 0;
     font-size: 3em;
     float: left;
     color: white;
     line-height: 70px;
+    font-weight: 400;
 }
 
 h1 span {
@@ -61,10 +64,6 @@ header {
     color: #e6e6e6;
 }
 
-header #logout {
-    text-align: right;
-}
-
 header > nav {
     line-height: 70px;
     color: #e6e6e6;
@@ -74,6 +73,8 @@ header > span, header > a {
     float: right;
     line-height: 70px;
     color: white;
+    text-align: right;
+    font-size: 1.2em;
 }
 
 header > nav ul {
