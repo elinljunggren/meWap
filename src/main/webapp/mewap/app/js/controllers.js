@@ -404,8 +404,8 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
                         $scope.loginURL = loginURL;
                         setTimeout(function () {
                             var logout = document.getElementById("logout");
-                            logout.style.width = (logout.offsetWidth+10) + "px";
-                        }, 1000);
+                            logout.style.width = (logout.offsetWidth+50) + "px";
+                        }, 3000);
                     }).error(function() {
                         console.log("loggedInUser: error");
                     });
