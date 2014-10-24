@@ -31,7 +31,7 @@ and open the template in the editor.
     <h4>Participators</h4>
         <ul>
         <li ng-repeat="p in participators">
-            <p>{{p}}</p>
+            <p>{{p.name}} <span ng-repeat="a in mwevent.answers" ng-if=" p.email === a.user.email">  answerd</span></p>
         </li> 
     </ul>
     <div class="btn-group answer">

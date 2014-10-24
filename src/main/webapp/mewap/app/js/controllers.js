@@ -290,11 +290,11 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         });
 
         function getParticipators(event) {
-            var names = [];
+            var p = [];
             event.participators.forEach(function (u) {
-                names[names.length] = u.name;
+                p[p.length] = u;
             });
-            return names;
+            return p;
         }
 
         function sortByWeek(event) {
