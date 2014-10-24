@@ -61,6 +61,10 @@ header {
     color: #e6e6e6;
 }
 
+header #logout {
+    text-align: right;
+}
+
 header > nav {
     line-height: 70px;
     color: #e6e6e6;
