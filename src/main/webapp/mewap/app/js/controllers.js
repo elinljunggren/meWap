@@ -31,6 +31,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
         $scope.$watch('pageSize', function () {
             getRange();
         });
+        //Sort listing of mewaps by if user is creator
         $scope.sortByCreator = function (eventList) {
             var creator = [];
             eventList.forEach(function (event) {
@@ -42,6 +43,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
             });
             return creator;
         };
+        //Sort listing of mewaps by if user is participator
         $scope.sortByParticipator = function (eventList) {
             var participatorList = [];
             eventList.forEach(function (event) {
@@ -123,12 +125,12 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             $scope.participators.splice(index, 1);
         };
         $scope.addParticipatorField();
-        
+
         $scope.$watch('dates', function () {
             //console.log($scope.dates);
             $scope.checkDeadlineDate();
         });
-
+        //Checks if deadline on mewap is passed todays date
         $scope.checkDeadlineDate = function () {
             var minDateValue = -1;
             var minDate;
@@ -143,11 +145,11 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
 
             //     console.log(minDate);
             $scope.minDeadline = new Date(minDate);
-        }; 
-        
+        };
+        //method saves mewap-event upon click in html page
         $scope.save = function () {
             $scope.mwEvent.dates = [];
-            $scope.dates.forEach(function(date) {
+            $scope.dates.forEach(function (date) {
                 $scope.mwEvent.dates[$scope.mwEvent.dates.length] = date.getTime().toString();
             });
             $scope.mwEvent.deadline = $scope.mwEvent.deadline.getTime().toString();
@@ -162,7 +164,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             if ($scope.mwEvent.allDayEvent !== true) {
                 $scope.mwEvent.allDayEvent = false;
             }
-            
+
             EventListProxy.create($scope.mwEvent)
                     .success(function () {
                         $location.path('/my-mewaps');
@@ -195,20 +197,81 @@ Date.prototype.getSimpleTime = function () {
 
 function arrayContains(array, elem) {
 
-    for(var i=0; i<array.length; i++){
-       
+    for (var i = 0; i < array.length; i++) {
+
         if (array[i] === elem) {
             return true;
         }
     }
     return false;
 }
+eventListControllers.controller('HistoryCtrl', ['$scope',
+    '$location', '$routeParams', 'EventListProxy',
+    function ($scope, $location, $routeParams, EventListProxy) {
+        $scope.loggedInUser = loggedInUser;
+        $scope.orderProp = 'id'; //Eventprop?!
+        $scope.pageSize = '10';
+        $scope.currentPage = 0;
+        $scope.oldEventName = "";
 
+        //Calculates how many events per page
+        EventListProxy.count()
+                .success(function (count) {
+                    $scope.count = count.value;
+
+                }).error(function () {
+            console.log("count: error");
+        });
+        
+        $scope.$watch('currentPage', function () {
+            getRange();
+        });
+
+        $scope.$watch('pageSize', function () {
+            getRange();
+        });
+
+
+        function getRange() {
+
+            var first = $scope.pageSize * $scope.currentPage;
+            EventListProxy.findHistory(first, $scope.pageSize)
+                    .success(function (mwevent) {
+                        mwevent.forEach(function (event) {
+                            var deadline = new Date(event.deadline);
+                            var parsed = new String();
+                            parsed = parsed + deadline.getDate() + " " +
+                                    month[deadline.getMonth()] + " " +
+                                    deadline.getFullYear();
+                            event.deadline = parsed;
+                        });
+                        $scope.mwevent = mwevent;
+
+                    }).error(function () {
+                console.log("findRange: error");
+            });
+        }
+//        $scope.oldDateParser = function (dates) {
+//            var parsed = new String();
+//
+//            dates.forEach(function (date) {
+//                var dateP = new Date(date.deadline);
+//                parsed = parsed + dateP.getDate() + " " +
+//                        month[dateP.getMonth()] + " " +
+//                        dateP.getFullYear();
+//                dates.date = parsed;
+//            });
+//            return parsed;
+//        }
+    }
+]);
 eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
         $scope.loggedInUser = loggedInUser;
         $scope.userName = userName;
+        $scope.answer = {};
+        $scope.answer.dates = [];
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
@@ -218,11 +281,11 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 }).error(function () {
             console.log("selectByPk: error");
         });
-        
-        function getParticipators(event){
+
+        function getParticipators(event) {
             var names = [];
-            event.participators.forEach(function(u){
-               names[names.length] =  u.name;
+            event.participators.forEach(function (u) {
+                names[names.length] = u.name;
             });
             return names;
         }
@@ -238,21 +301,21 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 if (!arrayContains(x, date.getDay())) {
                     x[x.length] = date.getDay();
                 }
-                if(!arrayContains(y, week)){
+                if (!arrayContains(y, week)) {
                     y[y.length] = week;
                 }
                 dates[dates.length] = date;
             });
-            
+
             //Sort days and weeks ascending order
-            x.sort(function(a, b){
-                return a-b;
+            x.sort(function (a, b) {
+                return a - b;
             });
-            
-            y.sort(function(a, b){
-                return a-b;
+
+            y.sort(function (a, b) {
+                return a - b;
             });
-            
+
             //insert days in farts row
             var matrix = [];
             matrix[0] = [];
@@ -260,20 +323,20 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             x.forEach(function (day) {
                 matrix[0][matrix[0].length] = weekday[day];
             });
-            
+
             //insert weeks in first column
             for (var i = 1; i <= y.length; i++) {
                 matrix[i] = [];
-                matrix[i][0] = y[i-1];
+                matrix[i][0] = y[i - 1];
             }
-            
-            dates.forEach(function(date) {
+
+            dates.forEach(function (date) {
                 for (var i = 0; i < y.length; i++) {
-                    if(date.getWeekNumber() === y[i]) {
-                        for(var j = 0; j < x.length; j++) {
-                           if(date.getDay() === x[j]) {
-                               matrix[i+1][j+1] = date;
-                           }
+                    if (date.getWeekNumber() === y[i]) {
+                        for (var j = 0; j < x.length; j++) {
+                            if (date.getDay() === x[j]) {
+                                matrix[i + 1][j + 1] = date;
+                            }
                         }
                     }
                 }
@@ -292,21 +355,21 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 if (!arrayContains(x, date.getSimpleTime())) {
                     x[x.length] = date.getSimpleTime();
                 }
-                if(!arrayContains(y, sd)){
+                if (!arrayContains(y, sd)) {
                     y[y.length] = sd;
                 }
                 dates[dates.length] = date;
             });
-            
+
             //Sort days and weeks ascending order
-            x.sort(function(a, b){
-                return a-b;
+            x.sort(function (a, b) {
+                return a - b;
             });
-            
-            y.sort(function(a, b){
-                return a-b;
+
+            y.sort(function (a, b) {
+                return a - b;
             });
-            
+
             //insert days in farts row
             var matrix = [];
             matrix[0] = [];
@@ -314,20 +377,20 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             x.forEach(function (time) {
                 matrix[0][matrix[0].length] = time;
             });
-            
+
             //insert weeks in first column
             for (var i = 1; i <= y.length; i++) {
                 matrix[i] = [];
-                matrix[i][0] = y[i-1];
+                matrix[i][0] = y[i - 1];
             }
-            
-            dates.forEach(function(date) {
+
+            dates.forEach(function (date) {
                 for (var i = 0; i < y.length; i++) {
-                    if(date.getSimpleDate() === y[i]) {
-                        for(var j = 0; j < x.length; j++) {
-                           if(date.getSimpleTime() === x[j]) {
-                               matrix[i+1][j+1] = date;
-                           }
+                    if (date.getSimpleDate() === y[i]) {
+                        for (var j = 0; j < x.length; j++) {
+                            if (date.getSimpleTime() === x[j]) {
+                                matrix[i + 1][j + 1] = date;
+                            }
                         }
                     }
                 }
@@ -336,9 +399,9 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         }
 
         function sortMaster(eventDates, event) {
-            if(event.allDayEvent === true){
-                var sorts=[sortByWeek];
-            }else{
+            if (event.allDayEvent === true) {
+                var sorts = [sortByWeek];
+            } else {
                 var sorts = [sortByDate];
             }
             var sortResults = [];
@@ -357,6 +420,35 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             });
             return bestResult;
         }
+
+        //eventID, user, lista med answers
+        //
+        $scope.addA = function (col) {
+            var tmp = $scope.answer.dates;
+            var date = new Date(col);
+            if (arrayContains(tmp, date.getTime().toString())) {
+                var index = tmp.indexOf(date.getTime().toString());
+                tmp.splice(index, 1);
+            } else {
+                tmp[tmp.length] = date.getTime().toString();
+            }
+            $scope.answer.dates = tmp;
+            console.log($scope.answer.dates);
+        };
+
+        
+        //when buttom pushed
+        $scope.done = function (){
+            
+            $scope.answer.user = loggedInUser; //user
+            
+            EventListProxy.addAnswer($routeParams.id, $scope.answer)
+                    .success(function () { 
+                        $location.path('/my-mewaps');
+                    }).error(function () {
+                ;
+            });    
+        };
 
         //controller för knappar inom detail
         //TODO
@@ -409,8 +501,11 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
                     }).error(function() {
                         console.log("loggedInUser: error");
                     });
-                    $scope.navigate("/my-mewaps");
+                    if ($location.path() === "/") {
+                        $scope.navigate("/my-mewaps");
+                    }
                 } else {
+                    $scope.navigate("/");
                     AuthProxy.login()
                     .success(function(url) {
                         loginURL = url.url;

@@ -190,6 +190,25 @@ public class EventListResource {
         MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
         List<MWEvent> es = meWap.getEventList()
                 .getRelatedToUser(user, meWap.getEventList().findAll());
+        es = meWap.getEventList().getUpcomingEvents(es);
+        Collection<MWEvent> es2 = getRange(es, first, count);
+        Collection<EventWrapper> ews = wrapEvents(es2);
+
+        GenericEntity<Collection<EventWrapper>> ge = 
+                new GenericEntity<Collection<EventWrapper>>(ews) {
+        };
+        
+        return Response.ok(ge).build();
+    }
+    @GET
+    @Path(value = "history")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findHistory(@QueryParam(value = "first") int first,
+            @QueryParam(value = "count") int count, @Context HttpHeaders hh) {
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
+        List<MWEvent> es = meWap.getEventList()
+                .getRelatedToUser(user, meWap.getEventList().findAll());
+        es = meWap.getEventList().getHistory(es);
         Collection<MWEvent> es2 = getRange(es, first, count);
         Collection<EventWrapper> ews = wrapEvents(es2);
 

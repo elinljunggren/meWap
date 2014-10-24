@@ -50,6 +50,30 @@ public class EventList extends AbstractDAO <MWEvent, Long> implements IEventList
         }
         return mwes;
     }
+
+    @Override
+    public List<MWEvent> getHistory(Collection<MWEvent> es) {
+        List<MWEvent> mwes = new ArrayList<>();
+        
+        for(MWEvent e : es) {
+            if(e.getDeadline()<System.currentTimeMillis()) {
+                mwes.add(e); 
+            } 
+        }
+        return mwes;
+    }
+
+    @Override
+    public List<MWEvent> getUpcomingEvents(Collection<MWEvent> es) {
+        List<MWEvent> mwes = new ArrayList<>();
+        
+        for(MWEvent e : es) {
+            if(e.getDeadline()>System.currentTimeMillis()) {
+                mwes.add(e); 
+            } 
+        }
+        return mwes;
+    }
     
     @Override
     protected EntityManager getEntityManager() {

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Page where the user can create a meWap, 
+all fields are mandatory to fill in.
 -->
 <!-- author Emma-->
 <div>
@@ -58,7 +57,7 @@ and open the template in the editor.
                 Response deadline:
             </td>
             <td> 
-                <input ng-model="mwEvent.deadline" type="datetime-local" name="deadline" value="{{mwEvent.deadline}}" />
+                <input ng-model="mwEvent.deadline" type="date" name="deadline" value="{{mwEvent.deadline}}" />
             </td>
         </tr>
         <tr>
@@ -100,7 +99,7 @@ and open the template in the editor.
         <tr>
             <td class="vtop">Invite members: </td>
             <td><div ng-repeat="text in participators track by $index">
-                <input ng-model="participators[$index]" type="text" value="{{participators[$index]}}"/>
+                <input ng-model="participators[$index]" type="email" value="{{participators[$index]}}"/>
                 <input type ="button" value="X" class="btn btn-default" ng-click="removeParticipatorField($index)"ng-if="participators.length>1"/>
 
                 </div>
@@ -116,5 +115,5 @@ and open the template in the editor.
                ng-click="save()"  ng-disabled="!(mwEvent.name&&mwEvent.notification&&mwEvent.deadline&&
               mwEvent.deadlineReminder&&mwEvent.description&&(mwEvent.allDayEvent||mwEvent.duration))"/>
     </div>
-    
+      
 </div>
