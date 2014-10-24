@@ -108,7 +108,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     function ($scope, $location, EventListProxy) {
         $scope.loggedInUser = loggedInUser;
         $scope.userName = userName;
-        $scope.dates = [];
+            $scope.dates = [];
         $scope.addDateField = function () {
             $scope.dates[$scope.dates.length] = new Date();
         };
@@ -126,25 +126,25 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
         };
         $scope.addParticipatorField();
 
-        $scope.$watch('dates', function () {
-            //console.log($scope.dates);
-            $scope.checkDeadlineDate();
-        });
+//        $scope.$watch('dates', function () {
+//            console.log($scope.dates);
+//            $scope.checkDeadlineDate(dates);
+//        });
         //Checks if deadline on mewap is passed todays date
-        $scope.checkDeadlineDate = function () {
-            var minDateValue = -1;
+        $scope.checkDeadlineDate = function (dates) {
+            var maxDateValue = new Date().getTime();
             var minDate;
-            $scope.dates.forEach(function (date) {
-                if (minDateValue > date.getTime() || minDateValue === -1) {
-                    minDateValue = date.getTime();
+            dates.forEach(function (date) {
+                if (maxDateValue > date.getTime() || maxDateValue === -1) {
+                    maxDateValue = date.getTime();
                     minDate = date;
                     //   console.log(date);
                 }
 
             });
 
-            //     console.log(minDate);
-            $scope.minDeadline = new Date(minDate);
+            //$scope.minDeadline = new Date(minDate);
+            return maxDateValue;
         };
         //method saves mewap-event upon click in html page
         $scope.save = function () {
@@ -156,8 +156,8 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             $scope.mwEvent.participators = $scope.participators;
             $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ? true : false;
             var duration = new Date($scope.mwEvent.duration);
-            var hour = duration.getHours();
-            var minute = duration.getMinutes();
+            var hour = duration.getHours(); 
+             var minute = duration.getMinutes();
             hour = hour * 60 * 1000;
             minute = minute * 60 * 60 * 1000;
             $scope.mwEvent.duration = hour + minute;
@@ -251,18 +251,6 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
                 console.log("findRange: error");
             });
         }
-//        $scope.oldDateParser = function (dates) {
-//            var parsed = new String();
-//
-//            dates.forEach(function (date) {
-//                var dateP = new Date(date.deadline);
-//                parsed = parsed + dateP.getDate() + " " +
-//                        month[dateP.getMonth()] + " " +
-//                        dateP.getFullYear();
-//                dates.date = parsed;
-//            });
-//            return parsed;
-//        }
     }
 ]);
 eventListControllers.controller('DetailEventCtrl', ['$scope',

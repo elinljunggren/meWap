@@ -19,7 +19,7 @@ Page where backlog for user is presented.
         <tbody>
             <tr ng-repeat="event in mwevent" ng-class-odd="'odd'" 
                 ng-class-even="'even'">
-                <td>{{event.name}}</td>
+                <td><a href="#/my-mewaps/{{event.id}}">{{event.name}}</a></td>
                 <td>{{event.creator.name}}</td>
                 <td>{{event.deadline}}</td>
             </tr>

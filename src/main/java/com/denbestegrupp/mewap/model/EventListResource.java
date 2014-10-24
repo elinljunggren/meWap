@@ -55,7 +55,9 @@ public class EventListResource {
     public Response create(JsonObject ev, @Context HttpHeaders hh) {
         log.log(Level.INFO, "{0}:create", this);
         log.log(Level.INFO, "Json{0}", ev.toString());
-
+        
+        MWUser creator = meWap.getUserList().find(gauth.getLoggedInUser(hh));
+        
         AnswerNotification answerNotification = MWEvent.AnswerNotification
                 .valueOf(ev.getString("notification"));
 
@@ -65,6 +67,7 @@ public class EventListResource {
         }
         
         List<MWUser> participators = new ArrayList<>();
+        participators.add(creator);
         for (JsonValue p : ev.getJsonArray("participators")) {
                 participators.add(meWap.getUserList().find(p.toString()));
         }
@@ -74,7 +77,7 @@ public class EventListResource {
             durationValue = (long) ev.getInt("duration");
         }
         MWEvent event = new MWEvent(ev.getString("name"),
-                meWap.getUserList().find(gauth.getLoggedInUser(hh)),
+                creator,
                 ev.getString("description"),
                 dates,
                 ev.getBoolean("allDayEvent"), 
