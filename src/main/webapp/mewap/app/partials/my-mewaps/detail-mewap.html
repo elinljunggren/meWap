@@ -8,18 +8,20 @@ and open the template in the editor.
     <div><h2>{{mwevent.name}}</h2></div>
     <div><h3>{{mwevent.description}}</h3></div>
     <table class="table">
-        <thead>
-
-        </thead>
         <tbody>
-                
             <tr ng-repeat="rows in matrix">
                 <td ng-repeat="col in rows">{{col}}</td>
             </tr>
-
         </tbody>
-
     </table>
+    <h4>Last day to answer: </h4>
+    <p>{{dl}}</p>
+    <div><h4>Participators:</h4></div>
+        <ul>
+        <li ng-repeat="p in participators">
+            <p>{{p}}</p>
+        </li> 
+    </ul>
 </div>
 
 

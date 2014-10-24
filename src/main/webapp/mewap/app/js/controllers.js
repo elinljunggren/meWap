@@ -185,7 +185,7 @@ Date.prototype.getSimpleDate = function () {
 Date.prototype.getSimpleTime = function () {
     var d = new Date(+this);
     var simple = new String();
-    simple = d.getHour() + ":" + d.getMinutes();
+    simple = d.getHours() + ":" + d.getMinutes();
     return simple;
 };
 
@@ -207,10 +207,20 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
-                    $scope.matrix = sortMaster(event.dates);
+                    $scope.dl = new Date(event.deadline).toDateString();
+                    $scope.participators = getParticipators(event);
+                    $scope.matrix = sortMaster(event.dates, event);
                 }).error(function () {
             console.log("selectByPk: error");
         });
+        
+        function getParticipators(event){
+            var names = [];
+            event.participators.forEach(function(u){
+               names[names.length] =  u.name;
+            });
+            return names;
+        }
 
         function sortByWeek(event) {
             var x = []; //days
@@ -320,11 +330,15 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             return matrix;
         }
 
-        function sortMaster(event) {
-            var sorts = [sortByWeek, sortByDate];
+        function sortMaster(eventDates, event) {
+            if(event.allDayEvent === true){
+                var sorts=[sortByWeek];
+            }else{
+                var sorts = [sortByDate];
+            }
             var sortResults = [];
             sorts.forEach(function (sort) {
-                sortResults[sortResults.length] = sort(event);
+                sortResults[sortResults.length] = sort(eventDates);
             });
 
             var bestResult;
