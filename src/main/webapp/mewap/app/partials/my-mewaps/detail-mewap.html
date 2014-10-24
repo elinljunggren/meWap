@@ -30,16 +30,20 @@ and open the template in the editor.
             </tr>
         </tbody>
     </table>
-    <h3>Last day to answer </h3>
-    <p>{{dl}}</p>
-    <h3>Participators</h3>
-        <ul>
-        <li ng-repeat="p in participators">
-            <p>{{p.name}} <span ng-repeat="a in mwevent.answers" ng-if=" p.email === a.user.email">  answerd</span></p>
-        </li> 
-    </ul>
     <div class="btn-group answer">
         <input type="button" value="Cancel" class="btn btn-default answer cancel" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
         <input type="button" value="Done" class="btn btn-default answer save" ng-click="done()" ng-if="mwevent.deadline > currentDate"/>
+    </div>
+    <div class="deadline">
+        <h3>Last day to answer </h3>
+        <p>{{dl}}</p>
+    </div>
+    <div class="participators">
+       <h3>Participators</h3>
+       <ul>
+            <li ng-repeat="p in participators">
+                {{p.name}} <span ng-repeat="a in mwevent.answers" ng-if=" p.email === a.user.email">  (answered)</span>
+            </li> 
+        </ul> 
     </div>
 </div>
