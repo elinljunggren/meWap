@@ -26,6 +26,9 @@ eventListService.factory('EventListProxy', ['$http',
             update: function (id, event) {
                 return $http.put(url + "/" + id, event);
             },
+            addAnswer: function (id, answer) {
+                return $http.put(url + "/answer/" + id, answer);
+            },
             create: function (event) {
                 return $http.post(url, event);
             },
