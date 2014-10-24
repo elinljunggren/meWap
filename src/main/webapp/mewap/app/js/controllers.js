@@ -58,6 +58,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
             var first = $scope.pageSize * $scope.currentPage;
             EventListProxy.findRange(first, $scope.pageSize)
                     .success(function (mwevent) {
+
                         mwevent.forEach(function (event) {
                             var deadline = new Date(event.deadline);
                             var parsed = new String();
