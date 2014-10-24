@@ -6,24 +6,24 @@ and open the template in the editor.
 -->
 <div class="myMewaps"> 
     <h2>Old meWaps</h2>
-    
+
     <table>
 
         <thead>
         <th colspan="3">You have participated in:</th>
 
-            <tr>
-                <th>Name</th><th>Creator</th><th>Date</th>
-            </tr>               
+        <tr>
+            <th>Name</th><th>Creator</th><th>Date</th>
+        </tr>               
         </thead>
         <tbody>
-        <tr ng-repeat="event in mwevent" ng-class-odd="'odd'" 
-            ng-class-even="'even'">
-            <td>{{event.name}}</td>
-            <td>{{event.creator.name}}</td>
-            <td>{{event.deadline}}</td>
-        </tr>
-        
+            <tr ng-repeat="event in mwevent" ng-class-odd="'odd'" 
+                ng-class-even="'even'">
+                <td>{{event.name}}</td>
+                <td>{{event.creator.name}}</td>
+                <td>{{event.deadline}}</td>
+            </tr>
+
         </tbody>
 
     </table>
@@ -38,4 +38,7 @@ and open the template in the editor.
             Next
         </button>
     </div>  
+    <input type="button" value="My meWaps" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
+    <input type="button" value="Create meWap" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/create-mewap')"/> 
+
 </div>
