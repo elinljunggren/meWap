@@ -411,6 +411,7 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
                     });
                     $scope.navigate("/my-mewaps");
                 } else {
+                    $scope.navigate("/");
                     AuthProxy.login()
                     .success(function(url) {
                         loginURL = url.url;
