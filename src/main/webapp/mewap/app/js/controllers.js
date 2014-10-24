@@ -31,6 +31,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
         $scope.$watch('pageSize', function () {
             getRange();
         });
+        //Sort listing of mewaps by if user is creator
         $scope.sortByCreator = function (eventList) {
             var creator = [];
             eventList.forEach(function (event) {
@@ -42,6 +43,7 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
             });
             return creator;
         };
+        //Sort listing of mewaps by if user is participator
         $scope.sortByParticipator = function (eventList) {
             var participatorList = [];
             eventList.forEach(function (event) {
@@ -128,7 +130,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             //console.log($scope.dates);
             $scope.checkDeadlineDate();
         });
-
+        //Checks if deadline on mewap is passed todays date
         $scope.checkDeadlineDate = function () {
             var minDateValue = -1;
             var minDate;
@@ -144,7 +146,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             //     console.log(minDate);
             $scope.minDeadline = new Date(minDate);
         };
-
+        //method saves mewap-event upon click in html page
         $scope.save = function () {
             $scope.mwEvent.dates = [];
             $scope.dates.forEach(function (date) {
@@ -212,6 +214,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
         $scope.currentPage = 0;
         $scope.oldEventName = "";
 
+        //Calculates how many events per page
         EventListProxy.count()
                 .success(function (count) {
                     $scope.count = count.value;
@@ -219,6 +222,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
                 }).error(function () {
             console.log("count: error");
         });
+        
         $scope.$watch('currentPage', function () {
             getRange();
         });
