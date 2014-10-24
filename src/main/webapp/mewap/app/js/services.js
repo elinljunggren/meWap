@@ -49,6 +49,9 @@ eventListService.factory('EventListProxy', ['$http',
             count: function () {
                 return $http.get(url + "/count");
             },
+            countHistory: function () {
+                return $http.get(url + "/countHistory");
+            },
             view: function (id) {
                 return $http.get(url + "/" + id);
             }
