@@ -225,9 +225,21 @@ public class EventListResource {
     @GET
     @Path(value = "count")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response count() {
+    public Response count(@Context HttpHeaders hh) {
         log.log(Level.INFO, "Count");
-        int c = meWap.getEventList().count();
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
+        int c = meWap.getEventList().getRelatedToUser(user, meWap.getEventList().getUpcomingEvents(meWap.getEventList().findAll())).size();
+        
+        JsonObject value = Json.createObjectBuilder().add("value", c).build();
+        return Response.ok(value).build();
+    }
+    @GET
+    @Path(value = "countHistory")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response countHistory(@Context HttpHeaders hh) {
+        log.log(Level.INFO, "Count");
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
+        int c = meWap.getEventList().getRelatedToUser(user, meWap.getEventList().getHistory(meWap.getEventList().findAll())).size();
         
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();

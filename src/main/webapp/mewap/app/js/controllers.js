@@ -215,7 +215,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
         $scope.oldEventName = "";
 
         //Calculates how many events per page
-        EventListProxy.count()
+        EventListProxy.countHistory()
                 .success(function (count) {
                     $scope.count = count.value;
 
