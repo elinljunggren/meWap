@@ -217,6 +217,7 @@ function arrayContains(array, elem) {
     }
     return false;
 }
+
 eventListControllers.controller('HistoryCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
@@ -265,6 +266,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
         }
     }
 ]);
+
 eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
@@ -274,6 +276,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         $scope.answer.dates = [];
         $scope.checked = [];
         $scope.answersPerDate = [];
+        $scope.currentDate = new Date().getTime();
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
@@ -454,6 +457,9 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         };
         
         $scope.addA = function (col) {
+            if($scope.mwevent.deadline < new Date().getTime()) {
+                return;
+            }
             var tmp = $scope.answer.dates;
             var date = new Date(col);
             var currentUser = {"email":loggedInUser,"name":userName};
