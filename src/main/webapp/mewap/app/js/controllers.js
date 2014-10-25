@@ -277,6 +277,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         $scope.checked = [];
         $scope.answersPerDate = [];
         $scope.currentDate = new Date().getTime();
+        $scope.oldEvents = [];
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
@@ -493,7 +494,6 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 ;
             });    
         };
-
         //controller för knappar inom detail
         //TODO
     }]);
