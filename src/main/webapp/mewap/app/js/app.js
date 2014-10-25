@@ -42,6 +42,10 @@ meWap.config(['$routeProvider',
                     templateUrl:'partials/my-mewaps/history-mewap.html',
                     controller: 'HistoryCtrl'
                 }).
+                when('/edit-mewap/:id',{
+                    templateUrl:'partials/my-mewaps/edit-mewap.html',
+                    controller: 'EditCtrl'
+                }).
                 otherwise({
                     templateUrl: 'partials/404.html'
                 });

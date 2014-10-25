@@ -7,6 +7,7 @@ and open the template in the editor.
 <div class="detail">
     <h2>{{mwevent.name}}</h2>
     <p>{{mwevent.description}}</p>
+    <input type="button" value="Edit" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/edit-mewap/' + mwevent.id)" ng-if="mwevent.creator.email === loggedInUser && mwevent.deadline > currentDate"/>
     <table class="table">
         <tbody>
             <tr ng-repeat="rows in matrix" ng-init="y = $index">
@@ -33,6 +34,7 @@ and open the template in the editor.
     <div class="btn-group answer">
         <input type="button" value="Cancel" class="btn btn-default answer cancel" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
         <input type="button" value="Done" class="btn btn-default answer save" ng-click="done()" ng-if="mwevent.deadline > currentDate"/>
+        
     </div>
     <div class="deadline">
         <h3>Last day to answer <span ng-if="mwevent.deadline < currentDate">(PASSED)</span></h3>
@@ -44,6 +46,6 @@ and open the template in the editor.
             <li ng-repeat="p in participators">
                 {{p.name}} <span ng-repeat="a in mwevent.answers" ng-if=" p.email === a.user.email">  (answered)</span>
             </li> 
-        </ul> 
+        </ul>
     </div>
 </div>
