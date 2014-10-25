@@ -45,6 +45,10 @@ button:not([disabled="disabled"]):hover, input[type="button"]:not([disabled="dis
     opacity: 0.9;
 }
 
+button[disabled="disabled"] {
+    opacity: 0.5;
+}
+
 body > div:first-child {
     min-height: 100%;
     position: relative;
@@ -616,3 +620,29 @@ footer #login a {
         color: #FFF1F1
     }
     
+/* Error 404 - styles not found */
+    .notFound {
+        padding-top: 60px;
+    }
+    .notFound img, .notFound div {
+        float: left;
+    }
+    
+    .notFound img {
+        margin-right: 44px;
+    }
+    
+    .notFound div {
+        width: 500px;
+        margin-top: 50px;
+    }
+    
+    .notFound input[type="button"] {
+        font-size: 0.8em;
+        height: 37px;
+        width: 120px;
+        background: rgb(67, 163, 67);
+        border: 2px rgb(133, 219, 133) solid;
+        color: #FCFFFC;
+        border-radius: 5px;
+    }
