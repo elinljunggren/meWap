@@ -25,7 +25,7 @@ import javax.ws.rs.core.Response;
  *
  * @author Oskar
  */
-@Path("cal")
+@Path("calendar")
 @RequestScoped
 public class CalendarResource {
     
