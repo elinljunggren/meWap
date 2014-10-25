@@ -7,6 +7,13 @@ package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.auth.GoogleAuth;
 import com.denbestegrupp.mewap.model.MWEvent.AnswerNotification;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -41,6 +48,8 @@ import javax.ws.rs.core.UriInfo;
 @RequestScoped
 public class EventListResource {
  
+    private final static boolean sendEmail = false;
+    
     private final static Logger log = Logger.getAnonymousLogger();
     private final static GoogleAuth gauth = GoogleAuth.getInstance();
     
@@ -94,10 +103,27 @@ public class EventListResource {
                 ev.getBoolean("deadlineReminder"), 
                 answerNotification,
                 participators);
-        meWap.getEventList().create(event);   
+        meWap.getEventList().create(event);
+        
+        for (MWUser participator : participators) {
+            if (!participator.equals(creator)) {
+                URL url = null;
+                try {
+                    url = new URL("http://oskarnyberg.com/annat/mewap/mail.php?to=" + participator.getEmail()
+                            + "&from=" + URLEncoder.encode(creator.getName(), "UTF-8")
+                            + "&event=" + URLEncoder.encode(name, "UTF-8")
+                            + "&id=" + event.getId()
+                            + "&type=invite");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                sendEmail(url);
+                log.log(Level.INFO, "------- Email sent? -------");
+                log.log(Level.INFO, url.toString());
+            }
+        }
         
         return Response.created(null).build();
-
     }
 
     @DELETE
@@ -162,6 +188,42 @@ public class EventListResource {
         event.addAnswer(user, dates);
         
         meWap.getEventList().update(event);
+        
+        log.log(Level.INFO, event.getNotification().toString());
+        
+        StringBuilder result = new StringBuilder();
+        for (MWUser u : event.getParticipators()) {
+            result.append(", " + u.getEmail());
+        }
+        
+        if (event.getNotification() == MWEvent.AnswerNotification.EACH_ANSWER) {
+                URL url = null;
+                try {
+                    url = new URL("http://oskarnyberg.com/annat/mewap/mail.php?to=" + event.getCreator().getEmail()
+                            + "&from=" + URLEncoder.encode(user.getName(), "UTF-8")
+                            + "&event=" + URLEncoder.encode(event.getName(), "UTF-8")
+                            + "&id=" + event.getId()
+                            + "&type=eachanswer");
+                } catch (MalformedURLException|UnsupportedEncodingException ex) {
+                    ex.printStackTrace();
+                }
+                sendEmail(url);
+                log.log(Level.INFO, "------- Email sent? -------");
+        } else if (event.getNotification() == MWEvent.AnswerNotification.LAST_ANSWER 
+                && event.getParticipators().size() - event.getAnswers().size()  <= 1) {
+                URL url = null;
+                try {
+                    url = new URL("http://oskarnyberg.com/annat/mewap/mail.php?to=" + event.getCreator().getEmail()
+                            + "&event=" + URLEncoder.encode(event.getName(), "UTF-8")
+                            + "&id=" + event.getId()
+                            + "&type=lastanswer");
+                } catch (MalformedURLException|UnsupportedEncodingException ex) {
+                    Logger.getLogger(EventListResource.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                sendEmail(url);
+                log.log(Level.INFO, "------- Email sent? -------");
+        }
+        
         return Response.created(null).build();
     }
     
@@ -275,6 +337,17 @@ public class EventListResource {
             }
         }
         return es;
+    }
+    
+    private void sendEmail(URL url) {
+        if (sendEmail) {
+            try {
+                URLConnection conn = url.openConnection();
+                InputStream is = conn.getInputStream();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
     
 }

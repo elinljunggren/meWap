@@ -102,6 +102,9 @@ public class AuthCallback extends HttpServlet {
         if (user == null) {
             user = new MWUser(json.get("email"), json.get("name"));
             mewap.getUserList().create(user);
+        } else if (user.getName().equals(user.getEmail())) {
+            user.setName(json.get("name"));
+            mewap.getUserList().update(user);
         }
         
         log.log(Level.INFO, "---------- Token retreived ----------");
