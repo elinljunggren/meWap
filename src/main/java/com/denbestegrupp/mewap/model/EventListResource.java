@@ -158,15 +158,7 @@ public class EventListResource {
         for (JsonValue date : a.getJsonArray("dates")) {
             dates.add(Long.parseLong(date.toString()));
         }
-        
-        for(MWAnswer mwa : event.getAnswers()) {
-            if(user.equals(mwa.getUser())) {
-                log.log(Level.INFO, "HALLÅÅÅÅÅ" + mwa.getUser().getName());
-                mwa.updateDates(dates);
-                break;
-            }
-        }
-        
+
         event.addAnswer(user, dates);
         
         meWap.getEventList().update(event);

@@ -6,6 +6,7 @@
 package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.persistence.AbstractEntity;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -124,7 +125,20 @@ public class MWEvent extends AbstractEntity {
     }
     
     public List<MWAnswer> getAnswers() {
-        return answers;
+        List<MWAnswer> as = new ArrayList<>();
+        for (int i = (answers.size() - 1); i >= 0; i--) {
+            boolean save = true;
+            for (MWAnswer a2 : as) {
+                if (answers.get(i).getUser().equals(a2.getUser())) {
+                    save = false;
+                    break;
+                }
+            }
+            if (save) {
+                as.add(answers.get(i));
+            }
+        }
+        return as;
     }
     
     public void addAnswer(MWUser user, List<Long> dates) {
