@@ -45,7 +45,7 @@ public class GoogleAuth {
         StringBuilder oauthUrl = new StringBuilder().append("https://accounts.google.com/o/oauth2/auth")
         .append("?client_id=").append(AuthConstants.CLIENT_ID)
         .append("&response_type=code")
-        .append("&scope=openid%20email")
+        .append("&scope=openid%20email%20https://www.googleapis.com/auth/calendar")
         .append("&redirect_uri=").append(AuthConstants.CALLBACK_URL)
         .append("&state=")
         .append("&access_type=offline")
