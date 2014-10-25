@@ -289,11 +289,21 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                     $scope.participators = getParticipators(event);
                     
                     event.answers.forEach(function(answer) {
+                        if(answer.user.email === loggedInUser) {
+                            answer.dates.forEach(function(date) {
+                                $scope.addA(new Date(date));
+                            });
+                        }
+                    });
+
+                    event.answers.forEach(function(answer) {
                         answer.dates.forEach(function(date) {
                             if ($scope.answersPerDate[date] === undefined) {
                                 $scope.answersPerDate[date] = [];
                             }
-                            $scope.answersPerDate[date][$scope.answersPerDate[date].length] = answer.user;
+                            if(answer.user.email !== loggedInUser) {
+                                $scope.answersPerDate[date][$scope.answersPerDate[date].length] = answer.user;
+                            }
                         });
                     });
                     
