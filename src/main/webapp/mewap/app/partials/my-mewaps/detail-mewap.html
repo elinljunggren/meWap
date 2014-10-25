@@ -4,21 +4,26 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 
-<div>
-    <div><h2>{{mwevent.name}}</h2></div>
-    <div><h3>{{mwevent.description}}</h3></div>
+<div class="detail">
+    <h2>{{mwevent.name}}</h2>
+    <p>{{mwevent.description}}</p>
+    <input type="button" value="Edit" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/edit-mewap/')" ng-if="mwevent.creator.email === loggedInUser"/>
     <table class="table">
         <tbody>
             <tr ng-repeat="rows in matrix" ng-init="y = $index">
-                <td ng-repeat="col in rows track by $index" ng-init="x = $index">
+                <td ng-repeat="col in rows track by $index" ng-init="x = $index" ng-class="{noDate: col === null, title: y*x === 0 && y+x !== 0}">
                     <p ng-if="y*x === 0 && col !== null">{{col}}</p>
                     <div ng-if="y*x > 0 && col !== null">
-                        <p ng-click="addA(col)" ng-class="checked[col]">{{answersPerDate[col.getTime()].length || "0"}}</p>
-                        <div>
-                            {{col.getFullYear() + "-" + (col.getMonth()+1) + "-" + col.getDate()}}
-                            People who have accepted
+                        <p ng-class="checked[col]">{{answersPerDate[col.getTime()].length || "0"}}</p>
+                        <div ng-click="addA(col)">
+                            <h3>
+                                {{col.getFullYear() + "-" + (col.getMonth()+1) + "-" + col.getDate()}}
+                            </h3>
                             <span ng-repeat="user in answersPerDate[col.getTime()]">
                                 {{user.name}}
+                            </span>
+                            <span ng-if="mwevent.deadline > currentDate">
+                                (Click to accept)
                             </span>
                         </div>
                     </div>
@@ -26,17 +31,21 @@ and open the template in the editor.
             </tr>
         </tbody>
     </table>
-    <h4>Last day to answer: </h4>
-    <p>{{dl}}</p>
-    <div><h4>Participators:</h4></div>
-        <ul>
-        <li ng-repeat="p in participators">
-            <p>{{p}}</p>
-        </li> 
-    </ul>
     <div class="btn-group answer">
         <input type="button" value="Cancel" class="btn btn-default answer cancel" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
-        <input type="button" value="Done" class="btn btn-default answer save" ng-click="done()"/>
-        <input type="button" value="Edit" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/edit-mewap/')"/>
+        <input type="button" value="Done" class="btn btn-default answer save" ng-click="done()" ng-if="mwevent.deadline > currentDate"/>
+        
+    </div>
+    <div class="deadline">
+        <h3>Last day to answer <span ng-if="mwevent.deadline < currentDate">(PASSED)</span></h3>
+        <p>{{dl}}</p>
+    </div>
+    <div class="participators">
+       <h3>Participators</h3>
+       <ul>
+            <li ng-repeat="p in participators">
+                {{p.name}} <span ng-repeat="a in mwevent.answers" ng-if=" p.email === a.user.email">  (answered)</span>
+            </li> 
+        </ul>
     </div>
 </div>

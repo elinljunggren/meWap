@@ -258,7 +258,19 @@ Date.prototype.getSimpleDate = function () {
 Date.prototype.getSimpleTime = function () {
     var d = new Date(+this);
     var simple = new String();
-    simple = d.getHours() + ":" + d.getMinutes();
+    
+    if(d.getHours() < 10) {
+        simple = "0" + d.getHours() + ":";
+    } else {
+        simple = d.getHours() + ":";
+    }
+    
+    if(d.getMinutes() < 10) {
+            simple += "0" + d.getMinutes();
+    } else {
+        simple += d.getMinutes();
+    }
+
     return simple;
 };
 
@@ -272,6 +284,7 @@ function arrayContains(array, elem) {
     }
     return false;
 }
+
 eventListControllers.controller('HistoryCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
@@ -320,6 +333,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
         }
     }
 ]);
+
 eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
@@ -329,18 +343,30 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         $scope.answer.dates = [];
         $scope.checked = [];
         $scope.answersPerDate = [];
+        $scope.currentDate = new Date().getTime();
+        $scope.oldEvents = [];
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     $scope.mwevent = event;
                     $scope.dl = new Date(event.deadline).toDateString();
                     $scope.participators = getParticipators(event);
+                    
+                    event.answers.forEach(function(answer) {
+                        if(answer.user.email === loggedInUser) {
+                            answer.dates.forEach(function(date) {
+                                $scope.addA(new Date(date));
+                            });
+                        }
+                    });
 
-                    event.answers.forEach(function (answer) {
-                        answer.dates.forEach(function (date) {
+                    event.answers.forEach(function(answer) {
+                        answer.dates.forEach(function(date) {
                             if ($scope.answersPerDate[date] === undefined) {
                                 $scope.answersPerDate[date] = [];
                             }
-                            $scope.answersPerDate[date][$scope.answersPerDate[date].length] = answer.user;
+                            if(answer.user.email !== loggedInUser) {
+                                $scope.answersPerDate[date][$scope.answersPerDate[date].length] = answer.user;
+                            }
                         });
                     });
 
@@ -352,17 +378,16 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                             }
                         }
                     }
-                    console.log($scope.matrix);
                 }).error(function () {
             console.log("selectByPk: error");
         });
 
         function getParticipators(event) {
-            var names = [];
+            var p = [];
             event.participators.forEach(function (u) {
-                names[names.length] = u.name;
+                p[p.length] = u;
             });
-            return names;
+            return p;
         }
 
         function sortByWeek(event) {
@@ -510,10 +535,13 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         };
 
         $scope.addA = function (col) {
+            if($scope.mwevent.deadline < new Date().getTime()) {
+                return;
+            }
             var tmp = $scope.answer.dates;
             var date = new Date(col);
-            var currentUser = {"email": loggedInUser, "name": userName};
-            console.log($scope.answersPerDate[col.getTime()]);
+
+            var currentUser = {"email":loggedInUser,"name":userName};
             if (containsUser($scope.answersPerDate[col.getTime()], currentUser)) {
                 var index = tmp.indexOf(date.getTime().toString());
                 tmp.splice(index, 1);
@@ -544,7 +572,6 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 ;
             });
         };
-
         //controller för knappar inom detail
         //TODO
     }]);

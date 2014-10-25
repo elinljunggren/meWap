@@ -457,9 +457,142 @@ footer #login a {
     }
     
     .myMewaps table td:first-child {
-        width: 45%;
+        width: 40%;
     }
     
     .myMewaps table td:last-child {
-        width: 20%;
+        width: 25%;
+    }
+    
+ /* detail-mewap.html */
+    .detail {
+        overflow: hidden;
+    }
+ 
+    .detail h2 {
+        margin: 0;
+    }
+    
+    .detail > p:first-of-type {
+        margin: 5px 0 30px;
+    }
+ 
+    .detail table {
+        border-spacing: 0;
+    }
+ 
+    .detail table td {
+        min-width: 40px;
+        text-align: center;
+        vertical-align: middle;
+        padding: 15px 20px;
+    }
+    
+    .detail table td:not(:first-child):not(.noDate):not(.title) {
+        cursor: pointer;
+        background-color: #DDFFDD;
+        position: relative;
+    }
+    
+    .detail table td.title {
+        font-weight: bold;
+        background-color: #EFEFEF;
+    }
+    
+    .detail table td.noDate {
+        background-color: #EFEFEF;
+    }
+    
+    .detail table td > p, .detail table td > div, .detail table td > div > p {
+        display: inline;
+    }
+    
+    .detail table td > div > div {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        width: 150px;
+        background: #FBFBFB;
+        padding: 25px;
+        opacity: 0.8;
+    }
+    
+    .detail table td > div > div > h3, .detail table td > div > div > h4 {
+        margin: 0 0 10px;
+    }
+    
+    .detail table td > div > div > span {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .detail table td > div > div > span:last-child {
+        font-size: 0.8em;
+        margin: 15px 0 0;
+    }
+    
+    .detail table td:hover > div > div {
+        display: block;
+    }
+    
+    .detail .deadline {
+        margin: 25px 30px 10px 40px;
+        float: left;
+    }
+    
+    .detail .participators {
+        float: left;
+        width: 100%;
+    }
+    
+    .detail .participators ul {
+        list-style: none;
+        margin: 0;
+        padding-left: 20px;
+    }
+    
+    .detail .participators ul li {
+        margin: 8px;
+    }
+    
+    .detail .participators ul li span {
+        color: green;
+    }
+    
+    .detail > div > h3 {
+        margin: 0 0 8px;
+    }
+    
+    .detail > div > p {
+        margin: 0;
+    }
+    
+    .detail .btn-group {
+        margin: 30px 0;
+        float: left;
+    }
+    
+    .detail input[type="button"] {
+        font-size: 0.8em;
+        height: 37px;
+        width: 120px;
+        background: #2871D7;
+        border: 2px #3388FF solid;
+        border-radius: 5px;
+        color: #E6F0FF;
+    }
+    
+    .detail input[type="button"]:last-child {
+        background: rgb(67, 163, 67);
+        border-color: rgb(133, 219, 133);
+        color: #FCFFFC;
+        margin: 0 20px;
+    }
+    
+    .detail input[type="button"]:first-child {
+        background: rgb(255, 64, 64);
+        border-color: rgb(255, 166, 166);
+        color: #FFF1F1
     }

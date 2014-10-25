@@ -69,14 +69,22 @@ public class EventListResource {
         List<MWUser> participators = new ArrayList<>();
         participators.add(creator);
         for (JsonValue p : ev.getJsonArray("participators")) {
-                participators.add(meWap.getUserList().find(p.toString()));
+            String email = p.toString();
+            MWUser participator = meWap.getUserList().find(email);
+            if(participator == null) {
+                participator = new MWUser(email, email);
+                meWap.getUserList().create(participator);
+            }
+            participators.add(participator);
         }
 
         long durationValue = -1;
         if(!ev.isNull("duration")) {
             durationValue = (long) ev.getInt("duration");
         }
-        MWEvent event = new MWEvent(ev.getString("name"),
+        
+        String name = ev.getString("name");
+        MWEvent event = new MWEvent(name,
                 creator,
                 ev.getString("description"),
                 dates,
@@ -139,18 +147,18 @@ public class EventListResource {
     @PUT
     @Path(value = "/answer/{id}")
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response addAnswer(@PathParam(value = "id") final long id, JsonObject ev) {
+    public Response addAnswer(@PathParam(value = "id") final long id, JsonObject a) {
         log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
-        log.log(Level.INFO, "Json{0}", ev.toString());
+        log.log(Level.INFO, "Json{0}", a.toString());
         
         MWEvent event = meWap.getEventList().find(id);
-        MWUser user = meWap.getUserList().find(ev.getString("user"));
+        MWUser user = meWap.getUserList().find(a.getString("user"));
 
         List<Long> dates = new ArrayList<>();
-        for (JsonValue date : ev.getJsonArray("dates")) {
+        for (JsonValue date : a.getJsonArray("dates")) {
             dates.add(Long.parseLong(date.toString()));
         }
-        
+
         event.addAnswer(user, dates);
         
         meWap.getEventList().update(event);
