@@ -340,7 +340,7 @@ footer #login a {
 
 /* create-mewap.html */
     h2.create {
-        text-align: center;
+        margin-left: 100px;
     }
 
     table.create {
@@ -364,8 +364,12 @@ footer #login a {
         padding-left: 5px;
     }
     
-    table.create #allDayEvent:not(:checked) {
+    table.create input[type="checkbox"] {
         margin-left: 14px;
+    }
+    
+    table.create #allDayEvent:checked {
+        margin-left: 0px;
     }
     
     table.create input[type="text"], table.create input[type="email"], table.create input[type="time"], table.create input[type="datetime-local"], table.create input[type="date"] {
@@ -471,6 +475,21 @@ footer #login a {
  
     .detail h2 {
         margin: 0;
+        display: inline-block;
+    }
+    
+    .detail input[type="button"]:first-of-type {
+        display: inline-block;
+        position: relative;
+        top: -2px;
+        margin-left: 15px;
+        font-size: 0.9em;
+        background: #eee;
+        border: none;
+    }
+    
+    .detail input[type="button"]:first-of-type:hover {
+        background: #ccc;
     }
     
     .detail > p:first-of-type {
@@ -574,7 +593,7 @@ footer #login a {
         float: left;
     }
     
-    .detail input[type="button"] {
+    .detail input[type="button"]:first-child, .detail input[type="button"]:last-child {
         font-size: 0.8em;
         height: 37px;
         width: 120px;
@@ -596,3 +615,4 @@ footer #login a {
         border-color: rgb(255, 166, 166);
         color: #FFF1F1
     }
+    
