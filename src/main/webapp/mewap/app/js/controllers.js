@@ -108,7 +108,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     function ($scope, $location, EventListProxy) {
         $scope.loggedInUser = loggedInUser;
         $scope.userName = userName;
-            $scope.dates = [];
+        $scope.dates = [];
         $scope.addDateField = function () {
             $scope.dates[$scope.dates.length] = new Date();
         };
@@ -156,8 +156,8 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             $scope.mwEvent.participators = $scope.participators;
             $scope.mwEvent.deadlineReminder = $scope.mwEvent.deadlineReminder === "true" ? true : false;
             var duration = new Date($scope.mwEvent.duration);
-            var hour = duration.getHours(); 
-             var minute = duration.getMinutes();
+            var hour = duration.getHours();
+            var minute = duration.getMinutes();
             hour = hour * 60 * 1000;
             minute = minute * 60 * 60 * 1000;
             $scope.mwEvent.duration = hour + minute;
@@ -173,7 +173,74 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             });
         };
     }]);
+eventListControllers.controller('EditCtrl', ['$scope', '$location',
+    'EventListProxy', '$routeParams',
+    function ($scope, $location, EventListProxy, $routeParams) {
+        $scope.loggedInUser = loggedInUser;
+        $scope.userName = userName;
+        $scope.dates = [];
 
+        EventListProxy.find($routeParams.id)
+                .success(function (event) {
+                    $scope.mwevent = event;
+                    $scope.mwevent.deadline = new Date(event.deadline);
+                    
+                    var dateList = [];
+                    $scope.mwevent.dates.forEach(function(date){
+                       dateList[dateList.length] = new Date(date);
+                    });
+                    $scope.dates = dateList;
+
+                    var partList = [];
+                    $scope.mwevent.participators.forEach(function(user){
+                        partList[partList.length] = user.email;
+                    });
+                    $scope.participators = partList;
+                    console.log($scope.mwevent.deadlineReminder);
+                }).error(function () {
+            console.log("selectById: error");
+        });
+
+        $scope.addDateField = function () {
+            $scope.dates[$scope.dates.length] = new Date();
+        };
+        $scope.addDateField();
+        $scope.removeDateField = function (index) {
+            $scope.dates.splice(index, 1);
+        };
+        $scope.participators = [];
+        $scope.addParticipatorField = function () {
+            $scope.participators[$scope.participators.length] = new String();
+        };
+        $scope.removeParticipatorField = function (index) {
+            $scope.participators.splice(index, 1);
+        };
+        $scope.addParticipatorField();
+        
+        $scope.update = function () {
+            $scope.dates.forEach(function (date) {
+                $scope.mwevent.dates[$scope.mwevent.dates.length] = date.getTime().toString();
+            });
+            $scope.mwevent.deadline = $scope.mwevent.deadline.getTime().toString();
+            $scope.mwevent.participators = $scope.participators;
+            $scope.mwevent.deadlineReminder = $scope.mwevent.deadlineReminder === "true" ? true : false;
+            var duration = new Date($scope.mwevent.duration);
+            var hour = duration.getHours();
+            var minute = duration.getMinutes();
+            hour = hour * 60 * 1000;
+            minute = minute * 60 * 60 * 1000;
+            $scope.mwevent.duration = hour + minute;
+            if ($scope.mwevent.allDayEvent !== true) {
+                $scope.mwevent.allDayEvent = false;
+            }
+            EventListProxy.update($routeParams.id, $scope.mwevent)
+                    .success(function () {
+                        $location.path('/my-mewaps');
+                    }).error(function () {
+                ;
+            });
+        };
+    }]);
 Date.prototype.getWeekNumber = function () {
     var d = new Date(+this);
     d.setHours(0, 0, 0);
@@ -235,7 +302,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
                 }).error(function () {
             console.log("count: error");
         });
-        
+
         $scope.$watch('currentPage', function () {
             getRange();
         });
@@ -280,22 +347,36 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         $scope.oldEvents = [];
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
+                    if(event.toString().length === 0){
+                        $location.path("/404.html");
+                        return;
+                    }
                     $scope.mwevent = event;
                     $scope.dl = new Date(event.deadline).toDateString();
                     $scope.participators = getParticipators(event);
                     
                     event.answers.forEach(function(answer) {
+                        if(answer.user.email === loggedInUser) {
+                            answer.dates.forEach(function(date) {
+                                $scope.addA(new Date(date));
+                            });
+                        }
+                    });
+
+                    event.answers.forEach(function(answer) {
                         answer.dates.forEach(function(date) {
                             if ($scope.answersPerDate[date] === undefined) {
                                 $scope.answersPerDate[date] = [];
                             }
-                            $scope.answersPerDate[date][$scope.answersPerDate[date].length] = answer.user;
+                            if(answer.user.email !== loggedInUser) {
+                                $scope.answersPerDate[date][$scope.answersPerDate[date].length] = answer.user;
+                            }
                         });
                     });
-                    
+
                     $scope.matrix = sortMaster(event.dates, event);
-                    for (var i=0; i<$scope.matrix.length; i++) {
-                        for (var j=0; j<$scope.matrix[0].length; j++) {
+                    for (var i = 0; i < $scope.matrix.length; i++) {
+                        for (var j = 0; j < $scope.matrix[0].length; j++) {
                             if ($scope.matrix[i][j] === undefined) {
                                 $scope.matrix[i][j] = null;
                             }
@@ -446,23 +527,24 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
 
         //eventID, user, lista med answers
         //
-        var containsUser = function(array, user) {
-            if(array !== undefined){
-                for (var i=0; i<array.length; i++) {
+        var containsUser = function (array, user) {
+            if (array !== undefined) {
+                for (var i = 0; i < array.length; i++) {
                     if (array[i].email === user.email) {
-                     return true;
+                        return true;
                     }
                 }
             }
             return false;
         };
-        
+
         $scope.addA = function (col) {
             if($scope.mwevent.deadline < new Date().getTime()) {
                 return;
             }
-            var tmp = $scope.answer.dates;
+            var tmp = $scope.answer.dates; // the old dates the user has selected
             var date = new Date(col);
+
             var currentUser = {"email":loggedInUser,"name":userName};
             if (containsUser($scope.answersPerDate[col.getTime()], currentUser)) {
                 var index = tmp.indexOf(date.getTime().toString());
@@ -481,18 +563,18 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             $scope.answer.dates = tmp;
         };
 
-        
+
         //when buttom pushed
-        $scope.done = function (){
-            
+        $scope.done = function () {
+
             $scope.answer.user = loggedInUser; //user
-            
+
             EventListProxy.addAnswer($routeParams.id, $scope.answer)
-                    .success(function () { 
+                    .success(function () {
                         $location.path('/my-mewaps');
                     }).error(function () {
                 ;
-            });    
+            });
         };
         //controller för knappar inom detail
         //TODO
@@ -529,36 +611,36 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
         if (firstPage) {
             firstPage = false;
             AuthProxy.isLoggedIn()
-                    .success(function(loggedIn) {
-                if (loggedIn.loggedIn) {
-                    AuthProxy.getLoggedInUser()
-                    .success(function(user) {
-                        loggedInUser = user.email;
-                        userName = user.name;
-                        $scope.loggedInUser = loggedInUser;
-                        $scope.userName = userName;
-                        $scope.loginURL = loginURL;
-                        setTimeout(function () {
-                            var logout = document.getElementById("logout");
-                            logout.style.width = (logout.offsetWidth+50) + "px";
-                        }, 3000);
-                    }).error(function() {
-                        console.log("loggedInUser: error");
-                    });
-                    if ($location.path() === "/") {
-                        $scope.navigate("/my-mewaps");
-                    }
-                } else {
-                    $scope.navigate("/");
-                    AuthProxy.login()
-                    .success(function(url) {
-                        loginURL = url.url;
-                        $scope.loginURL = url.url;
-                    }).error(function() {
-                        console.log("getLoginURL: error");
-                    });
-                }
-            }).error(function() {
+                    .success(function (loggedIn) {
+                        if (loggedIn.loggedIn) {
+                            AuthProxy.getLoggedInUser()
+                                    .success(function (user) {
+                                        loggedInUser = user.email;
+                                        userName = user.name;
+                                        $scope.loggedInUser = loggedInUser;
+                                        $scope.userName = userName;
+                                        $scope.loginURL = loginURL;
+                                        setTimeout(function () {
+                                            var logout = document.getElementById("logout");
+                                            logout.style.width = (logout.offsetWidth + 50) + "px";
+                                        }, 3000);
+                                    }).error(function () {
+                                console.log("loggedInUser: error");
+                            });
+                            if ($location.path() === "/") {
+                                $scope.navigate("/my-mewaps");
+                            }
+                        } else {
+                            $scope.navigate("/");
+                            AuthProxy.login()
+                                    .success(function (url) {
+                                        loginURL = url.url;
+                                        $scope.loginURL = url.url;
+                                    }).error(function () {
+                                console.log("getLoginURL: error");
+                            });
+                        }
+                    }).error(function () {
                 console.log("isloggedin: error");
             });
         }

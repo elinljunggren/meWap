@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <!--
-Page where the user can create a meWap, 
-all fields are mandatory to fill in.
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
 -->
-<!-- author Emma-->
 <div>
-    <!--body content-->
-    <h2 class="create">Create new meWap</h2>
-
+     <!--body content-->
+    <h2 class="create">Edit meWap</h2>
+    <div><h3>{{mwevent.name}}</h3></div>
+    <div><h4>{{mwevent.description}}</h4></div>
     <table class="create">
         <tr>
             <td>Name of event:</td>
             <td>
-                <input ng-model="mwEvent.name" type="text" required placeholder="Enter name..." value="{{mwEvent.name}}"  />
+                <input ng-model="mwevent.name"  type="text" value="{{mwevent.name}}"  />
             </td>
 
         </tr>
         <tr>
             <td>Description of event:</td>
             <td>
-                <input ng-model="mwEvent.description" type="text" placeholder="Describe your event..." value="{{mwEvent.description}}"/>
+                <input ng-model="mwevent.description" type="text" placeholder="Describe your event..." value="{{mwevent.description}}"/>
             </td>
         </tr>
         <tr>
             <td>Length of event: </td>
             <td>
+                
 
-
-                <input ng-model="mwEvent.duration" type="time" step="900" value="{{mwEvent.duration}}" ng-if="mwEvent.allDayEvent != true"/>
-                <input ng-model="mwEvent.allDayEvent" type="checkbox" name="allDayEvent" value="{{mwEvent.allDayEvent}}" id="allDayEvent"/>
+                <input ng-model="mwevent.duration" type="time" step="900" value="{{mwevent.duration}}" ng-if="mwevent.allDayEvent != true"/>
+                <input ng-model="mwevent.allDayEvent" type="checkbox" name="allDayEvent" value="{{mwevent.allDayEvent}}" id="allDayEvent"/>
                 <label for="allDayEvent">
                     All day event
                 </label><br>
@@ -40,12 +41,11 @@ all fields are mandatory to fill in.
             <td>
 
                 <div ng-repeat="date in dates track by $index">
-                    <input ng-model="dates[$index]" type="datetime-local" value="{{dates[$index]}}" ng-if="mwEvent.allDayEvent != true"/>
-                    <input ng-model="dates[$index]" type="date" value="{{dates[$index]}}" ng-if="mwEvent.allDayEvent == true"/>
+                    <input ng-model="dates[$index]" type="datetime-local" value="{{dates[$index]}}" ng-if="mwevent.allDayEvent != true"/>
+                    <input ng-model="dates[$index]" type="date" value="{{dates[$index]}}" ng-if="mwevent.allDayEvent == true"/>
 
                     <input type ="button" value="X" class="btn btn-default" ng-click="removeDateField($index)" ng-if="dates.length > 1"/>
                 </div>
-
 
                 <input type="button" value="Add date" class="btn btn-default" ng-click="addDateField()"/>
 
@@ -57,26 +57,27 @@ all fields are mandatory to fill in.
                 Response deadline:
             </td>
             <td> 
-                <input ng-model="mwEvent.deadline" type="date" name="deadline" value="{{mwEvent.deadline}}" />
-                 <input ng-model="mwEvent.deadlineReminder" type="checkbox" name="deadlineReminder" value="{{mwEvent.deadlineReminder}}" id="deadlinereminder_true" />
+                <input ng-model="mwevent.deadline" type="date" name="deadline" value="{{mwevent.deadline}}" />
+                <input ng-model="mwevent.deadlineReminder" type="checkbox" name="deadlineReminder" value="{{mwevent.deadlineReminder}}" id="deadlinereminder_true" />
                  <label for ="deadlineReminder">
                      Send deadline reminder?
                  </label>
             </td>
         </tr>
+
         <tr>
             <td class="vtop">Notify participators?</td>
             <td>
                 <form>
-                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="NO_NOTIFICATION" id="no_notification" />
+                    <input ng-model="mwevent.notification" type="radio" name="notification" value="NO_NOTIFICATION" id="no_notification" />
                     <label for="no_notification">
                         No notification
                     </label><br />
-                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="EACH_ANSWER" id="each_answer" />
+                    <input ng-model="mwevent.notification" type="radio" name="notification" value="EACH_ANSWER" id="each_answer" />
                     <label for="each_answer">
                         Notification for every answer
                     </label><br />
-                    <input ng-model="mwEvent.notification" type="radio" name="notification" value="LAST_ANSWER" id="last_answer" />
+                    <input ng-model="mwevent.notification" type="radio" name="notification" value="LAST_ANSWER" id="last_answer" />
                     <label for="last_answer">
                         Noification for last answer
                     </label>
@@ -99,9 +100,7 @@ all fields are mandatory to fill in.
 
     <div class="btn-group create">
         <input type="button" value="Cancel" class="btn btn-default create cancel" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
-        <input type="button" value="Save" class="btn btn-default create save" 
-               ng-click="save()"  ng-disabled="!(mwEvent.name && mwEvent.notification && mwEvent.deadline &&
-                                           mwEvent.description && (mwEvent.allDayEvent || mwEvent.duration))"/>
+        <input type="button" value="Update" class="btn btn-default create update" ng-click="update()"  />
     </div>
 
 </div>
