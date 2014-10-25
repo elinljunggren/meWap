@@ -182,6 +182,10 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
 
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
+                    if(event.toString().length === 0){
+                        $location.path("404.html");
+                        return;
+                    }
                     $scope.mwevent = event;
                     $scope.mwevent.deadline = new Date(event.deadline);
                     
