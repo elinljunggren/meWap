@@ -106,15 +106,15 @@ public class EventListResource {
         for (MWUser participator : participators) {
             if (!participator.equals(creator)) {
                 try {
-                    
                     URL url = new URL("http://oskarnyberg.com/annat/mewap/mail.php?to=" + participator.getEmail()
                             + "&from=" + URLEncoder.encode(creator.getName(), "UTF-8")
-                            + "&event=" + name
-                            + "&id=" + event.getId());
+                            + "&event=" + URLEncoder.encode(name, "UTF-8")
+                            + "&id=" + event.getId()
+                            + "&type=invite");
                     URLConnection conn = url.openConnection();
                     InputStream is = conn.getInputStream();
                     log.log(Level.INFO, "------- Email sent? -------");
-                    
+                    log.log(Level.INFO, url.toString());
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -194,6 +194,42 @@ public class EventListResource {
         event.addAnswer(user, dates);
         
         meWap.getEventList().update(event);
+        
+        log.log(Level.INFO, event.getNotification().toString());
+        
+        StringBuilder result = new StringBuilder();
+        for (MWUser u : event.getParticipators()) {
+            result.append(", " + u.getEmail());
+        }
+        
+        if (event.getNotification() == MWEvent.AnswerNotification.EACH_ANSWER) {
+                try {
+                    URL url = new URL("http://oskarnyberg.com/annat/mewap/mail.php?to=" + event.getCreator().getEmail()
+                            + "&from=" + URLEncoder.encode(user.getName(), "UTF-8")
+                            + "&event=" + URLEncoder.encode(event.getName(), "UTF-8")
+                            + "&id=" + event.getId()
+                            + "&type=eachanswer");
+                    URLConnection conn = url.openConnection();
+                    InputStream is = conn.getInputStream();
+                    log.log(Level.INFO, "------- Email sent? -------");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+        } else if (event.getNotification() == MWEvent.AnswerNotification.LAST_ANSWER 
+                && event.getParticipators().size() - event.getAnswers().size()  <= 1) {
+                try {
+                    URL url = new URL("http://oskarnyberg.com/annat/mewap/mail.php?to=" + event.getCreator().getEmail()
+                            + "&event=" + URLEncoder.encode(event.getName(), "UTF-8")
+                            + "&id=" + event.getId()
+                            + "&type=lastanswer");
+                    URLConnection conn = url.openConnection();
+                    InputStream is = conn.getInputStream();
+                    log.log(Level.INFO, "------- Email sent? -------");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+        }
+        
         return Response.created(null).build();
     }
     
