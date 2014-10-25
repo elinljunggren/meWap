@@ -347,6 +347,10 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         $scope.oldEvents = [];
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
+                    if(event.toString().length === 0){
+                        $location.path("/404.html");
+                        return;
+                    }
                     $scope.mwevent = event;
                     $scope.dl = new Date(event.deadline).toDateString();
                     $scope.participators = getParticipators(event);
@@ -538,7 +542,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             if($scope.mwevent.deadline < new Date().getTime()) {
                 return;
             }
-            var tmp = $scope.answer.dates;
+            var tmp = $scope.answer.dates; // the old dates the user has selected
             var date = new Date(col);
 
             var currentUser = {"email":loggedInUser,"name":userName};

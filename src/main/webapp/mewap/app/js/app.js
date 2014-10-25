@@ -47,7 +47,7 @@ meWap.config(['$routeProvider',
                     controller: 'EditCtrl'
                 }).
                 otherwise({
-                    redirectTo: '/index.html'
+                    templateUrl: 'partials/404.html'
                 });
 
 
