@@ -7,6 +7,13 @@ package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.auth.GoogleAuth;
 import com.denbestegrupp.mewap.model.MWEvent.AnswerNotification;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -94,10 +101,27 @@ public class EventListResource {
                 ev.getBoolean("deadlineReminder"), 
                 answerNotification,
                 participators);
-        meWap.getEventList().create(event);   
+        meWap.getEventList().create(event);
+        
+        for (MWUser participator : participators) {
+            if (!participator.equals(creator)) {
+                try {
+                    
+                    URL url = new URL("http://oskarnyberg.com/annat/mewap/mail.php?to=" + participator.getEmail()
+                            + "&from=" + URLEncoder.encode(creator.getName(), "UTF-8")
+                            + "&event=" + name
+                            + "&id=" + event.getId());
+                    URLConnection conn = url.openConnection();
+                    InputStream is = conn.getInputStream();
+                    log.log(Level.INFO, "------- Email sent? -------");
+                    
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
         
         return Response.created(null).build();
-
     }
 
     @DELETE
