@@ -173,6 +173,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             });
         };
     }]);
+
 eventListControllers.controller('EditCtrl', ['$scope', '$location',
     'EventListProxy', '$routeParams',
     function ($scope, $location, EventListProxy, $routeParams) {
@@ -567,7 +568,15 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             $scope.answer.dates = tmp;
         };
 
-
+        $scope.deleteEvent = function () {
+            EventListProxy.delete($routeParams.id)
+                    .success(function () {
+                        $location.path('/my-mewaps');
+                    }).error(function () {
+                        
+                    });
+        };
+        
         //when buttom pushed
         $scope.done = function () {
 
