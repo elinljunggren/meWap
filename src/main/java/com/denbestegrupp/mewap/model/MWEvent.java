@@ -133,7 +133,14 @@ public class MWEvent extends AbstractEntity {
     }
     
     public void removeAnswer(MWAnswer answer){
-        answers.remove(answer);
+        MWUser user = answer.getUser();
+        for(int i =0; i < answers.size(); i++) {
+            if(user.equals(answers.get(i).getUser())) {
+                answers.remove(i);
+                break;
+            }
+        }
+        //answers.remove(answer); Did not seem to work...
     }
 
     public void setName(String name) {

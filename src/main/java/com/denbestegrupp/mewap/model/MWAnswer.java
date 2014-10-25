@@ -50,6 +50,12 @@ public class MWAnswer extends AbstractEntity {
     public void addDate(Long date) {
 	    dates.add(date);
     }
+    
+    public void updateDates(List<Long> newDates) {
+        System.out.println("DETTA ÄR GAMLA DATUMEN: " + this.dates.toString());
+        this.dates = newDates;
+        System.out.println("DETTA ÄR NYA DATUMEN: " + this.dates.toString());
+    }
 
     @Override
     public int hashCode() {

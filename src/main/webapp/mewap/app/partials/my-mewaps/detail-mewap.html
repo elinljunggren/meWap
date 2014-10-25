@@ -21,7 +21,7 @@ and open the template in the editor.
                             <span ng-repeat="user in answersPerDate[col.getTime()]">
                                 {{user.name}}
                             </span>
-                            <span>
+                            <span ng-if="mwevent.deadline > currentDate">
                                 (Click to accept)
                             </span>
                         </div>
@@ -35,7 +35,7 @@ and open the template in the editor.
         <input type="button" value="Done" class="btn btn-default answer save" ng-click="done()" ng-if="mwevent.deadline > currentDate"/>
     </div>
     <div class="deadline">
-        <h3>Last day to answer </h3>
+        <h3>Last day to answer <span ng-if="mwevent.deadline < currentDate">(PASSED)</span></h3>
         <p>{{dl}}</p>
     </div>
     <div class="participators">
