@@ -7,8 +7,6 @@ and open the template in the editor.
 <div>
      <!--body content-->
     <h2 class="create">Edit meWap</h2>
-    <div><h3>{{mwevent.name}}</h3></div>
-    <div><h4>{{mwevent.description}}</h4></div>
     <table class="create">
         <tr>
             <td>Name of event:</td>
@@ -66,7 +64,7 @@ and open the template in the editor.
         </tr>
 
         <tr>
-            <td class="vtop">Notify participators?</td>
+            <td class="vtop">Email notification?</td>
             <td>
                 <form>
                     <input ng-model="mwevent.notification" type="radio" name="notification" value="NO_NOTIFICATION" id="no_notification" />
