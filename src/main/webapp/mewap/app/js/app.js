@@ -43,7 +43,7 @@ meWap.config(['$routeProvider',
                     controller: 'HistoryCtrl'
                 }).
                 otherwise({
-                    redirectTo: '/index.html'
+                    templateUrl: 'partials/404.html'
                 });
 
 
