@@ -81,13 +81,13 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
 
 
 var weekday = new Array(7);
-weekday[0] = "Sunday";
-weekday[1] = "Monday";
-weekday[2] = "Tuesday";
-weekday[3] = "Wednesday";
-weekday[4] = "Thursday";
-weekday[5] = "Friday";
-weekday[6] = "Saturday";
+weekday[0] = "Monday";
+weekday[1] = "Tuesday";
+weekday[2] = "Wednesday";
+weekday[3] = "Thursday";
+weekday[4] = "Friday";
+weekday[5] = "Saturday";
+weekday[6] = "Sunday";
 
 var month = new Array(12);
 month[0] = "January";
@@ -246,6 +246,15 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
             });
         };
     }]);
+
+Date.prototype.getRealDay = function () {
+    var d = new Date(+this).getDay();
+    if (d === 0) {
+        return 6;
+    }
+    return (d-1);
+};
+
 Date.prototype.getWeekNumber = function () {
     var d = new Date(+this);
     d.setHours(0, 0, 0);
@@ -436,8 +445,8 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             event.forEach(function (d) {
                 var date = new Date(d);
                 var week = date.getWeekNumber();
-                if (!arrayContains(x, date.getDay())) {
-                    x[x.length] = date.getDay();
+                if (!arrayContains(x, date.getRealDay())) {
+                    x[x.length] = date.getRealDay();
                 }
                 if (!arrayContains(y, week)) {
                     y[y.length] = week;
@@ -472,7 +481,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 for (var i = 0; i < y.length; i++) {
                     if (date.getWeekNumber() === y[i]) {
                         for (var j = 0; j < x.length; j++) {
-                            if (date.getDay() === x[j]) {
+                            if (date.getRealDay() === x[j]) {
                                 matrix[i + 1][j + 1] = date;
                             }
                         }
