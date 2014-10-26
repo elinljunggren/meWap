@@ -1,7 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * To wrapp users 
+ * 
+ * @author group 1:
+ *  Josefin Ondrus
+ *  Emma Gustafsson
+ *  Elin Ljunggren
+ *  Oskar Nyberg
  */
 package com.denbestegrupp.mewap.model;
 
@@ -11,16 +15,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-/**
- *
- * @author josefinondrus
- */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "User", propOrder = {
     "email",
     "name"
 })
+
 public class UserWrapper {
     private MWUser user;
 
