@@ -18,6 +18,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * A class to test user persistence
+ * @author Group 1:
+ *         Emma Gustafsson
+ *         Josefin Ondrus
+ *         Elin Ljunggren
+ *         Oskar Nyberg
+ */
+
 @RunWith(Arquillian.class)
 public class UserPersistenceTest {
 

@@ -14,8 +14,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- *
- * @author emma
+ * A class to wrap answers
+ * @author Group 1:
+ *         Emma Gustafsson
+ *         Josefin Ondrus
+ *         Elin Ljunggren
+ *         Oskar Nyberg
  */
 
 //wrapper for answer class
