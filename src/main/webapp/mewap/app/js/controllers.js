@@ -221,8 +221,10 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
             $scope.participators.splice(index, 1);
         };
         $scope.addParticipatorField();
-        
+      
         $scope.update = function () {
+            //$scope.mwevent.dates = $scope.dates;
+            
             $scope.dates.forEach(function (date) {
                 $scope.mwevent.dates[$scope.mwevent.dates.length] = date.getTime().toString();
             });
@@ -463,10 +465,10 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             event.dates.forEach(function (d) {
                 var date = new Date(d);
                 var week = date.getWeekNumber();
-                if (!arrayContainsDate(x, date.getRealDay())) {
+                if (!arrayContains(x, date.getRealDay())) {
                     x[x.length] = date.getRealDay();
                 }
-                if (!arrayContainsDate(y, week)) {
+                if (!arrayContains(y, week)) {
                     y[y.length] = week;
                 }
                 dates[dates.length] = date;
