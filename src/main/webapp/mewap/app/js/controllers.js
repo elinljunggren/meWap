@@ -739,7 +739,10 @@ eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
         $scope.loggedInUser = loggedInUser;
         $scope.userName = userName;
         $scope.loginURL = loginURL;
-        startSlide();
+        startSlide(true);
+        setTimeout(function() {
+            document.getElementsByTagName("h2")[0].style.opacity = 1;
+        }, 100);
     }]);
 
 // General navigation controller
@@ -750,7 +753,7 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
             $location.path(url);
         };
         $scope.menuOnPage = function () {
-            return $location.path() !== "/";
+            return $location.path() !== "/" && $location.path() !== "/presentation";
         };
 
         if (firstPage) {
@@ -776,7 +779,9 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
                                 $scope.navigate("/my-mewaps");
                             }
                         } else {
-                            $scope.navigate("/");
+                            if ($location.path() !== "/presentation") {
+                                $scope.navigate("/");
+                            }
                             AuthProxy.login()
                                     .success(function (url) {
                                         loginURL = url.url;
@@ -789,4 +794,20 @@ eventListControllers.controller('NavigationCtrl', ['$scope', '$location', 'AuthP
                 console.log("isloggedin: error");
             });
         }
+    }]);
+
+// Controller for presentationpage
+eventListControllers.controller('PresentationCtrl', ['$scope', '$location',
+    function ($scope, $location) {
+        startSlide(false);
+        
+        $scope.goToStart = function() {
+            document.getElementsByTagName("header")[0].style.opacity = 1;
+            document.getElementsByTagName("footer")[0].style.opacity = 1;
+            document.getElementsByTagName("input")[0].style.opacity = 0;
+            document.getElementsByTagName("input")[1].style.opacity = 1;
+            setTimeout(function() {
+                location.href = "#/";
+            }, 2000);
+        };
     }]);

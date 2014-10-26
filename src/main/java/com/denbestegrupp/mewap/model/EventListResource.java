@@ -156,7 +156,7 @@ public class EventListResource {
     @PUT
     @Path(value = "{id}")
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response update(@PathParam(value = "id") final Long id, JsonObject ev) {
+    public Response update(@PathParam(value = "id") final Long id, JsonObject ev, @Context HttpHeaders hh) {
         log.log(Level.INFO, "{0}:update{1}", new Object[]{this, id});
         log.log(Level.INFO, "Json{0}", ev.toString());
                 
@@ -168,7 +168,9 @@ public class EventListResource {
             dates.add(Long.parseLong(date.toString()));
         }
         
+        MWUser creator = meWap.getUserList().find(gauth.getLoggedInUser(hh));
         List<MWUser> participators = new ArrayList<>();
+        participators.add(creator);
         for (JsonValue p : ev.getJsonArray("participators")) {
             String email = p.toString();
             MWUser participator = meWap.getUserList().find(email);

@@ -46,6 +46,10 @@ meWap.config(['$routeProvider',
                     templateUrl:'partials/my-mewaps/edit-mewap.html',
                     controller: 'EditCtrl'
                 }).
+                when('/presentation',{
+                    templateUrl:'partials/presentation.html',
+                    controller: 'PresentationCtrl'
+                }).
                 otherwise({
                     templateUrl: 'partials/404.html'
                 });

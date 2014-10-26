@@ -262,6 +262,11 @@ footer #login a {
         padding: 0 140px;
     }
     
+    .startPage #slider > ul > li .firstSlide:not(.lastSlide) h2 {
+        transition: opacity 1s linear;
+        opacity: 0;
+    }
+    
     .startPage #slider > ul > li .firstSlide h2 span {
         font-size: 1.1em;
     }
