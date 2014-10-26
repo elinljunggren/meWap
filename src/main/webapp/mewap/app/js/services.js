@@ -83,8 +83,8 @@ authService.factory('CalendarProxy', ['$http',
 
         var url = getURL() + '/webresources/calendar';
         return {
-            eventsForDate: function () {
-                return $http.get(url + "/eventsForDate");
+            eventsForDate: function (start, end) {
+                return $http.get(url + "/eventsForDate?startDate=" + start + "&endDate=" + end);
             }
         };
 

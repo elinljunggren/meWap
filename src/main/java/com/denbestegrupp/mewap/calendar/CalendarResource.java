@@ -33,8 +33,9 @@ public class CalendarResource {
     
     @GET
     @Path("eventsForDate")
-    public Response eventsForDate(@Context HttpHeaders hh, @QueryParam(value = "date") long date) {
-        List<String> events = calendar.getEvents(date, hh);
+    public Response eventsForDate(@Context HttpHeaders hh, 
+            @QueryParam(value = "startDate") long start, @QueryParam(value = "endDate") long end) {
+        List<String> events = calendar.getEvents(start, end, hh);
         JsonArrayBuilder json = Json.createArrayBuilder();
         for (String event : events) {
             InputStream stream = new ByteArrayInputStream(event.getBytes(StandardCharsets.UTF_8));

@@ -340,8 +340,8 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
 ]);
 
 eventListControllers.controller('DetailEventCtrl', ['$scope',
-    '$location', '$routeParams', 'EventListProxy',
-    function ($scope, $location, $routeParams, EventListProxy) {
+    '$location', '$routeParams', 'EventListProxy', 'CalendarProxy', 
+    function ($scope, $location, $routeParams, EventListProxy, CalendarProxy) {
         $scope.loggedInUser = loggedInUser;
         $scope.userName = userName;
         $scope.answer = {};
@@ -589,8 +589,29 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 ;
             });
         };
-        //controller för knappar inom detail
-        //TODO
+        
+        $scope.fillFromGCal = function() {
+            var calendarEvents, minDate, maxDate;
+            
+            for (var i=1; i<$scope.matrix[0].length; i++) {
+                if ($scope.matrix[1][i] !== null) {
+                    minDate = $scope.matrix[1][i];
+                    break;
+                }
+            }
+            for (var i=$scope.matrix[0].length-1; i>=0; i--) {
+                if ($scope.matrix[$scope.matrix.length - 1][i] !== null) {
+                    maxDate = $scope.matrix[$scope.matrix.length - 1][i];
+                    break;
+                }
+            }
+            
+            CalendarProxy.eventsForDate(minDate.getTime(), maxDate.getTime()).success(function(events) {
+                console.log(events);
+            }).error(function() {
+                console.log("eventsForDate error");
+            });
+        };
     }]);
 
 authControllers.controller('AuthCtrl', ['$scope', '$location',

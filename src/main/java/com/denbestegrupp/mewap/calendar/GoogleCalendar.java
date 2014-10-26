@@ -20,7 +20,6 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.HttpHeaders;
 
@@ -38,7 +37,7 @@ public class GoogleCalendar {
     public GoogleCalendar() {
     }
     
-    public List<String> getEvents(Long date, HttpHeaders hh) {
+    public List<String> getEvents(Long start, Long end, HttpHeaders hh) {
         calendar = createCalendar(createCredentials(hh));
         List<String> eventsString = new ArrayList<>();
         
@@ -46,8 +45,8 @@ public class GoogleCalendar {
             List<CalendarListEntry> calendars = calendar.calendarList().list().execute().getItems();
             for (CalendarListEntry c : calendars) {
                 List<Event> events = calendar.events().list(c.getId())
-                                    .set("timeMin", new DateTime(getStartOfDay(date)))
-                                    .set("timeMax", new DateTime(getEndOfDay(date)))
+                                    .set("timeMin", new DateTime(getStartOfDay(start)))
+                                    .set("timeMax", new DateTime(getEndOfDay(end)))
                                     .execute().getItems();
                 for (Event e : events) {
                     eventsString.add(e.toString());
