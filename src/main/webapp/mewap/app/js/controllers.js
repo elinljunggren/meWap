@@ -607,12 +607,14 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         };
 
         $scope.deleteEvent = function () {
-            EventListProxy.delete($routeParams.id)
-                    .success(function () {
-                        $location.path('/my-mewaps');
-                    }).error(function () {
-                        
-                    });
+            if (confirm("Are you sure you want to delete this event?")) {
+                EventListProxy.delete($routeParams.id)
+                        .success(function () {
+                            $location.path('/my-mewaps');
+                        }).error(function () {
+
+                        });
+            }
         };
         
         //when buttom pushed
