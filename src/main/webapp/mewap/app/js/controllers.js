@@ -223,6 +223,7 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
         $scope.addParticipatorField();
         
         $scope.update = function () {
+            $scope.mwevent.dates.splice(0, $scope.mwevent.dates.length+1);
             $scope.dates.forEach(function (date) {
                 $scope.mwevent.dates[$scope.mwevent.dates.length] = date.getTime().toString();
             });
@@ -265,8 +266,15 @@ Date.prototype.getWeekNumber = function () {
 Date.prototype.getSimpleDate = function () {
     var d = new Date(+this);
     var simple = new String();
-    simple = d.getDate() + "/" + d.getMonth();
+    simple = d.getDate() + "/" + (d.getMonth() + 1);
     return simple;
+};
+
+Date.prototype.getNoTimeDate = function () {
+    var d = new Date(+this);
+    d.setHours(10);
+    d.setMinutes(0);
+    return d;
 };
 
 Date.prototype.getFullDateString = function () {
@@ -311,6 +319,17 @@ function arrayContains(array, elem) {
     for (var i = 0; i < array.length; i++) {
 
         if (array[i] === elem) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function arrayContainsDate(array, elem) {
+
+    for (var i = 0; i < array.length; i++) {
+
+        if (array[i].getTime() === elem.getTime()) {
             return true;
         }
     }
@@ -442,7 +461,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             var y = []; //weeks
             var dates = [];
             //Fill them ALL!
-            event.forEach(function (d) {
+            event.dates.forEach(function (d) {
                 var date = new Date(d);
                 var week = date.getWeekNumber();
                 if (!arrayContains(x, date.getRealDay())) {
@@ -495,29 +514,48 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             var x = []; //time
             var y = []; //date
             var dates = [];
+            var endTimes = [];
             //Fill them ALL!
-            event.forEach(function (d) {
+            event.dates.forEach(function (d) {
                 var date = new Date(d);
-                var sd = date.getSimpleDate();
-                if (!arrayContains(x, date.getSimpleTime())) {
-                    x[x.length] = date.getSimpleTime();
+                var noTimeDate = date.getNoTimeDate();
+                var simpleTime = date.getSimpleTime(); //  + "-" + new Date(date.getTime()+event.duration).getSimpleTime()
+                var endTime = new Date(date.getTime()+event.duration).getSimpleTime(); 
+                // var sd = date.getSimpleDate();
+                console.log(date);
+                if (!arrayContains(x, simpleTime)) {
+                    x[x.length] = simpleTime;
+                    endTimes[endTimes.length] = endTime;
                 }
-                if (!arrayContains(y, sd)) {
-                    y[y.length] = sd;
+                if (!arrayContainsDate(y, noTimeDate)) {
+                    y[y.length] = noTimeDate;
                 }
                 dates[dates.length] = date;
             });
-
+            console.log(x.toString());
             //Sort days and weeks ascending order
             x.sort(function (a, b) {
-                return a - b;
+                return new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b);
             });
-
+            endTimes.sort(function (a, b) {
+                return new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b);
+            });
+            
+            for(var i = 0; i < x.length; i ++) {
+                x[i] = x[i] + "-" + endTimes[i];
+            }
+            
+            console.log(y.toString());
             y.sort(function (a, b) {
-                return a - b;
+                return (a-b);
             });
+            
+            for(var i = 0; i < y.length; i ++) {
+                y[i] = y[i].getSimpleDate();
+            }
+            console.log(y.toString());
 
-            //insert days in farts row
+            //insert times in farts row
             var matrix = [];
             matrix[0] = [];
             matrix[0][0] = "";
@@ -525,7 +563,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 matrix[0][matrix[0].length] = time;
             });
 
-            //insert weeks in first column
+            //insert days in first column
             for (var i = 1; i <= y.length; i++) {
                 matrix[i] = [];
                 matrix[i][0] = y[i - 1];
@@ -535,7 +573,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 for (var i = 0; i < y.length; i++) {
                     if (date.getSimpleDate() === y[i]) {
                         for (var j = 0; j < x.length; j++) {
-                            if (date.getSimpleTime() === x[j]) {
+                            if ((date.getSimpleTime() + "-" + endTimes[j]) === x[j]) {
                                 matrix[i + 1][j + 1] = date;
                             }
                         }
@@ -553,7 +591,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             }
             var sortResults = [];
             sorts.forEach(function (sort) {
-                sortResults[sortResults.length] = sort(eventDates);
+                sortResults[sortResults.length] = sort(event);
             });
 
             var bestResult;
