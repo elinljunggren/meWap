@@ -530,6 +530,25 @@ footer #login a {
         background-color: #AADDAA !important;
     }
     
+    .detail table td:first-of-type {
+        position: relative;
+    }
+    
+    .detail table td button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        background: #ccc;
+        border: none;
+    }
+    
+    .detail table td button:hover {
+        background: #aaa;
+    }
+    
     .detail table td > p, .detail table td > div, .detail table td > div > p {
         display: inline;
     }
