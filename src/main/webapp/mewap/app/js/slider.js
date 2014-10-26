@@ -54,10 +54,10 @@ var startTimer = function() {
     if(timer !== null) {
         clearTimeout(timer);
     }
-    timer = setTimeout(function() {
+    /*timer = setTimeout(function() {
         nextImage();
         startTimer();
-    }, interval);
+    }, interval);*/
 };
 
 var generateLastImage = function() {
@@ -84,7 +84,9 @@ var generateCSS = function() {
     document.getElementById("sliderContents").style.width = (images + 1) + "00%";
     var lis = document.getElementById("sliderContents").getElementsByTagName("li");
     for (var i=0; i<lis.length; i++) {
-       lis[i].style.width = (100/(images+1))  + "%";
+        if (lis[i].parentNode === document.getElementById("sliderContents")) {
+            lis[i].style.width = (100/(images+1))  + "%";
+        }
     }
 };
 

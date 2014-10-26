@@ -229,18 +229,21 @@ footer #login a {
         transition: none !important;
     }
     
-    .startPage #slider > ul li {
+    .startPage #slider > ul > li {
         float: left;
         height: 100%;
     }
     
     .startPage #slider > ul > li .text {
         float: left;
-        padding-top: 80px;
-        padding-left: 10%;
         padding-right: 10%;
-        width: 80%;
+        width: 100%;
         color: #f4ffff;
+    }
+    
+    .startPage #slider > ul > li .text > div {
+        width: 800px;
+        margin: 0 auto;
     }
     
     .startPage #slider > ul > li h2 {
@@ -249,25 +252,61 @@ footer #login a {
         font-weight: 100;
     }
     
+    .startPage #slider > ul > li .firstSlide {
+        padding-top: 70px;
+    }
+    
     .startPage #slider > ul > li .firstSlide h2 {
         font-size: 6em;
         text-align: center;
-    }
-    
-    .startPage #slider > ul > li .secondSlide h2{
-        text-align: center;
+        padding: 0 140px;
     }
     
     .startPage #slider > ul > li .firstSlide h2 span {
         font-size: 1.1em;
     }
     
-    .startPage #slider > ul > li img.full {
-        max-height: 100%;
+    .startPage #slider > ul > li .secondSlide {
+        padding-top: 0px;
+        width: 100%;
     }
     
-    .startPage #slider > ul > li .text ul {
-        font-size: 2em;
+    .startPage #slider > ul > li .secondSlide > div {
+        width: 800px;
+        padding-top: 45px;
+    }
+    
+    .startPage #slider > ul > li .secondSlide > div > div {
+        float: left;
+        padding-top: 35px;
+    }
+    
+    .startPage #slider > ul > li .secondSlide h2{
+        text-align: left;
+        margin-bottom: 20px;
+    }
+    
+    .startPage #slider > ul > li .secondSlide img {
+        float: left;
+        width: 350px;
+    }
+    
+    .startPage #slider > ul > li .secondSlide ul {
+        text-align: left;
+        font-size: 1.3em;
+        padding-left: 70px;
+    }
+    
+    .startPage #slider > ul > li .secondSlide ul li {
+        margin-bottom: 10px;
+    }
+    
+    .startPage #slider > ul > li .thirdSlide > div {
+        padding-top: 70px;
+    }
+    
+    .startPage #slider > ul > li img.full {
+        max-height: 100%;
     }
     
     .startPage #slider #arrows {
