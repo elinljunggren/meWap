@@ -189,6 +189,9 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
                     }
                     $scope.mwevent = event;
                     $scope.mwevent.deadline = new Date(event.deadline);
+                    var tmp = new Date($scope.mwevent.duration);
+                    tmp.setHours(tmp.getHours()-1);
+                    $scope.mwevent.duration = tmp;
                     
                     var dateList = [];
                     $scope.mwevent.dates.forEach(function(date){
