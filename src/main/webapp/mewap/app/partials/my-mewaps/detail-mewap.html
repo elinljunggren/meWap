@@ -6,7 +6,8 @@ and open the template in the editor.
 
 <div class="detail">
     <h2>{{mwevent.name}}</h2>
-    <input type="button" value="Edit" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/edit-mewap/' + mwevent.id)" ng-if="mwevent.creator.email === loggedInUser && mwevent.deadline > currentDate"/>
+    <input type="button" value="Edit" class="btn" ng-controller="NavigationCtrl" ng-click="navigate('/edit-mewap/' + mwevent.id)" ng-if="mwevent.creator.email === loggedInUser && mwevent.deadline > currentDate"/>
+    <input type="button" value="Delete" class="btn" ng-click="deleteEvent()" ng-if="mwevent.creator.email === loggedInUser"/>
     <p>{{mwevent.description}}</p>
     <table class="table">
         <tbody>
