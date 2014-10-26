@@ -221,10 +221,9 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
             $scope.participators.splice(index, 1);
         };
         $scope.addParticipatorField();
-      
+        
         $scope.update = function () {
-            //$scope.mwevent.dates = $scope.dates;
-            
+            $scope.mwevent.dates.splice(0, $scope.mwevent.dates.length+1);
             $scope.dates.forEach(function (date) {
                 $scope.mwevent.dates[$scope.mwevent.dates.length] = date.getTime().toString();
             });
