@@ -50,7 +50,8 @@ import javax.ws.rs.core.UriInfo;
 @RequestScoped
 public class EventListResource {
  
-    private final static boolean sendEmail = false;
+    // If false no emails will be sent for invites and answer notifications.
+    private final static boolean sendEmail = true;
     
     private final static Logger log = Logger.getAnonymousLogger();
     private final static GoogleAuth gauth = GoogleAuth.getInstance();
