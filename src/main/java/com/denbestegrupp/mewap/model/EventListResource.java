@@ -134,6 +134,24 @@ public class EventListResource {
         meWap.getEventList().delete(id);
         return Response.ok().build();
     }
+    
+    @DELETE
+    @Path("deleteHistory")
+    public Response deleteHistory(@Context HttpHeaders hh) {
+        
+        MWUser user = meWap.getUserList().find(gauth.getLoggedInUser(hh));
+        List<MWEvent> es = meWap.getEventList()
+                .getRelatedToUser(user, meWap.getEventList().findAll());
+        es = meWap.getEventList().getHistory(es);
+        
+        for (MWEvent e : es) {
+            if (e.getCreator().equals(user)) {
+                meWap.getEventList().delete(e.getId());
+            }
+        }
+        
+        return Response.ok().build();
+    }
 
     @PUT
     @Path(value = "{id}")

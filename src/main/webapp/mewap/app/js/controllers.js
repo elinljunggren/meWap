@@ -336,6 +336,17 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
                 console.log("findRange: error");
             });
         }
+        
+        $scope.clearHistory = function () {
+            if (confirm("Are you sure you want to delete all old events you have created?")) {
+                EventListProxy.deleteHistory()
+                        .success(function () {
+                            location.reload(true);
+                        }).error(function () {
+                            console.log("deleteHistory: error");
+                        });
+            }
+        };
     }
 ]);
 

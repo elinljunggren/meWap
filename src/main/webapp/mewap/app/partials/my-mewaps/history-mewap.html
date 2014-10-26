@@ -39,6 +39,6 @@ Page where backlog for user is presented.
         </button>
     </div>  
     <input type="button" value="My meWaps" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/my-mewaps')"/>
-    <input type="button" value="Create meWap" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/create-mewap')"/> 
+    <input type="button" value="Clear history" class="btn btn-default cancel" ng-click="clearHistory()" ng-disabled="mwevent.length === 0"/> 
 
 </div>
