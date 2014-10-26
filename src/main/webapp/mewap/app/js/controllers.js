@@ -657,7 +657,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
 
             EventListProxy.addAnswer($routeParams.id, $scope.answer)
                     .success(function () {
-                        $location.path('/my-mewaps');
+                        location.reload(true);
                     }).error(function () {
                 ;
             });
