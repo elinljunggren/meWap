@@ -13,7 +13,7 @@ and open the template in the editor.
         <tbody>
             <tr ng-repeat="rows in matrix" ng-init="y = $index">
                 <td ng-repeat="col in rows track by $index" ng-init="x = $index" ng-class="{noDate: col === null, title: y*x === 0 && y+x !== 0, checkedDate: checked[col].length > 0, zerozero: y+x === 0}">
-                    <button ng-if="y+x === 0" ng-click="fillFromGCal()">Fill<br />automatically</button>
+                    <button ng-if="y+x === 0 && mwevent.deadline > currentDate" ng-click="fillFromGCal()" title="From Google Calendar">Fill<br />automatically</button>
                     <p ng-if="y*x === 0 && y+x > 0 && col !== null">{{col}}</p>
                     <div ng-if="y*x > 0 && col !== null">
                         <p>{{answersPerDate[col.getTime()].length || "0"}}</p>
