@@ -241,7 +241,7 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
             }
             EventListProxy.update($routeParams.id, $scope.mwevent)
                     .success(function () {
-                        $location.path('/my-mewaps');
+                        $location.path('/my-mewaps/' + $routeParams.id);
                     }).error(function () {
                 ;
             });

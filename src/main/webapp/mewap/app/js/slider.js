@@ -7,7 +7,7 @@
 var currentImage = 0;
 var images;
 var timer;
-var interval = 3 * 1000;
+var interval = 7 * 1000;
 var pageIndicators = [];
 
 var goToImage = function(goTo) {
