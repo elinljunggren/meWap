@@ -46,6 +46,9 @@ eventListService.factory('EventListProxy', ['$http',
             delete: function (id) {
                 return $http.delete(url + "/" + id);
             },
+            deleteHistory: function () {
+                return $http.delete(url + "/deleteHistory");
+            },
             count: function () {
                 return $http.get(url + "/count");
             },
