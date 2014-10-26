@@ -602,6 +602,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
         };
         
         $scope.fillFromGCal = function() {
+            document.getElementsByClassName("zerozero")[0].innerHTML = "<img src='img/loader.gif' />";
             var calendarEvents, minDate, maxDate;
             
             for (var i=1; i<$scope.matrix[0].length; i++) {
@@ -619,6 +620,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             
             CalendarProxy.eventsForDate(minDate.getTime(), maxDate.getTime()).success(function(events) {
                 console.log(events);
+                document.getElementsByClassName("zerozero")[0].innerHTML = "&#10003;";
             }).error(function() {
                 console.log("eventsForDate error");
             });
