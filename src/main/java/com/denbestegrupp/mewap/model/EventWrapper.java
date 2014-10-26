@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.denbestegrupp.mewap.model;
 
 import java.util.ArrayList;
@@ -15,8 +11,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- *
- * @author elin
+ * A wrapper for the MWEvent 
+ * 
+ * @author Group 1:
+ * Emma Gustafsson
+ * Josefin Ondrus
+ * Elin Ljunggren
+ * Oskar Nyberg
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -50,7 +51,7 @@ public class EventWrapper {
         return event.getName();
     }
 
-    @XmlElement //If serving XML we should use @XmlAttribute 
+    @XmlElement
     public Long getId() {
         return event.getId();
     }
@@ -59,18 +60,22 @@ public class EventWrapper {
     public Collection<Long> getDates() {
         return event.getDates();
     }
+    
     @XmlElement
     public UserWrapper getCreator(){
         return new UserWrapper(event.getCreator());
     }
+    
     @XmlElement
     public String getDescription(){
         return event.getDescription();
     }
+    
     @XmlElement
     public boolean isAllDayEvent(){
         return event.isAllDayEvent();
     }
+    
     @XmlElement
     public long getDuration() {
         return event.getDuration();
@@ -90,6 +95,7 @@ public class EventWrapper {
     public MWEvent.AnswerNotification getNotification() {
         return event.getNotification();
     }
+    
     @XmlElement
     public Collection<UserWrapper> getParticipators(){
         Collection<MWUser> u = event.getParticipators();
@@ -99,6 +105,7 @@ public class EventWrapper {
         }
         return cu;
     }
+    
     @XmlElement
     public Collection<AnswerWrapper> getAnswers() {
         Collection<MWAnswer> u = event.getAnswers();

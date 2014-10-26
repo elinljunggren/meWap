@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.auth.GoogleAuth;
@@ -41,8 +37,14 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
- *
- * @author elin
+ * REST Web Service for the EventList, link between backend and frontend
+ * Gets requests from services.js.
+ * 
+ * @author Group 1:
+ * Emma Gustafsson
+ * Josefin Ondrus
+ * Elin Ljunggren
+ * Oskar Nyberg
  */
 @Path("events")
 @RequestScoped
@@ -297,6 +299,7 @@ public class EventListResource {
         
         return Response.ok(ge).build();
     }
+    
     @GET
     @Path(value = "history")
     @Produces(value = {MediaType.APPLICATION_JSON})
@@ -327,6 +330,7 @@ public class EventListResource {
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
+    
     @GET
     @Path(value = "countHistory")
     @Produces(value = {MediaType.APPLICATION_JSON})

@@ -1,15 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.denbestegrupp.mewap.persistence;
 
 import java.util.List;
 
 /**
- *
- * @author elin
+ * Basic contract for containers of Events and Users
+ * 
+ * @author Group 1:
+ * Emma Gustafsson
+ * Josefin Ondrus
+ * Elin Ljunggren
+ * Oskar Nyberg
+ * 
  * @param <T> type of elements in container
  * @param <K> K is type of id (primary key)
  */

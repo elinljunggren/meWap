@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.denbestegrupp.mewap.persistence;
 
 import java.io.Serializable;
@@ -13,8 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
- *
- * @author elin
+ * Base class for all entities: 
+ * MWEvent, MWUser and MWAnswer
+ * 
+ * @author Group 1:
+ * Emma Gustafsson
+ * Josefin Ondrus
+ * Elin Ljunggren
+ * Oskar Nyberg
  */
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable{
