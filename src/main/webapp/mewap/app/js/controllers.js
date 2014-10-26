@@ -229,6 +229,7 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
         };
         $scope.addParticipatorField();
         
+        //updates the existing event with new parameters
         $scope.update = function () {
             $scope.mwevent.dates.splice(0, $scope.mwevent.dates.length+1);
             $scope.dates.forEach(function (date) {
@@ -369,9 +370,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
             getRange();
         });
 
-
         function getRange() {
-
             var first = $scope.pageSize * $scope.currentPage;
             EventListProxy.findHistory(first, $scope.pageSize)
                     .success(function (mwevent) {
@@ -388,8 +387,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
                     }).error(function () {
                 console.log("findRange: error");
             });
-        }
-        
+        }   
         $scope.clearHistory = function () {
             if (confirm("Are you sure you want to delete all old events you have created?")) {
                 EventListProxy.deleteHistory()
@@ -736,7 +734,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             });
         };
     }]);
-
+// Authorication controller
 authControllers.controller('AuthCtrl', ['$scope', '$location',
     'AuthProxy',
     function ($scope, $location, AuthProxy) {
@@ -745,7 +743,7 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
         };
 
     }]);
-
+// Controller for start page
 eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
     function ($scope, $location) {
         $scope.loggedInUser = loggedInUser;
