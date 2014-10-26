@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.persistence.IDAO;
@@ -11,9 +6,13 @@ import java.util.List;
 import javax.ejb.Local;
 
 /**
- *
- * @author Oskar
- */
+* Interface for an EventList. An EveltList makes events accessible from the database.
+* @author Group 1:
+* Emma Gustafsson
+* Josefin Ondrus
+* Elin Ljunggren
+* Oskar Nyberg
+*/
 @Local
 public interface IEventList extends IDAO<MWEvent, Long> {
     

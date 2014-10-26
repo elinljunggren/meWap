@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.persistence.AbstractDAO;
@@ -13,9 +8,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
- * @author Oskar
- */
+* A class which makes Users accessible from database
+* @author Group 1:
+* Emma Gustafsson
+* Josefin Ondrus
+* Elin Ljunggren
+* Oskar Nyberg
+*/
 @Stateless
 public class UserList extends AbstractDAO <MWUser, String> implements IUserList {
 

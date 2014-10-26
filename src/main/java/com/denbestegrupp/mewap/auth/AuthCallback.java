@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.denbestegrupp.mewap.auth;
 
 import com.denbestegrupp.mewap.model.MWUser;
@@ -43,9 +38,13 @@ import javax.servlet.http.Cookie;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
- *
- * @author Oskar
- */
+* A servlet which the user are sent to from google after authenticating.
+* @author Group 1:
+* Emma Gustafsson
+* Josefin Ondrus
+* Elin Ljunggren
+* Oskar Nyberg
+*/
 @WebServlet(name = "AuthServlet", urlPatterns = {"/authcallback"})
 public class AuthCallback extends HttpServlet {
 
