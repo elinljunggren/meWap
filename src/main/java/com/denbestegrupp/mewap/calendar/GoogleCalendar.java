@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.denbestegrupp.mewap.calendar;
 
 import com.denbestegrupp.mewap.auth.AuthConstants;
@@ -24,9 +19,13 @@ import java.util.logging.Logger;
 import javax.ws.rs.core.HttpHeaders;
 
 /**
- *
- * @author Oskar
- */
+* A class which communicates with Google Calender using their java api.
+* @author Group 1:
+* Emma Gustafsson
+* Josefin Ondrus
+* Elin Ljunggren
+* Oskar Nyberg
+*/
 public class GoogleCalendar {
     
     Logger log = Logger.getAnonymousLogger();

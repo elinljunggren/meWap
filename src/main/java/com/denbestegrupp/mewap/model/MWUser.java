@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.denbestegrupp.mewap.model;
 
 import java.io.Serializable;
@@ -11,9 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- *
- * @author Oskar
- */
+* A class representing an user
+* @author Group 1:
+* Emma Gustafsson
+* Josefin Ondrus
+* Elin Ljunggren
+* Oskar Nyberg
+*/
 @Entity
 public class MWUser implements Serializable {
     

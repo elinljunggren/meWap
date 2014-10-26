@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.denbestegrupp.mewap.auth;
 
 import com.denbestegrupp.mewap.model.MWUser;
@@ -21,9 +16,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- *
- * @author Oskar
- */
+* RESTful resource which handles authentication info.
+* @author Group 1:
+* Emma Gustafsson
+* Josefin Ondrus
+* Elin Ljunggren
+* Oskar Nyberg
+*/
 @Path("auth")
 @RequestScoped
 public class AuthResource {
