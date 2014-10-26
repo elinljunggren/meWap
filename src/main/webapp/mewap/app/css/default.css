@@ -273,7 +273,7 @@ footer #login a {
     
     .startPage #slider > ul > li .secondSlide > div {
         width: 800px;
-        padding-top: 45px;
+        padding-top: 40px;
     }
     
     .startPage #slider > ul > li .secondSlide > div > div {
@@ -303,6 +303,60 @@ footer #login a {
     
     .startPage #slider > ul > li .thirdSlide > div {
         padding-top: 70px;
+    }
+    
+    .startPage #slider > ul > li .fourthSlide > div {
+        padding-top: 20px;
+    }
+    
+    .startPage #slider > ul > li .fourthSlide h2 {
+        padding-left: 20px;
+    }
+    
+    .startPage #slider > ul > li .fourthSlide > div > div {
+        font-size: 0.9em;
+        padding-top: 70px;
+    }
+    
+    .startPage #slider > ul > li .fourthSlide img {
+        background: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        margin-right: 20px;
+    }
+    
+    .startPage #slider > ul > li .fifthSlide > div > img {
+        width: 200px;
+        padding: 30px 50px;
+        margin-top: 10px;
+        background: white;
+        opacity: 0.8;
+    }
+    
+    .startPage #slider > ul > li .fifthSlide > div > div {
+        padding-top: 0px;
+        margin-left: 50px;
+    }
+    
+    .startPage #slider > ul > li .fifthSlide > div {
+        padding-top: 80px;
+    }
+    
+    .startPage #slider > ul > li .sixthSlide > div {
+        margin-top: 50px;
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .startPage #slider > ul > li .sixthSlide > div > img, .startPage #slider > ul > li .sixthSlide > div > h2 {
+        float: none;
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .startPage #slider > ul > li .sixthSlide > div > h2 {
+        padding: 15px 0;
+        margin: 0;
+        font-size: 2.4em;
     }
     
     .startPage #slider > ul > li img.full {

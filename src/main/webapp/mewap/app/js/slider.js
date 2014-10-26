@@ -54,10 +54,10 @@ var startTimer = function() {
     if(timer !== null) {
         clearTimeout(timer);
     }
-    /*timer = setTimeout(function() {
+    timer = setTimeout(function() {
         nextImage();
         startTimer();
-    }, interval);*/
+    }, interval);
 };
 
 var generateLastImage = function() {
