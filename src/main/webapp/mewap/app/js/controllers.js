@@ -158,8 +158,8 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             var duration = new Date($scope.mwEvent.duration);
             var hour = duration.getHours();
             var minute = duration.getMinutes();
-            hour = hour * 60 * 1000;
-            minute = minute * 60 * 60 * 1000;
+            hour = hour * 60 * 60 * 1000;
+            minute = minute * 60 * 1000;
             $scope.mwEvent.duration = hour + minute;
             if ($scope.mwEvent.allDayEvent !== true) {
                 $scope.mwEvent.allDayEvent = false;
@@ -232,8 +232,8 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
             var duration = new Date($scope.mwevent.duration);
             var hour = duration.getHours();
             var minute = duration.getMinutes();
-            hour = hour * 60 * 1000;
-            minute = minute * 60 * 60 * 1000;
+            hour = hour * 60 * 60 * 1000;
+            minute = minute * 60 * 1000;
             $scope.mwevent.duration = hour + minute;
             if ($scope.mwevent.allDayEvent !== true) {
                 $scope.mwevent.allDayEvent = false;
@@ -258,6 +258,24 @@ Date.prototype.getSimpleDate = function () {
     var simple = new String();
     simple = d.getDate() + "/" + d.getMonth();
     return simple;
+};
+
+Date.prototype.getFullDateString = function () {
+    var d = new Date(+this);
+    var date = d.getFullYear() + "-";
+    
+    if((d.getMonth()+1) < 10) {
+        date += "0" + (d.getMonth()+1) + "-";
+    } else {
+        date += (d.getMonth()+1) + "-";
+    }
+    
+    if(d.getDate() < 10) {
+        date += "0" + d.getDate();
+    } else {
+        date += d.getDate();
+    }
+    return date;    
 };
 
 Date.prototype.getSimpleTime = function () {
@@ -619,7 +637,43 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             }
             
             CalendarProxy.eventsForDate(minDate.getTime(), maxDate.getTime()).success(function(events) {
-                console.log(events);
+                if ($scope.mwevent.allDayEvent) {
+                    $scope.mwevent.dates.forEach(function(date) {
+                        var intersects = false;
+                        events.forEach(function(gEvent) {
+                            if (gEvent.start.date !== undefined) {
+                                var dateString = new Date(date).getFullDateString();
+                                if (dateString === gEvent.start.date) {
+                                    intersects = true;
+                                }
+                            }
+                        });
+                        if (!intersects) {
+                            $scope.addA(new Date(date));
+                        }
+                    });  
+                } else {
+                    $scope.mwevent.dates.forEach(function(date) {
+                        var intersects = false;
+                        events.forEach(function(gEvent) {
+                            if (gEvent.start.dateTime !== undefined) {
+                                var gStart = new Date(gEvent.start.dateTime).getTime();
+                                var gEnd = new Date(gEvent.end.dateTime).getTime();
+                                var mStart = date;
+                                var mEnd = mStart + $scope.mwevent.duration;
+                                if ((mStart > gStart && mStart < gEnd) 
+                                        || (mEnd > gStart && mEnd < gEnd) 
+                                        || (mStart < gStart && mEnd > gEnd)) {
+                                    intersects = true;
+                                }
+                            }
+                        });
+                        if (!intersects) {
+                            $scope.addA(new Date(date));
+                        }
+                    });
+                }
+                
                 document.getElementsByClassName("zerozero")[0].innerHTML = "&#10003;";
             }).error(function() {
                 console.log("eventsForDate error");
