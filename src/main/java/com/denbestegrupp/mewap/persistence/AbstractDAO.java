@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.denbestegrupp.mewap.persistence;
 
 import java.util.List;
@@ -10,8 +6,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
+ * A container for entities, base class for EventList and UserList.
+ * The fundamental common operations are here. 
  *
- * @author elin
+ * T is type for items in container, K is type of id (primary key)
+ * 
+ * @author Group 1:
+ * Emma Gustafsson
+ * Josefin Ondrus
+ * Elin Ljunggren
+ * Oskar Nyberg
+ * 
  * @param <T> Any type
  * @param <K> Key
  */

@@ -1,7 +1,13 @@
 'use strict';
 
 /* 
- * @author Josefin Ondrus
+ * The meWap services communicates with the RESTful API
+ * 
+ * @author group 1:
+ *  Josefin Ondrus
+ *  Emma Gustafsson
+ *  Elin Ljunggren
+ *  Oskar Nyberg
  */
 
 var eventListService = angular.module('EventListService', []);

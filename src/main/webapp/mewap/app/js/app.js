@@ -1,12 +1,15 @@
 'use strict';
 
-
 /* 
- * The meWap apps
- * @author Josefin Ondrus
+ * The meWap apps directs to correct pages and defines controller
+ * 
+ * @author group 1:
+ *  Josefin Ondrus
+ *  Emma Gustafsson
+ *  Elin Ljunggren
+ *  Oskar Nyberg
  */
 
-//TODO
 var meWap = angular.module('MeWap', [
     'ngRoute',
     'EventListControllers',
@@ -53,6 +56,5 @@ meWap.config(['$routeProvider',
                 otherwise({
                     templateUrl: 'partials/404.html'
                 });
-
 
     }]);

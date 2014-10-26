@@ -1,7 +1,13 @@
 /*
- * Till den här enkla funktionen såg vi ingen anledning till att använda angular
+ * This is the full width slider at the start page. 
+ * To this function we did not see any reason to use angular and wanted to
+ * try using only regular javascript.
  * 
- * author elin
+ * @author Group 1:
+ * Emma Gustafsson
+ * Josefin Ondrus
+ * Elin Ljunggren
+ * Oskar Nyberg
  */
 
 var currentImage = 0;
