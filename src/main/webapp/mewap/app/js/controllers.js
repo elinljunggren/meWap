@@ -79,30 +79,6 @@ eventListControllers.controller('EventListCtrl', ['$scope', 'EventListProxy', 'A
         }
     }]);
 
-
-var weekday = new Array(7);
-weekday[0] = "Monday";
-weekday[1] = "Tuesday";
-weekday[2] = "Wednesday";
-weekday[3] = "Thursday";
-weekday[4] = "Friday";
-weekday[5] = "Saturday";
-weekday[6] = "Sunday";
-
-var month = new Array(12);
-month[0] = "January";
-month[1] = "February";
-month[2] = "March";
-month[3] = "April";
-month[4] = "May";
-month[5] = "June";
-month[6] = "July";
-month[7] = "August";
-month[8] = "September";
-month[9] = "October";
-month[10] = "November";
-month[11] = "December";
-
 eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
     'EventListProxy',
     function ($scope, $location, EventListProxy) {
@@ -343,6 +319,30 @@ function arrayContainsDate(array, elem) {
     }
     return false;
 }
+
+var weekday = new Array(7);
+weekday[0] = "Monday";
+weekday[1] = "Tuesday";
+weekday[2] = "Wednesday";
+weekday[3] = "Thursday";
+weekday[4] = "Friday";
+weekday[5] = "Saturday";
+weekday[6] = "Sunday";
+
+var month = new Array(12);
+month[0] = "January";
+month[1] = "February";
+month[2] = "March";
+month[3] = "April";
+month[4] = "May";
+month[5] = "June";
+month[6] = "July";
+month[7] = "August";
+month[8] = "September";
+month[9] = "October";
+month[10] = "November";
+month[11] = "December";
+
 // funcionality for showing old events
 eventListControllers.controller('HistoryCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
@@ -524,7 +524,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             event.dates.forEach(function (d) {
                 var date = new Date(d);
                 var noTimeDate = date.getNoTimeDate();
-                var simpleTime = date.getSimpleTime(); //  + "-" + new Date(date.getTime()+event.duration).getSimpleTime()
+                var simpleTime = date.getSimpleTime(); 
                 var endTime = new Date(date.getTime()+event.duration).getSimpleTime(); 
                 // var sd = date.getSimpleDate();
                 console.log(date);
@@ -590,25 +590,13 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
 
         function sortMaster(eventDates, event) {
             if (event.allDayEvent === true) {
-                var sorts = [sortByWeek];
+                var sorts = sortByWeek;
             } else {
-                var sorts = [sortByDate];
+                var sorts = sortByDate;
             }
-            var sortResults = [];
-            sorts.forEach(function (sort) {
-                sortResults[sortResults.length] = sort(event);
-            });
-
-            var bestResult;
-            var bestSum = -1;
-            sortResults.forEach(function (result) {
-                var sum = result[0].length + result[0][1].length;
-                if (bestSum === -1 || sum < bestSum) {
-                    bestSum = sum;
-                    bestResult = result;
-                }
-            });
-            return bestResult;
+            
+            var result = sorts(event);
+            return result;
         }
 
         //eventID, user, lista med answers
