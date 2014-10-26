@@ -1,10 +1,7 @@
 package com.denbestegrupp.mewap.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -22,6 +19,15 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+/**
+ * A class to test event persistence
+ * @author Group 1:
+ *         Emma Gustafsson
+ *         Josefin Ondrus
+ *         Elin Ljunggren
+ *         Oskar Nyberg
+ */
 
 @RunWith(Arquillian.class)
 public class EventPersistenceTest {

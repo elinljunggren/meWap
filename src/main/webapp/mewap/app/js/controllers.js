@@ -1,7 +1,13 @@
 'use strict';
 
 /* 
- * @author josefinondrus
+ * The meWap controllers, manages input shown data and interaction
+ * 
+ * @author group 1:
+ *  Josefin Ondrus
+ *  Emma Gustafsson
+ *  Elin Ljunggren
+ *  Oskar Nyberg
  */
 
 var eventListControllers = angular.module('EventListControllers', []);
@@ -149,6 +155,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             });
         };
     }]);
+
 //functionality to edit an existing event
 eventListControllers.controller('EditCtrl', ['$scope', '$location',
     'EventListProxy', '$routeParams',
@@ -234,6 +241,7 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
         };
     }]);
 
+//To arrange week with monday as first day
 Date.prototype.getRealDay = function () {
     var d = new Date(+this).getDay();
     if (d === 0) {
@@ -242,6 +250,7 @@ Date.prototype.getRealDay = function () {
     return (d-1);
 };
 
+//To get weeknumber forom a date object
 Date.prototype.getWeekNumber = function () {
     var d = new Date(+this);
     d.setHours(0, 0, 0);
@@ -249,6 +258,7 @@ Date.prototype.getWeekNumber = function () {
     return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
 };
 
+//Change the date to a string DD/MM
 Date.prototype.getSimpleDate = function () {
     var d = new Date(+this);
     var simple = new String();
@@ -256,6 +266,7 @@ Date.prototype.getSimpleDate = function () {
     return simple;
 };
 
+//to make two date objects with different time equal
 Date.prototype.getNoTimeDate = function () {
     var d = new Date(+this);
     d.setHours(10);
@@ -263,6 +274,7 @@ Date.prototype.getNoTimeDate = function () {
     return d;
 };
 
+//to represent a date as a string YYYY-MM-DD
 Date.prototype.getFullDateString = function () {
     var d = new Date(+this);
     var date = d.getFullYear() + "-";
@@ -281,6 +293,7 @@ Date.prototype.getFullDateString = function () {
     return date;    
 };
 
+//Change the time to a string HH:MM
 Date.prototype.getSimpleTime = function () {
     var d = new Date(+this);
     var simple = new String();
@@ -300,6 +313,7 @@ Date.prototype.getSimpleTime = function () {
     return simple;
 };
 
+//Compares elemenst in array with elem
 function arrayContains(array, elem) {
 
     for (var i = 0; i < array.length; i++) {
@@ -311,6 +325,7 @@ function arrayContains(array, elem) {
     return false;
 }
 
+//Compares date elems in array with elem
 function arrayContainsDate(array, elem) {
 
     for (var i = 0; i < array.length; i++) {
@@ -322,6 +337,7 @@ function arrayContainsDate(array, elem) {
     return false;
 }
 
+//Returns weekday as a string representation
 var weekday = new Array(7);
 weekday[0] = "Monday";
 weekday[1] = "Tuesday";
@@ -331,6 +347,7 @@ weekday[4] = "Friday";
 weekday[5] = "Saturday";
 weekday[6] = "Sunday";
 
+//Returns month as a string representation
 var month = new Array(12);
 month[0] = "January";
 month[1] = "February";
@@ -403,6 +420,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
     }
 ]);
 
+// funcionality for showing events old and active
 eventListControllers.controller('DetailEventCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy', 'CalendarProxy', 
     function ($scope, $location, $routeParams, EventListProxy, CalendarProxy) {
@@ -432,6 +450,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                         }
                     });
 
+                    //Functionality to fill event with answers
                     event.answers.forEach(function(answer) {
                         answer.dates.forEach(function(date) {
                             if ($scope.answersPerDate[date] === undefined) {
@@ -443,6 +462,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                         });
                     });
 
+                    //Gets the matrix by calling sorting algorithms 
                     $scope.matrix = sortMaster(event.dates, event);
                     for (var i = 0; i < $scope.matrix.length; i++) {
                         for (var j = 0; j < $scope.matrix[0].length; j++) {
@@ -467,6 +487,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             var x = []; //days
             var y = []; //weeks
             var dates = [];
+            
             //Fill them ALL!
             event.dates.forEach(function (d) {
                 var date = new Date(d);
@@ -480,13 +501,14 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 dates[dates.length] = date;
             });
 
-            //Sort days and weeks ascending order
-            x.sort(function (a, b) {
-                return a - b;
+            //Sort days ascending order
+            x.sort(function (d1, d2) {
+                return d1 - d2;
             });
-
-            y.sort(function (a, b) {
-                return a - b;
+            
+            //Sort weeks ascending order
+            y.sort(function (w1, w2) {
+                return w1 - w2;
             });
 
             //insert days in farts row
@@ -502,7 +524,9 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 matrix[i] = [];
                 matrix[i][0] = y[i - 1];
             }
-
+            
+            //Fills the matrix by comparing date-week with y-axis in matrix and 
+            //date-day with x-axis in matrix
             dates.forEach(function (date) {
                 for (var i = 0; i < y.length; i++) {
                     if (date.getWeekNumber() === y[i]) {
@@ -521,7 +545,8 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             var x = []; //time
             var y = []; //date
             var dates = [];
-            var endTimes = [];
+            var endTimes = []; //The end time generated by duration
+            
             //Fill them ALL!
             event.dates.forEach(function (d) {
                 var date = new Date(d);
@@ -539,28 +564,30 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 }
                 dates[dates.length] = date;
             });
-            console.log(x.toString());
-            //Sort days and weeks ascending order
+            
+            //Sort times ascending order
             x.sort(function (a, b) {
                 return new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b);
             });
+            
             endTimes.sort(function (a, b) {
                 return new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b);
             });
             
+            //fills x-axis with nice time representation
             for(var i = 0; i < x.length; i ++) {
                 x[i] = x[i] + "-" + endTimes[i];
             }
             
-            console.log(y.toString());
+            //sorts dates in ascending order
             y.sort(function (a, b) {
                 return (a-b);
             });
             
+            //fills y-axis with easy date representation
             for(var i = 0; i < y.length; i ++) {
                 y[i] = y[i].getSimpleDate();
             }
-            console.log(y.toString());
 
             //insert times in farts row
             var matrix = [];
@@ -576,6 +603,8 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
                 matrix[i][0] = y[i - 1];
             }
 
+            //Fills the matrix by comparing date-time with y-axis in matrix and 
+            //date-date with x-axis in matrix
             dates.forEach(function (date) {
                 for (var i = 0; i < y.length; i++) {
                     if (date.getSimpleDate() === y[i]) {
@@ -590,6 +619,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             return matrix;
         }
 
+        //Controlls what sorting algorithm to use
         function sortMaster(eventDates, event) {
             if (event.allDayEvent === true) {
                 var sorts = sortByWeek;
@@ -601,8 +631,6 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             return result;
         }
 
-        //eventID, user, lista med answers
-        //
         var containsUser = function (array, user) {
             if (array !== undefined) {
                 for (var i = 0; i < array.length; i++) {
@@ -614,6 +642,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             return false;
         };
 
+        //handles a users answer (click) on the event and stores the answer
         $scope.addA = function (col) {
             if($scope.mwevent.deadline < new Date().getTime()) {
                 return;
@@ -650,14 +679,14 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             }
         };
         
-        //when buttom pushed
+        //when buttom pushed to save answers from the user
         $scope.done = function () {
 
             $scope.answer.user = loggedInUser; //user
 
             EventListProxy.addAnswer($routeParams.id, $scope.answer)
                     .success(function () {
-                        $location.path('/my-mewaps');
+                        location.reload(true);
                     }).error(function () {
                 ;
             });
@@ -724,6 +753,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             });
         };
     }]);
+
 // Authorication controller
 authControllers.controller('AuthCtrl', ['$scope', '$location',
     'AuthProxy',
@@ -733,6 +763,7 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
         };
 
     }]);
+
 // Controller for start page
 eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
     function ($scope, $location) {

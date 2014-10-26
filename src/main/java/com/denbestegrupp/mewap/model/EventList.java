@@ -14,8 +14,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
- * @author emma
+ * A class to represent events in a list
+ * @author Group 1:
+ *         Emma Gustafsson
+ *         Josefin Ondrus
+ *         Elin Ljunggren
+ *         Oskar Nyberg
  */
 @Stateless
 public class EventList extends AbstractDAO <MWEvent, Long> implements IEventList {

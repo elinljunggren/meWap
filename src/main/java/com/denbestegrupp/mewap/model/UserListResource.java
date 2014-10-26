@@ -1,7 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * RESTful service that supplies user information to the client
+ * 
+ * @author group 1:
+ *  Josefin Ondrus
+ *  Emma Gustafsson
+ *  Elin Ljunggren
+ *  Oskar Nyberg
  */
 package com.denbestegrupp.mewap.model;
 import java.util.ArrayList;
@@ -19,10 +23,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-/**
- *
- * @author josefinondrus
- */
 @Path("users")
 @RequestScoped
 public class UserListResource {

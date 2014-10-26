@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.denbestegrupp.mewap.auth;
 
 import java.io.IOException;
@@ -24,9 +19,13 @@ import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
- *
- * @author Oskar
- */
+* A class which talks to googles OAuth2 REST-api
+* @author Group 1:
+* Emma Gustafsson
+* Josefin Ondrus
+* Elin Ljunggren
+* Oskar Nyberg
+*/
 @ApplicationScoped
 public class GoogleAuth {
     

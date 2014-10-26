@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.denbestegrupp.mewap.model;
 
 import com.denbestegrupp.mewap.persistence.AbstractEntity;
@@ -16,9 +11,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author Oskar
- */
+* A class which represents an answer to an event
+* @author Group 1:
+* Emma Gustafsson
+* Josefin Ondrus
+* Elin Ljunggren
+* Oskar Nyberg
+*/
 @Entity
 public class MWAnswer extends AbstractEntity {
     
