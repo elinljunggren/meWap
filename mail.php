@@ -3,7 +3,7 @@
         $txt;
         if ($_GET["type"] === "invite") {
             echo "invite";
-        	$txt = "Hej!<br /><br />";
+        	$txt = "Hi!<br /><br />";
         	$txt .= $_GET["from"] . " invited you to participate in " . $_GET["event"];
         	$txt .= "<br /><br /><a href=\"http://mewap.se/mewap/app/index.html#/my-mewaps/". $_GET['id'] . "\">Click here to visit the meWap event!</a>";
         } else if ($_GET["type"] === "eachanswer") {
