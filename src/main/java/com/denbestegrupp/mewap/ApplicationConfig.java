@@ -1,11 +1,15 @@
 package com.denbestegrupp.mewap;
 
-
-
-
 import java.util.Set;
 import javax.ws.rs.core.Application;
-
+/**
+ * A class to configurate application
+ * @author Group 1:
+ *         Emma Gustafsson
+ *         Josefin Ondrus
+ *         Elin Ljunggren
+ *         Oskar Nyberg
+ */
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
 
