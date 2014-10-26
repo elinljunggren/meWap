@@ -519,7 +519,7 @@ footer #login a {
     
     .detail table td.title {
         font-weight: bold;
-        background-color: #EFEFEF;
+        background-color: #E8E8E8;
     }
     
     .detail table td.noDate {
@@ -532,6 +532,10 @@ footer #login a {
     
     .detail table td:first-of-type {
         position: relative;
+    }
+    
+    .detail table td.zerozero {
+        text-align: center;
     }
     
     .detail table td button {
