@@ -202,7 +202,9 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
 
                     var partList = [];
                     $scope.mwevent.participators.forEach(function(user){
-                        partList[partList.length] = user.email;
+                        if (user.email !== loggedInUser) {
+                            partList[partList.length] = user.email;
+                        }
                     });
                     $scope.participators = partList;
                     console.log($scope.mwevent.deadlineReminder);
