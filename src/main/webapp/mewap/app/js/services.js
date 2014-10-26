@@ -19,7 +19,6 @@ var getURL = function () {
 eventListService.factory('EventListProxy', ['$http',
     function ($http) {
 
-        //TODO
         var url = getURL() + '/webresources/events';
         return {
             findAll: function () {
@@ -66,7 +65,6 @@ eventListService.factory('EventListProxy', ['$http',
 authService.factory('AuthProxy', ['$http',
     function ($http) {
 
-        //TODO
         var url = getURL() + '/webresources/auth';
         return {
             login: function () {
@@ -77,6 +75,19 @@ authService.factory('AuthProxy', ['$http',
             },
             getLoggedInUser: function () {
                 return $http.get(url + "/getLoggedInUser");
+            }
+        };
+
+    }]);
+
+// Representing the remote RESTful calendar
+authService.factory('CalendarProxy', ['$http',
+    function ($http) {
+
+        var url = getURL() + '/webresources/calendar';
+        return {
+            eventsForDate: function () {
+                return $http.get(url + "/eventsForDate");
             }
         };
 

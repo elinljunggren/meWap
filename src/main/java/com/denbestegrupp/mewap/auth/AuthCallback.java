@@ -80,13 +80,22 @@ public class AuthCallback extends HttpServlet {
         } catch (ParseException e) {
             throw new RuntimeException("Unable to parse json " + body);
         }
+        
+        log.log(Level.INFO, "------ data ------");
+        log.log(Level.INFO, jsonObject.get("access_token").toString());
+        log.log(Level.INFO, jsonObject.get("token_type").toString());
+        log.log(Level.INFO, jsonObject.get("refresh_token").toString());
 
         // google tokens expire after an hour, but since we requested offline access we can get a new token without user involvement via the refresh token
         String accessToken = (String) jsonObject.get("access_token");
-
         Cookie cookie = new Cookie("access_token", accessToken);
         cookie.setMaxAge(60*60*24*7);
         resp.addCookie(cookie);
+        
+        String refreshToken = (String) jsonObject.get("refresh_token");
+        Cookie cookie2 = new Cookie("refresh_token", refreshToken);
+        cookie2.setMaxAge(60*60*24*7);
+        resp.addCookie(cookie2);
 
         // get some info about the user with the access token
         String jsonString = get(new StringBuilder("https://www.googleapis.com/oauth2/v1/userinfo?access_token=").append(accessToken).toString());
