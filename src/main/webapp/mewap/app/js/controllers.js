@@ -109,14 +109,19 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
         $scope.loggedInUser = loggedInUser;
         $scope.userName = userName;
         $scope.dates = [];
+     
+        //methods for adding/removing datefields upon
+        //users request
         $scope.addDateField = function () {
             $scope.dates[$scope.dates.length] = new Date();
         };
-
+        
         $scope.addDateField();
         $scope.removeDateField = function (index) {
             $scope.dates.splice(index, 1);
         };
+        //methods for adding/removing participatorfields upon
+        //users request
         $scope.participators = [];
         $scope.addParticipatorField = function () {
             $scope.participators[$scope.participators.length] = new String();
@@ -126,10 +131,7 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
         };
         $scope.addParticipatorField();
 
-//        $scope.$watch('dates', function () {
-//            console.log($scope.dates);
-//            $scope.checkDeadlineDate(dates);
-//        });
+
         //Checks if deadline on mewap is passed todays date
         $scope.checkDeadlineDate = function (dates) {
             var maxDateValue = new Date().getTime();
@@ -138,12 +140,10 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
                 if (maxDateValue > date.getTime() || maxDateValue === -1) {
                     maxDateValue = date.getTime();
                     minDate = date;
-                    //   console.log(date);
                 }
 
             });
 
-            //$scope.minDeadline = new Date(minDate);
             return maxDateValue;
         };
         //method saves mewap-event upon click in html page
@@ -173,14 +173,15 @@ eventListControllers.controller('NewEventCtrl', ['$scope', '$location',
             });
         };
     }]);
-
+//functionality to edit an existing event
 eventListControllers.controller('EditCtrl', ['$scope', '$location',
     'EventListProxy', '$routeParams',
     function ($scope, $location, EventListProxy, $routeParams) {
         $scope.loggedInUser = loggedInUser;
         $scope.userName = userName;
         $scope.dates = [];
-
+        
+        //finds the event requested for editing 
         EventListProxy.find($routeParams.id)
                 .success(function (event) {
                     if(event.toString().length === 0){
@@ -189,6 +190,9 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
                     }
                     $scope.mwevent = event;
                     $scope.mwevent.deadline = new Date(event.deadline);
+                    var tmp = new Date($scope.mwevent.duration);
+                    tmp.setHours(tmp.getHours()-1);
+                    $scope.mwevent.duration = tmp;
                     
                     var dateList = [];
                     $scope.mwevent.dates.forEach(function(date){
@@ -205,7 +209,8 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
                 }).error(function () {
             console.log("selectById: error");
         });
-
+        //methods for adding/removing datefields upon
+        //users request
         $scope.addDateField = function () {
             $scope.dates[$scope.dates.length] = new Date();
         };
@@ -213,6 +218,8 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
         $scope.removeDateField = function (index) {
             $scope.dates.splice(index, 1);
         };
+        //methods for adding/removing fields for participators upon
+        //users request
         $scope.participators = [];
         $scope.addParticipatorField = function () {
             $scope.participators[$scope.participators.length] = new String();
@@ -222,6 +229,7 @@ eventListControllers.controller('EditCtrl', ['$scope', '$location',
         };
         $scope.addParticipatorField();
         
+        //updates the existing event with new parameters
         $scope.update = function () {
             $scope.mwevent.dates.splice(0, $scope.mwevent.dates.length+1);
             $scope.dates.forEach(function (date) {
@@ -335,7 +343,7 @@ function arrayContainsDate(array, elem) {
     }
     return false;
 }
-
+// funcionality for showing old events
 eventListControllers.controller('HistoryCtrl', ['$scope',
     '$location', '$routeParams', 'EventListProxy',
     function ($scope, $location, $routeParams, EventListProxy) {
@@ -362,9 +370,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
             getRange();
         });
 
-
         function getRange() {
-
             var first = $scope.pageSize * $scope.currentPage;
             EventListProxy.findHistory(first, $scope.pageSize)
                     .success(function (mwevent) {
@@ -381,8 +387,7 @@ eventListControllers.controller('HistoryCtrl', ['$scope',
                     }).error(function () {
                 console.log("findRange: error");
             });
-        }
-        
+        }   
         $scope.clearHistory = function () {
             if (confirm("Are you sure you want to delete all old events you have created?")) {
                 EventListProxy.deleteHistory()
@@ -729,7 +734,7 @@ eventListControllers.controller('DetailEventCtrl', ['$scope',
             });
         };
     }]);
-
+// Authorication controller
 authControllers.controller('AuthCtrl', ['$scope', '$location',
     'AuthProxy',
     function ($scope, $location, AuthProxy) {
@@ -738,7 +743,7 @@ authControllers.controller('AuthCtrl', ['$scope', '$location',
         };
 
     }]);
-
+// Controller for start page
 eventListControllers.controller('StartPageCtrl', ['$scope', '$location',
     function ($scope, $location) {
         $scope.loggedInUser = loggedInUser;

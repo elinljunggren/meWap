@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlType;
  *
  * @author emma
  */
+
+//wrapper for answer class
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name="Answer", propOrder = {
