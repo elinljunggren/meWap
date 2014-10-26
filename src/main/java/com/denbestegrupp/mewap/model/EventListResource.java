@@ -170,7 +170,13 @@ public class EventListResource {
         
         List<MWUser> participators = new ArrayList<>();
         for (JsonValue p : ev.getJsonArray("participators")) {
-                participators.add(meWap.getUserList().find(p.toString()));
+            String email = p.toString();
+            MWUser participator = meWap.getUserList().find(email);
+            if(participator == null) {
+                participator = new MWUser(email, email);
+                meWap.getUserList().create(participator);
+            }
+            participators.add(participator);
         }
         
         MWEvent event = meWap.getEventList().find(id);
